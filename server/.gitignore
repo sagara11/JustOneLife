@@ -1,0 +1,6 @@
+node_modules/
+.vscode/
+public/stylesheets/css/
+package-lock.json
+uploads/
+.env
