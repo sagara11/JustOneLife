@@ -1,15 +1,23 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import { loginAPI } from "./authenticationAPI";
+import { signupAPI, signinAPI } from "./authenticationAPI";
 
 const initialState = {
-  errors: [],
+  newUser: null,
 };
 
-export const login = createAsyncThunk(
-  "authentication/login",
+export const signin = createAsyncThunk(
+  "authentication/signin",
   async (payload) => {
-    const { data } = await loginAPI(payload);
+    const { data } = await signinAPI(payload);
+    return data;
+  }
+);
+
+export const signup = createAsyncThunk(
+  "authentication/signup",
+  async (payload) => {
+    const { data } = await signupAPI(payload);
     return data;
   }
 );
@@ -24,16 +32,21 @@ export const authenticationSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(login.fulfilled, (state, action) => {
+      .addCase(signin.fulfilled, (state, action) => {
         const res = action.payload;
-        if (res.success) {
-          state.errors = [];
-          localStorage.setItem("authToken", res.token);
-          window.location.href = "http://localhost:3000/";
-        }
+        localStorage.setItem("authToken", res.accessToken);
+        window.location.href = "http://localhost:3000/";
       })
-      .addCase(login.rejected, (state) => {
-        state.errors = [{ message: "Invalid Credentials!" }];
+      .addCase(signup.pending, (state, action) => {
+        state.newUser = null;
+      })
+      .addCase(signup.fulfilled, (state, action) => {
+        const res = action.payload;
+        if(res) {
+          state.newUser = res;
+        } else {
+          state.newUser = null;
+        }
       });
   },
 });
