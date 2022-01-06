@@ -8,6 +8,10 @@ const config = {
   },
 };
 
-export function loginAPI(params) {
-  return axios.post(`${URL}/auth/login`, params, config);
+export function signinAPI(params) {
+  return axios.post(`${URL}/auth/signin`, params, config);
+}
+
+export function signupAPI(params) {
+  return axios.post(`${URL}/auth/signup`, params, config);
 }
