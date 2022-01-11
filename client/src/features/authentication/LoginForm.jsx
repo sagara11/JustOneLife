@@ -5,11 +5,20 @@ import {globalState} from "../global/globalSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {authenticationState, signin, signup} from "./authenticationSlice";
 import {useEffect} from "react";
+import {useHistory} from "react-router-dom";
 
 function LoginForm() {
   const {web3} = useSelector(globalState);
   const {newUser} = useSelector(authenticationState);
   const dispatch = useDispatch();
+
+  const history = useHistory();
+
+  useEffect(() => {
+    if (localStorage.getItem("authToken")) {
+      history.push("/");
+    }
+  }, [history]);
 
   useEffect(() => {
     const signMessage = async () => {

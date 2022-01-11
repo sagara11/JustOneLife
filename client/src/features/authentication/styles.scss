@@ -30,3 +30,22 @@
     }
   }
 }
+
+#additional-register-form {
+  width: 400px;
+  .form-element {
+    margin: 25px 0;
+  }
+  #form_submit {
+    width: 100%;
+    padding: 20px;
+  }
+  p {
+    color: #bf1650;
+    margin-bottom: 0;
+  }
+
+  input {
+    padding: 10px 15px;
+  }
+}

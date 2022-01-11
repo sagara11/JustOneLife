@@ -44,10 +44,7 @@ export const globalSlice = createSlice({
         state.currentUser = null;
       })
       .addCase(fetchCurrentUser.fulfilled, (state, action) => {
-        const {data} = action.payload;
-        if (data) {
-          state.currentUser = data;
-        }
+        state.currentUser = action.payload;
       });
   },
 });

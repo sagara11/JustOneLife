@@ -60,7 +60,7 @@ const App = () => {
       <Switch>
         <PrivateRoute path="/" exact component={HomePage} />
         <Route path="/login" component={AuthenticationPage} />
-        <PrivateRoute component={NotFound} />
+        <Route component={NotFound} />
       </Switch>
     </BrowserRouter>
   );
