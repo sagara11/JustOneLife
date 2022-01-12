@@ -10,13 +10,12 @@ import {
   setAccounts,
   setWeb3,
   setContract,
-  setStorageValue,
 } from "./features/global/globalSlice";
 import getWeb3 from "./getWeb3";
-import HomePage from './pages/HomePage';
+import HomePage from "./pages/HomePage";
 
 const App = () => {
-  const {web3, contract, accounts, storageValue} = useSelector(globalState);
+  const {web3} = useSelector(globalState);
   const dispatch = useDispatch();
   useEffect(() => {
     const init = async () => {
@@ -50,9 +49,9 @@ const App = () => {
     };
 
     init();
-  }, []);
+  }, [dispatch]);
 
-  if (typeof web3 === null) {
+  if (web3 === null) {
     return <div>Loading Web3, accounts, and contract...</div>;
   }
 

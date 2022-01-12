@@ -5,10 +5,9 @@ import {globalState} from "../global/globalSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {authenticationState, signin, signup} from "./authenticationSlice";
 import {useEffect} from "react";
-import { useHistory } from 'react-router-dom';
 
 function LoginForm() {
-  const {web3, contract, accounts, storageValue} = useSelector(globalState);
+  const {web3} = useSelector(globalState);
   const {newUser} = useSelector(authenticationState);
   const dispatch = useDispatch();
 
@@ -26,7 +25,7 @@ function LoginForm() {
       );
     };
     if (newUser !== null) signMessage();
-  }, [newUser]);
+  }, [dispatch, newUser, web3.eth.personal, web3.utils]);
 
   const handleClick = async () => {
     let publicAddress;
