@@ -4,3 +4,4 @@ public/stylesheets/css/
 package-lock.json
 uploads/
 .env
+yarn.lock

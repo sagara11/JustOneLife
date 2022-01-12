@@ -8,7 +8,7 @@ class AuthenticationController {
     next();
   }
 
-  async create(req, res, next) {
+  async signin(req, res, next) {
     const {publicAddress, signature} = req.body;
 
     if (!signature || !publicAddress)

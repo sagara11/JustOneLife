@@ -1,7 +1,7 @@
 const User = require("../models/users");
 
 const addNewUser = async (publicAddress) => {
-  const user = await findUser(publicAddress);
+  const user = await User.findByAddress(publicAddress);
 
   if (!user) {
     let random_number = Math.floor(Math.random() * 100000);
@@ -14,11 +14,6 @@ const addNewUser = async (publicAddress) => {
   return user;
 };
 
-const findUser = async (publicAddress) => {
-  const user = await User.findOne({publicAddress: publicAddress});
-  return user ? user : null;
-};
 module.exports = {
   addNewUser,
-  findUser
 };

@@ -2,13 +2,12 @@ const ethUtil = require("ethereumjs-util");
 const sigUtil = require("@metamask/eth-sig-util");
 const jwt = require("jsonwebtoken");
 const User = require("../models/users");
-const {findUser} = require("./UserServices");
 
 const verifyUser = async (publicAddress) => {
   ////////////////////////////////////////////////////
   // Step 1: Verify user
   ////////////////////////////////////////////////////
-  const user = await findUser(publicAddress);
+  const user = await User.findByAddress(publicAddress);
   return user ? user : null;
 };
 
