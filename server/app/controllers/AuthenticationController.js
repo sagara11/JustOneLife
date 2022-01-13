@@ -24,6 +24,10 @@ class AuthenticationController {
     res.json({accessToken: data.accessToken});
     next();
   }
+
+  async getCurrentUser(req, res, next) {
+    return res.status(200).json(req.account);
+  }
 }
 
 module.exports = new AuthenticationController();
