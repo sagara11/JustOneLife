@@ -1,5 +1,5 @@
 const User = require("../../models/users");
-
+const userServices = require("../../services/userServices");
 class UsersController {
   async show(req, res, next) {
     try {
@@ -7,22 +7,22 @@ class UsersController {
       res.status(200).json(user);
       next();
     } catch (err) {
-      console.log(err)
+      console.log(err);
       next(err);
     }
   }
 
   async update(req, res, next) {
     try {
-      const updatedUser = await User.findOneAndUpdate(
-        {id: req.account._id},
-        {$set: req.body},
-        {new: true}
-      );
+      const {publicAddress} = req.params;
+      const data = req.body;
+
+      const updatedUser = await userServices.updateUser(publicAddress, data);
+
       res.status(200).json(updatedUser);
       next();
     } catch (err) {
-      console.log(err)
+      console.log(err);
       next(err);
     }
   }

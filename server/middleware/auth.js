@@ -37,9 +37,10 @@ exports.secondStepCheck = async (req, res, next) => {
 
     // isEmpty can check if string is undefined or ""
     if (isEmpty(user.email) || isEmpty(user.name)) {
-      return res
-        .status(500)
-        .send({error: "Go to second step of login process", isAlreadyRegister: false});
+      return res.status(500).send({
+        error: "Go to second step of login process",
+        isAlreadyRegister: false,
+      });
     }
     next();
   } catch (err) {

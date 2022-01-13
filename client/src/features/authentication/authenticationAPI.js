@@ -18,5 +18,5 @@ export function signupAPI(params) {
 }
 
 export function updateAccountAPI(params) {
-  return axios.put(`${URL}/users/update`, params, config);
+  return axios.put(`${URL}/users/${params.publicAddress}`, params.data, config);
 }
