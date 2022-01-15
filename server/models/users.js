@@ -35,6 +35,10 @@ const User = new Schema(
       unique: true,
       lowercase: true,
     },
+    refreshToken: {
+      type: String,
+      unique: true,
+    },
   },
   {
     timestamps: true,

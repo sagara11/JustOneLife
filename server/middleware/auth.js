@@ -27,6 +27,7 @@ exports.jwtCheck = async (req, res, next) => {
   } catch (err) {
     // handle if jwt expired
     console.log(err);
+    return null
     next(err);
   }
 };
