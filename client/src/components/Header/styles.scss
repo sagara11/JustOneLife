@@ -14,17 +14,39 @@
     }
   }
 
-  .header-menu__wrapper {
+  .header-submenu__wrapper {
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: flex-end;
 
-    .header-menu__item {
+    .header-submenu__item {
       margin: 0;
-      color: #29A9F5;
+      color: #29a9f5;
       font-size: 16px;
       text-decoration: none;
+    }
+
+    .header-submenu__toggle {
+      margin: 0;
+      cursor: pointer;
+      color: #29a9f5;
+      font-size: 18px;
+    }
+  }
+
+  .header-navbar__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 100%;
+    flex: 0 0 100%;
+
+    .header-navbar__item {
+      text-align: center;
+      color: #29a9f5;
+      font-size: 18px;
+      cursor: pointer;
     }
   }
 }
