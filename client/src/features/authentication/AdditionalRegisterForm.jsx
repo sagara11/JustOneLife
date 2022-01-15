@@ -2,8 +2,9 @@ import React from "react";
 import "./styles.scss";
 import {useForm} from "react-hook-form";
 import {ErrorMessage} from "@hookform/error-message";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {updateAccount} from "./authenticationSlice";
+import {globalState} from "../global/globalSlice";
 
 function AdditionalRegisterForm() {
   const {
@@ -12,11 +13,18 @@ function AdditionalRegisterForm() {
     formState: {errors},
   } = useForm();
   const dispatch = useDispatch();
+
+  const {currentUser} = useSelector(globalState);
+
   const onSubmit = (data) => {
-    dispatch(updateAccount(data));
+    currentUser &&
+      dispatch(
+        updateAccount({publicAddress: currentUser.publicAddress, data: data})
+      );
   };
-  const regexEmail =
-    /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+  // eslint-disable-next-line no-useless-escape
+  const regexEmail = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} id="additional-register-form">

@@ -1,9 +1,9 @@
-const {addNewUser} = require("../../services/UserServices");
 const {authenticateUser} = require("../../services/AuthenticationServices");
+const userServices = require("../../services/userServices");
 class AuthenticationController {
   async signup(req, res, next) {
     const {publicAddress} = req.body;
-    const user = await addNewUser(publicAddress);
+    const user = await userServices.addNewUser(publicAddress);
     res.json(user);
     next();
   }
