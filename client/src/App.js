@@ -83,6 +83,19 @@ const App = () => {
     <BrowserRouter>
       <Switch>
         <PrivateRoute path="/" exact component={HomePage} />
+        <PrivateRoute
+          path="/medical-record/:patientPublicAddress"
+          component={HomePage}
+        />
+        <PrivateRoute
+          path="/vaccination-certificate/:patientPublicAddress"
+          component={HomePage}
+        />
+        <PrivateRoute path="/medical-records" component={HomePage} />
+        <PrivateRoute path="/vaccination-certificates" component={HomePage} />
+        <PrivateRoute path="/doctors" component={HomePage} />
+        <PrivateRoute path="/managers" component={HomePage} />
+        <PrivateRoute path="/settings" component={HomePage} />
         <Route path="/login" component={AuthenticationPage} />
         <Route component={NotFound} />
       </Switch>
