@@ -1,9 +1,16 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
-import {signupAPI, signinAPI, updateAccountAPI} from "./authenticationAPI";
+import {
+  signupAPI,
+  signinAPI,
+  updateAccountAPI,
+  checkExpiredAPI,
+  refreshTokenAPI,
+} from "./authenticationAPI";
 
 const initialState = {
-  newUser: null
+  newUser: null,
+  tokenValid: false
 };
 
 export const signin = createAsyncThunk(
@@ -30,6 +37,22 @@ export const updateAccount = createAsyncThunk(
   }
 );
 
+export const checkExpired = createAsyncThunk(
+  "authentication/checkExpired",
+  async (payload) => {
+    const {data} = await checkExpiredAPI(payload);
+    return data;
+  }
+);
+
+export const refreshToken = createAsyncThunk(
+  "authentication/refreshToken",
+  async (payload) => {
+    const {data} = await refreshTokenAPI(payload);
+    return data;
+  }
+);
+
 export const authenticationSlice = createSlice({
   name: "authentication",
   initialState,
@@ -37,12 +60,16 @@ export const authenticationSlice = createSlice({
     resetState: () => {
       return initialState;
     },
+    changeTokenValid: (state, action) => {
+      state.tokenValid = action.payload
+    }
   },
   extraReducers: (builder) => {
     builder
       .addCase(signin.fulfilled, (state, action) => {
         const res = action.payload;
         localStorage.setItem("authToken", res.accessToken);
+        localStorage.setItem("refreshToken", res.refreshToken);
         window.location.href = "/";
       })
       .addCase(signup.pending, (state, action) => {
@@ -59,11 +86,17 @@ export const authenticationSlice = createSlice({
       .addCase(updateAccount.fulfilled, (state, action) => {
         const res = action.payload;
         if (res) window.location.href = "/";
+      })
+      .addCase(refreshToken.fulfilled, (state, action) => {
+        const res = action.payload;
+        localStorage.setItem("authToken", res.accessToken);
+        console.log(res.accessToken)
+        state.tokenValid = true
       });
   },
 });
 
-export const {resetState} = authenticationSlice.actions;
+export const {resetState, changeTokenValid} = authenticationSlice.actions;
 
 export const authenticationState = (state) => state.authentication;
 

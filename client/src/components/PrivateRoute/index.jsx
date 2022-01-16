@@ -4,6 +4,7 @@ import AuthenticationPage from "../../pages/AuthenticationPage/index";
 import {fetchCurrentUser, globalState} from "../../features/global/globalSlice";
 import {useEffect} from "react";
 import {isEmpty} from "lodash";
+import {authenticationState} from "../../features/authentication/authenticationSlice";
 
 const PrivateRoute = ({component: Component, ...rest}) => {
   const dispatch = useDispatch();

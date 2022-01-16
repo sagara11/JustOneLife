@@ -11,11 +11,18 @@ import {
   setWeb3,
   setContract,
 } from "./features/global/globalSlice";
+import {
+  authenticationState,
+  refreshToken,
+  changeTokenValid,
+} from "./features/authentication/authenticationSlice";
 import getWeb3 from "./getWeb3";
 import HomePage from "./pages/HomePage";
+const jwt = require("jsonwebtoken");
 
 const App = () => {
   const {web3} = useSelector(globalState);
+  const {tokenValid} = useSelector(authenticationState);
   const dispatch = useDispatch();
   useEffect(() => {
     const init = async () => {
@@ -50,6 +57,23 @@ const App = () => {
 
     init();
   }, [dispatch]);
+
+  useEffect(() => {
+    const tokenExpiredCheck = async (token) => {
+      try {
+        if (token) {
+          await jwt.verify(token, process.env.REACT_APP_SECRET_KEY);
+        }
+      } catch (err) {
+        dispatch(changeTokenValid(false));
+        dispatch(
+          refreshToken({refreshToken: localStorage.getItem("refreshToken")})
+        );
+      }
+    };
+
+    tokenExpiredCheck(localStorage.getItem("authToken"));
+  }, [dispatch, tokenValid]);
 
   if (web3 === null) {
     return <div>Loading Web3, accounts, and contract...</div>;

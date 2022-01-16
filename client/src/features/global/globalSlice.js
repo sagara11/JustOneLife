@@ -1,4 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {isEmpty} from "lodash";
 
 import {fetchCurrentUserAPI} from "./globalAPI";
 
@@ -44,7 +45,7 @@ export const globalSlice = createSlice({
         state.currentUser = null;
       })
       .addCase(fetchCurrentUser.fulfilled, (state, action) => {
-        state.currentUser = action.payload;
+        state.currentUser = isEmpty(action.payload) ? null : action.payload
       });
   },
 });
