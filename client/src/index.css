@@ -28,3 +28,17 @@ body {
 iframe {
   display: none;
 }
+
+.form-control {
+  background-color: #E7E7E7;
+  border: none;
+}
+
+.btn {
+  border: none;
+  color: white;
+}
+
+.btn-primary {
+  background-color: #29A9F5;
+}
