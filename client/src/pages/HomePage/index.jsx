@@ -7,8 +7,8 @@ function HomePage() {
   return (
     <>
       <Header />
+      <Sidebar />
       <div className="body__wrapper">
-        <Sidebar />
       </div>
     </>
   );

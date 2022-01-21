@@ -79,7 +79,7 @@ function Sidebar() {
           <NavLink
             to="/settings"
             className={(isActive) =>
-              "sidebar__item last-item" + (isActive ? " active-item" : "")
+              "sidebar__item" + (isActive ? " active-item" : "")
             }
           >
             <IoSettingsSharp className="sidebar__icon" />
