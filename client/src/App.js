@@ -20,10 +20,16 @@ import getWeb3 from "./getWeb3";
 import HomePage from "./pages/HomePage";
 import ManagerPage from "./pages/ManagerPage";
 import DoctorPage from "./pages/DoctorPage";
+import {
+  authorizationState,
+  setRolePatient,
+} from "./features/authorization/authorizationSlice";
+import {isEmpty} from "lodash";
 const jwt = require("jsonwebtoken");
 
 const App = () => {
-  const {web3} = useSelector(globalState);
+  const {web3, accounts, contracts, currentUser} = useSelector(globalState);
+  const {userRole} = useSelector(authorizationState);
   const {tokenValid} = useSelector(authenticationState);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -76,6 +82,11 @@ const App = () => {
 
     tokenExpiredCheck(localStorage.getItem("authToken"));
   }, [dispatch, tokenValid]);
+
+  useEffect(() => {
+    if (currentUser && isEmpty(userRole))
+      dispatch(setRolePatient({web3, accounts, currentUser, contracts}));
+  }, [accounts, contracts, currentUser, dispatch, web3, userRole]);
 
   if (web3 === null) {
     return <div>Loading Web3, accounts, and contract...</div>;

@@ -27,7 +27,6 @@ const User = new Schema(
     nonce: {
       type: Number,
       default: () => Math.floor(Math.random() * 1000000),
-      select: false,
     },
     publicAddress: {
       type: String,
