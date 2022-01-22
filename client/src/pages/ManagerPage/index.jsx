@@ -5,7 +5,7 @@ import Sidebar from "../../components/Sidebar";
 import loginBackground from "../../assets/images/login-background.jpg";
 import AddManagerForm from '../../features/manager/AddForm';
 
-function HomePage() {
+function ManagerPage() {
   return (
     <>
       <Header />
@@ -19,4 +19,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default ManagerPage;

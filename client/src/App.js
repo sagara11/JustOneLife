@@ -19,6 +19,7 @@ import {
 import getWeb3 from "./getWeb3";
 import HomePage from "./pages/HomePage";
 import ManagerPage from "./pages/ManagerPage";
+import DoctorPage from "./pages/DoctorPage";
 const jwt = require("jsonwebtoken");
 
 const App = () => {
@@ -94,7 +95,7 @@ const App = () => {
         />
         <PrivateRoute path="/medical-records" component={HomePage} />
         <PrivateRoute path="/vaccination-certificates" component={HomePage} />
-        <PrivateRoute path="/doctors" component={HomePage} />
+        <PrivateRoute path="/doctors" component={DoctorPage} />
         <PrivateRoute path="/managers" component={ManagerPage} />
         <PrivateRoute path="/settings" component={HomePage} />
         <Route path="/login" component={AuthenticationPage} />
