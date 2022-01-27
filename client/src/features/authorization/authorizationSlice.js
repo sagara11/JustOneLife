@@ -1,10 +1,11 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {isEmpty} from "lodash";
 import AuthorizeContract from "../../contracts/Authorize.json";
 import authorizationServices from "./authorizationServices";
+import managerServices from "../manager/managerServices";
+import globalServices from '../global/globalServices';
 
 const initialState = {
-  userRole: null,
+  userRole: []
 };
 
 export const setRolePatient = createAsyncThunk(
@@ -18,20 +19,59 @@ export const setRolePatient = createAsyncThunk(
   }
 );
 
+export const setRoleManager = createAsyncThunk(
+  "authorization/setRoleManager",
+  async (payload) => {
+    const params = payload;
+    const managerService = new managerServices(params);
+    const data = await managerService.updateRole();
+    return data;
+  }
+);
+
+export const getCurrentUserRole = createAsyncThunk(
+  "authorization/getCurrentUserRole",
+  async (payload) => {
+    const params = payload;
+    const globalService = new globalServices(params);
+    const data = await globalService.getRole();
+    return data;
+  }
+);
+
 export const authorizationSlice = createSlice({
   name: "authorization",
   initialState,
   reducers: {
     resetState: () => {
       return initialState;
-    },
+    }
   },
   extraReducers: (builder) => {
-    builder.addCase(setRolePatient.fulfilled, (state, action) => {
-      const res = action.payload;
-      if (res && isEmpty(state.userRole))
-        state.userRole = process.env.REACT_APP_ROLE_PATIENT;
-    });
+    builder
+      .addCase(setRoleManager.fulfilled, (state, action) => {
+        console.log(action.payload);
+        alert("Successfully update manager role for account");
+      })
+      .addCase(setRoleManager.rejected, (state, action) => {
+        console.log(action.error.message);
+        alert(action.error.message);
+      })
+      .addCase(getCurrentUserRole.fulfilled, (state, action) => {
+        if(action.payload[0] === '1') {
+          state.userRole.push(process.env.REACT_APP_ROLE_PATIENT);
+        }
+        if(action.payload[1] === '1') {
+          state.userRole.push(process.env.REACT_APP_ROLE_DOCTOR);
+        }
+        if(action.payload[2] === '1') {
+          state.userRole.push(process.env.REACT_APP_ROLE_MANAGER);
+        }
+        if(action.payload[3] === '1') {
+          state.userRole.push(process.env.REACT_APP_ROLE_ADMIN);
+        }
+        console.log(`Current user role: ${state.userRole}`);
+      });
   },
 });
 

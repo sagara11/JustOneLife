@@ -7,7 +7,7 @@ export const store = configureStore({
   reducer: {
     authentication: authenticationReducer,
     authorization: authorizationReducer,
-    global: globalReducer,
+    global: globalReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

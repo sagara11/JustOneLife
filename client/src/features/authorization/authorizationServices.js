@@ -10,12 +10,12 @@ const authorizationServices = {
     const hasRole = await authorizeContract.methods
       .hasRole(roleHash, currentUser.publicAddress)
       .call({from: accounts[0]});
-    console.log("has Role: ", hasRole);
+    console.log("has Patient role: ", hasRole);
     if (!hasRole) {
-      console.log(accounts[0], currentUser.publicAddress);
       await authorizeContract.methods
         .setPatient(currentUser.publicAddress)
         .send({from: accounts[0]});
+      console.log(`User ${accounts[0]} has been set to Patient role`);
     }
     const data = await authorizeContract.getPastEvents("RoleGranted");
     console.log(data[0]["returnValues"]);
