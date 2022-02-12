@@ -34,6 +34,18 @@ const userServices = {
     }
     return user;
   },
+  updateManagerRole: async(publicAddress) => {
+    const user = await User.findByAddress(publicAddress);
+    if(user.email) {
+      sendEmailJob(
+        user.email,
+        'Upgrade to manager role!!',
+        'Your account has been upgraded to Manager by system admin.'
+      )
+    } else {
+      console.log("This user does not have any related email address!!!")
+    }
+  }
 };
 
 module.exports = userServices;
