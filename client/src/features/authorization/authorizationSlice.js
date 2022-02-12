@@ -2,10 +2,11 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import AuthorizeContract from "../../contracts/Authorize.json";
 import authorizationServices from "./authorizationServices";
 import managerServices from "../manager/managerServices";
-import globalServices from '../global/globalServices';
+import globalServices from "../global/globalServices";
+import {setIsLoading} from "../global/globalSlice";
 
 const initialState = {
-  userRole: []
+  userRole: [],
 };
 
 export const setRolePatient = createAsyncThunk(
@@ -45,32 +46,46 @@ export const authorizationSlice = createSlice({
   reducers: {
     resetState: () => {
       return initialState;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
+      .addCase(setRolePatient.pending, (state, action) => {
+        setIsLoading(true);
+      })
+      .addCase(setRolePatient.fulfilled, (state, action) => {
+        setIsLoading(false);
+      })
+      .addCase(setRoleManager.pending, (state, action) => {
+        setIsLoading(true);
+      })
       .addCase(setRoleManager.fulfilled, (state, action) => {
         console.log(action.payload);
         alert("Successfully update manager role for account");
+        setIsLoading(false);
       })
       .addCase(setRoleManager.rejected, (state, action) => {
         console.log(action.error.message);
         alert(action.error.message);
       })
+      .addCase(getCurrentUserRole.pending, (state, action) => {
+        setIsLoading(true);
+      })
       .addCase(getCurrentUserRole.fulfilled, (state, action) => {
-        if(action.payload[0] === '1') {
+        if (action.payload[0] === "1") {
           state.userRole.push(process.env.REACT_APP_ROLE_PATIENT);
         }
-        if(action.payload[1] === '1') {
+        if (action.payload[1] === "1") {
           state.userRole.push(process.env.REACT_APP_ROLE_DOCTOR);
         }
-        if(action.payload[2] === '1') {
+        if (action.payload[2] === "1") {
           state.userRole.push(process.env.REACT_APP_ROLE_MANAGER);
         }
-        if(action.payload[3] === '1') {
+        if (action.payload[3] === "1") {
           state.userRole.push(process.env.REACT_APP_ROLE_ADMIN);
         }
         console.log(`Current user role: ${state.userRole}`);
+        setIsLoading(false);
       });
   },
 });

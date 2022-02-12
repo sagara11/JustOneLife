@@ -1,16 +1,16 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {setIsLoading} from "../global/globalSlice";
 
 import {
   signupAPI,
   signinAPI,
   updateAccountAPI,
-  checkExpiredAPI,
   refreshTokenAPI,
 } from "./authenticationAPI";
 
 const initialState = {
   newUser: null,
-  tokenValid: false
+  tokenValid: false,
 };
 
 export const signin = createAsyncThunk(
@@ -37,14 +37,6 @@ export const updateAccount = createAsyncThunk(
   }
 );
 
-export const checkExpired = createAsyncThunk(
-  "authentication/checkExpired",
-  async (payload) => {
-    const {data} = await checkExpiredAPI(payload);
-    return data;
-  }
-);
-
 export const refreshToken = createAsyncThunk(
   "authentication/refreshToken",
   async (payload) => {
@@ -61,8 +53,8 @@ export const authenticationSlice = createSlice({
       return initialState;
     },
     changeTokenValid: (state, action) => {
-      state.tokenValid = action.payload
-    }
+      state.tokenValid = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -87,11 +79,15 @@ export const authenticationSlice = createSlice({
         const res = action.payload;
         if (res) window.location.href = "/";
       })
+      .addCase(refreshToken.pending, (state, action) => {
+        setIsLoading(true);
+      })
       .addCase(refreshToken.fulfilled, (state, action) => {
         const res = action.payload;
         localStorage.setItem("authToken", res.accessToken);
-        console.log(res.accessToken)
-        state.tokenValid = true
+        console.log(res.accessToken);
+        state.tokenValid = true;
+        setIsLoading(false);
       });
   },
 });

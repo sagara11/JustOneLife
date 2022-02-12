@@ -9,6 +9,7 @@ const initialState = {
   accounts: null,
   contract: null,
   storageValue: 0,
+  isLoading: false,
 };
 
 export const fetchCurrentUser = createAsyncThunk(
@@ -38,20 +39,31 @@ export const globalSlice = createSlice({
     setStorageValue: (state, payload) => {
       state.storageValue = payload.payload;
     },
+    setIsLoading: (state, payload) => {
+      state.isLoading = payload.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchCurrentUser.pending, (state, action) => {
         state.currentUser = null;
+        state.isLoading = true;
       })
       .addCase(fetchCurrentUser.fulfilled, (state, action) => {
-        state.currentUser = isEmpty(action.payload) ? null : action.payload
+        state.currentUser = isEmpty(action.payload) ? null : action.payload;
+        state.isLoading = false;
       });
   },
 });
 
-export const {resetState, setWeb3, setAccounts, setContract, setStorageValue} =
-  globalSlice.actions;
+export const {
+  resetState,
+  setWeb3,
+  setAccounts,
+  setContract,
+  setStorageValue,
+  setIsLoading,
+} = globalSlice.actions;
 
 export const globalState = (state) => state.global;
 
