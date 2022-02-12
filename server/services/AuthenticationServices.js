@@ -74,12 +74,12 @@ const authenticationServices = {
   },
 
   refreshTokenHandle: async (refreshToken) => {
-    if (!refreshToken) return res.json({errors: 401});
+    if (!refreshToken) return null;
     const refreshTokenExists = await User.findOne({
       refreshToken: refreshToken,
     }).exec();
 
-    if (isEmpty(refreshTokenExists)) res.json({errors: 403});
+    if (isEmpty(refreshTokenExists)) return null;
 
     const accessTokenValid = await jwt.verify(
       refreshToken,
@@ -87,7 +87,7 @@ const authenticationServices = {
     );
 
     if (isEmpty(accessTokenValid)) {
-      return res.json({errors: 403});
+      return null;
     }
     const accessToken = await jwt.sign(
       {

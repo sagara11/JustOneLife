@@ -17,7 +17,7 @@ const PrivateRoute = ({component: Component, ...rest}) => {
     if(currentUser) {
       dispatch(getCurrentUserRole({web3, accounts, currentUser}));
     }
-  }, [currentUser, dispatch]);
+  }, [accounts, currentUser, dispatch, web3]);
 
   const isAlreadyRegister =
     currentUser && !isEmpty(currentUser.email) && !isEmpty(currentUser.name);

@@ -6,7 +6,6 @@ import "truffle/DeployedAddresses.sol";
 import "../contracts/Authorize.sol";
 
 contract TestAuthorize {
-
   function testItDeployedRole() public {
     Authorize authorize = Authorize(DeployedAddresses.Authorize());
     address deployedAddress = msg.sender;
