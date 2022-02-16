@@ -3,6 +3,7 @@ import AuthorizeContract from "../../contracts/Authorize.json";
 import authorizationServices from "./authorizationServices";
 import managerServices from "../manager/managerServices";
 import globalServices from '../global/globalServices';
+import { getUser, sendAuthorizeManagerMail } from './authorizationAPI';
 
 const initialState = {
   userRole: []
@@ -23,9 +24,14 @@ export const setRoleManager = createAsyncThunk(
   "authorization/setRoleManager",
   async (payload) => {
     const params = payload;
-    const managerService = new managerServices(params);
-    const data = await managerService.updateRole();
-    return data;
+    const hasUser = await getUser(payload);
+    if(hasUser.data) {
+      const managerService = new managerServices(params);
+      const data = await managerService.updateRole();
+      return data;
+    } else {
+      return Promise.reject("This account does not exist in the system");
+    }
   }
 );
 
@@ -52,6 +58,9 @@ export const authorizationSlice = createSlice({
       .addCase(setRoleManager.fulfilled, (state, action) => {
         console.log(action.payload);
         alert("Successfully update manager role for account");
+
+        let account = action.payload.events.RoleGranted.returnValues["account"];
+        sendAuthorizeManagerMail(account);
       })
       .addCase(setRoleManager.rejected, (state, action) => {
         console.log(action.error.message);
