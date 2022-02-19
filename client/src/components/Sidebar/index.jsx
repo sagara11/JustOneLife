@@ -8,9 +8,12 @@ import {MdDocumentScanner} from "react-icons/md";
 import {NavLink} from "react-router-dom";
 import {globalState} from "../../features/global/globalSlice";
 import {useSelector} from "react-redux";
+import { authorizationState } from '../../features/authorization/authorizationSlice';
 
 function Sidebar() {
-  const {currentUser} = useSelector(globalState);
+  const { currentUser } = useSelector(globalState);
+  const { userRole } = useSelector(authorizationState);
+
   return (
     <>
       <div className="sidebar__wrapper">
@@ -43,40 +46,48 @@ function Sidebar() {
               <AiFillSafetyCertificate className="sidebar__icon" />
             </NavLink>
             {/* Doctor icons */}
-            <NavLink
-              to="/medical-records"
-              className={(isActive) =>
-                "sidebar__item" + (isActive ? " active-item" : "")
-              }
-            >
-              <IoDocumentsSharp className="sidebar__icon" />
-            </NavLink>
-            <NavLink
-              to="/vaccination-certificates"
-              className={(isActive) =>
-                "sidebar__item" + (isActive ? " active-item" : "")
-              }
-            >
-              <AiFillSafetyCertificate className="sidebar__icon" />
-            </NavLink>
+            {userRole.includes(process.env.REACT_APP_ROLE_DOCTOR) &&
+              <NavLink
+                to="/medical-records"
+                className={(isActive) =>
+                  "sidebar__item" + (isActive ? " active-item" : "")
+                }
+              >
+                <IoDocumentsSharp className="sidebar__icon" />
+              </NavLink>
+            }
+            {userRole.includes(process.env.REACT_APP_ROLE_DOCTOR) &&
+              <NavLink
+                to="/vaccination-certificates"
+                className={(isActive) =>
+                  "sidebar__item" + (isActive ? " active-item" : "")
+                }
+              >
+                <AiFillSafetyCertificate className="sidebar__icon" />
+              </NavLink>
+            }
             {/* Manager icons */}
-            <NavLink
-              to="/doctors"
-              className={(isActive) =>
-                "sidebar__item" + (isActive ? " active-item" : "")
-              }
-            >
-              <BsPeopleFill className="sidebar__icon" />
-            </NavLink>
+            {userRole.includes(process.env.REACT_APP_ROLE_MANAGER) &&
+              <NavLink
+                to="/doctors"
+                className={(isActive) =>
+                  "sidebar__item" + (isActive ? " active-item" : "")
+                }
+              >
+                <BsPeopleFill className="sidebar__icon" />
+              </NavLink>
+            }
             {/* Admin icons */}
-            <NavLink
-              to="/managers"
-              className={(isActive) =>
-                "sidebar__item" + (isActive ? " active-item" : "")
-              }
-            >
-              <BsFillPersonPlusFill className="sidebar__icon" />
-            </NavLink>
+            {userRole.includes(process.env.REACT_APP_ROLE_ADMIN) &&
+              <NavLink
+                to="/managers"
+                className={(isActive) =>
+                  "sidebar__item" + (isActive ? " active-item" : "")
+                }
+              >
+                <BsFillPersonPlusFill className="sidebar__icon" />
+              </NavLink>
+            }
           </div>
           <div className="sidebar-bottom">
             <NavLink

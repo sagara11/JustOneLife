@@ -67,16 +67,16 @@ export const authorizationSlice = createSlice({
         alert(action.error.message);
       })
       .addCase(getCurrentUserRole.fulfilled, (state, action) => {
-        if(action.payload[0] === '1') {
+        if(action.payload[0] === '1' && !state.userRole.includes(process.env.REACT_APP_ROLE_PATIENT)) {
           state.userRole.push(process.env.REACT_APP_ROLE_PATIENT);
         }
-        if(action.payload[1] === '1') {
+        if(action.payload[1] === '1' && !state.userRole.includes(process.env.REACT_APP_ROLE_DOCTOR)) {
           state.userRole.push(process.env.REACT_APP_ROLE_DOCTOR);
         }
-        if(action.payload[2] === '1') {
+        if(action.payload[2] === '1' && !state.userRole.includes(process.env.REACT_APP_ROLE_MANAGER)) {
           state.userRole.push(process.env.REACT_APP_ROLE_MANAGER);
         }
-        if(action.payload[3] === '1') {
+        if(action.payload[3] === '1' && !state.userRole.includes(process.env.REACT_APP_ROLE_ADMIN)) {
           state.userRole.push(process.env.REACT_APP_ROLE_ADMIN);
         }
         console.log(`Current user role: ${state.userRole}`);
