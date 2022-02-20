@@ -34,7 +34,7 @@ class AuthenticationController {
     return res.status(200).json(req.account);
   }
 
-  async refreshToken(req, res) {
+  async refreshToken(req, res, next) {
     const refreshToken = req.body.refreshToken;
     const accessToken = await authenticationServices.refreshTokenHandle(
       refreshToken

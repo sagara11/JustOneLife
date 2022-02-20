@@ -2,7 +2,7 @@ import {Redirect, Route} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import AuthenticationPage from "../../pages/AuthenticationPage/index";
 import {fetchCurrentUser, globalState} from "../../features/global/globalSlice";
-import { getCurrentUserRole } from '../../features/authorization/authorizationSlice';
+import {getCurrentUserRole} from "../../features/authorization/authorizationSlice";
 import {useEffect} from "react";
 import {isEmpty} from "lodash";
 
@@ -14,7 +14,10 @@ const PrivateRoute = ({component: Component, ...rest}) => {
     if (!currentUser && localStorage.getItem("authToken")) {
       dispatch(fetchCurrentUser());
     }
-    if(currentUser) {
+  }, [accounts, currentUser, dispatch, web3]);
+
+  useEffect(() => {
+    if (currentUser) {
       dispatch(getCurrentUserRole({web3, accounts, currentUser}));
     }
   }, [accounts, currentUser, dispatch, web3]);

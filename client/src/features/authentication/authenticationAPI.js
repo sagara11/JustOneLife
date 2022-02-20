@@ -21,10 +21,6 @@ export function updateAccountAPI(params) {
   return axios.put(`${URL}/users/${params.publicAddress}`, params.data, config);
 }
 
-export function checkExpiredAPI(params) {
-  return axios.post(`${URL}/auth/checkExpired`, params, config);
-}
-
 export function refreshTokenAPI(params) {
   return axios.post(`${URL}/auth/refreshToken`, params, config);
 }
