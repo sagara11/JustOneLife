@@ -17,7 +17,10 @@ class AuthenticationController {
         .status(400)
         .send({error: "Request should have signature and publicAddress"});
 
-    const data = await authenticationServices.authenticateUser(publicAddress, signature);
+    const data = await authenticationServices.authenticateUser(
+      publicAddress,
+      signature
+    );
     if (data.error)
       return res.status(401).send({
         error: data.error,
@@ -33,8 +36,15 @@ class AuthenticationController {
 
   async refreshToken(req, res) {
     const refreshToken = req.body.refreshToken;
-    const accessToken = await authenticationServices.refreshTokenHandle(refreshToken);
+    const accessToken = await authenticationServices.refreshTokenHandle(
+      refreshToken
+    );
+    if (accessToken === null) {
+      res.json({errors: 403});
+      next();
+    }
     res.json({accessToken: accessToken});
+    next();
   }
 }
 

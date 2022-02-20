@@ -79,7 +79,6 @@ const App = () => {
         );
       }
     };
-
     tokenExpiredCheck(localStorage.getItem("authToken"));
   }, [dispatch, tokenValid]);
 
