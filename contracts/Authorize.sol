@@ -28,7 +28,7 @@ contract Authorize is Ownable, AccessControl {
   }
 
   function setDoctor(address _managerAddress, address _userAddress) public {
-    grantRole(DOCTOR_ROLE, _userAddress);grantRole
+    grantRole(DOCTOR_ROLE, _userAddress);
     if (doctorToManager[_userAddress] != _managerAddress) {
       managerToDoctors[_managerAddress].push(_userAddress);
       doctorToManager[_userAddress] = _managerAddress;
