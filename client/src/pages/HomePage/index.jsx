@@ -42,7 +42,7 @@ function HomePage() {
             </section>
             <section className="home__section post__section">
               <div className="background-image">
-                <img src="covid19-iniciativas-innovacion-social.jpg" alt="" />
+                <img src="/covid19-iniciativas-innovacion-social.jpg" alt="" />
               </div>
               <div className="background-cover">
                 <div className="post-header">Post title: Research of Covid19 variant</div>
