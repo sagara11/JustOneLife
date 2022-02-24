@@ -25,10 +25,12 @@ import {
   setRolePatient,
 } from "./features/authorization/authorizationSlice";
 import {isEmpty} from "lodash";
+import {loadingState} from "./features/loading/loadingSlice";
 const jwt = require("jsonwebtoken");
 
 const App = () => {
   const {web3, accounts, contracts, currentUser} = useSelector(globalState);
+  const isLoading = useSelector(loadingState);
   const {userRole} = useSelector(authorizationState);
   const {tokenValid} = useSelector(authenticationState);
   const dispatch = useDispatch();
@@ -87,7 +89,7 @@ const App = () => {
       dispatch(setRolePatient({web3, accounts, currentUser, contracts}));
   }, [accounts, contracts, currentUser, dispatch, web3, userRole]);
 
-  if (web3 === null) {
+  if (web3 === null || !isLoading) {
     return <div>Loading Web3, accounts, and contract...</div>;
   }
 
