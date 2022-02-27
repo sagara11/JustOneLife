@@ -3,6 +3,10 @@ const User = require("../models/users");
 const {sendEmailJob} = require("../queues/email");
 
 const userServices = {
+  getList: async (userAddresses) => {
+    const userList = User.find({publicAddress: {$in: userAddresses}});
+    return userList;
+  },
   addNewUser: async (publicAddress) => {
     const user = await User.findByAddress(publicAddress);
 
@@ -34,18 +38,18 @@ const userServices = {
     }
     return user;
   },
-  updateManagerRole: async(publicAddress) => {
+  updateManagerRole: async (publicAddress) => {
     const user = await User.findByAddress(publicAddress);
-    if(user.email) {
+    if (user.email) {
       sendEmailJob(
         user.email,
-        'Upgrade to manager role!!',
-        'Your account has been upgraded to Manager by system admin.'
-      )
+        "Upgrade to manager role!!",
+        "Your account has been upgraded to Manager by system admin."
+      );
     } else {
-      console.log("This user does not have any related email address!!!")
+      console.log("This user does not have any related email address!!!");
     }
-  }
+  },
 };
 
 module.exports = userServices;

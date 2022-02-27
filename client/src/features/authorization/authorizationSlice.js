@@ -3,6 +3,7 @@ import authorizationServices from "./authorizationServices";
 import managerServices from "../manager/managerServices";
 import globalServices from "../global/globalServices";
 import {getUser, sendAuthorizeManagerMail} from "./authorizationAPI";
+import doctorServices from "../doctor/doctorServices";
 
 const initialState = {
   userRole: [],
@@ -26,6 +27,21 @@ export const setRoleManager = createAsyncThunk(
     if (hasUser.data) {
       const managerService = new managerServices(params);
       const data = await managerService.updateRole();
+      return data;
+    } else {
+      return Promise.reject("This account does not exist in the system");
+    }
+  }
+);
+
+export const setRoleDoctor = createAsyncThunk(
+  "authorization/setRoleDoctor",
+  async (payload) => {
+    const params = payload;
+    const hasUser = await getUser(payload);
+    if (hasUser.data) {
+      const doctorService = new doctorServices(params);
+      const data = await doctorService.updateRole();
       return data;
     } else {
       return Promise.reject("This account does not exist in the system");

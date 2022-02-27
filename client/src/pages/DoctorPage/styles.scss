@@ -81,35 +81,3 @@
     }
   }
 }
-
-.add-doctor-form__dialog {
-  max-width: 60%;
-  height: inherit;
-
-  .add-doctor-form__content {
-    height: 33%;
-
-    .add-doctor-form {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background-color: white;
-      border-radius: 10px;
-      height: 100%;
-
-      input {
-        width: 70%;
-      }
-
-      .btn {
-        margin-top: 30px;
-        padding: 6px 50px;
-      }
-
-      p {
-        margin: 0;
-      }
-    }
-  }
-}
