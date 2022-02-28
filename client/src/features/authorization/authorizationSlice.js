@@ -1,22 +1,20 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import AuthorizeContract from "../../contracts/Authorize.json";
 import authorizationServices from "./authorizationServices";
 import managerServices from "../manager/managerServices";
-import globalServices from '../global/globalServices';
-import { getUser, sendAuthorizeManagerMail } from './authorizationAPI';
+import globalServices from "../global/globalServices";
+import {getUser, sendAuthorizeManagerMail} from "./authorizationAPI";
 
 const initialState = {
-  userRole: []
+  userRole: [],
 };
 
 export const setRolePatient = createAsyncThunk(
   "authorization/setRolePatient",
   async (payload) => {
-    const {web3, accounts, currentUser} = payload;
-    return await authorizationServices.handleSetRole(
-      {web3, accounts, currentUser},
-      AuthorizeContract
-    );
+    const params = payload;
+    const authorizationService = new authorizationServices(params);
+    const data = await authorizationService.setPatientRole();
+    return data;
   }
 );
 
@@ -25,7 +23,7 @@ export const setRoleManager = createAsyncThunk(
   async (payload) => {
     const params = payload;
     const hasUser = await getUser(payload);
-    if(hasUser.data) {
+    if (hasUser.data) {
       const managerService = new managerServices(params);
       const data = await managerService.updateRole();
       return data;
@@ -51,7 +49,7 @@ export const authorizationSlice = createSlice({
   reducers: {
     resetState: () => {
       return initialState;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -67,16 +65,28 @@ export const authorizationSlice = createSlice({
         alert(action.error.message);
       })
       .addCase(getCurrentUserRole.fulfilled, (state, action) => {
-        if(action.payload[0] === '1' && !state.userRole.includes(process.env.REACT_APP_ROLE_PATIENT)) {
+        if (
+          action.payload[0] === "1" &&
+          !state.userRole.includes(process.env.REACT_APP_ROLE_PATIENT)
+        ) {
           state.userRole.push(process.env.REACT_APP_ROLE_PATIENT);
         }
-        if(action.payload[1] === '1' && !state.userRole.includes(process.env.REACT_APP_ROLE_DOCTOR)) {
+        if (
+          action.payload[1] === "1" &&
+          !state.userRole.includes(process.env.REACT_APP_ROLE_DOCTOR)
+        ) {
           state.userRole.push(process.env.REACT_APP_ROLE_DOCTOR);
         }
-        if(action.payload[2] === '1' && !state.userRole.includes(process.env.REACT_APP_ROLE_MANAGER)) {
+        if (
+          action.payload[2] === "1" &&
+          !state.userRole.includes(process.env.REACT_APP_ROLE_MANAGER)
+        ) {
           state.userRole.push(process.env.REACT_APP_ROLE_MANAGER);
         }
-        if(action.payload[3] === '1' && !state.userRole.includes(process.env.REACT_APP_ROLE_ADMIN)) {
+        if (
+          action.payload[3] === "1" &&
+          !state.userRole.includes(process.env.REACT_APP_ROLE_ADMIN)
+        ) {
           state.userRole.push(process.env.REACT_APP_ROLE_ADMIN);
         }
         console.log(`Current user role: ${state.userRole}`);
