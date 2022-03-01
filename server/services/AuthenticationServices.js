@@ -73,6 +73,14 @@ const authenticationServices = {
     return accessToken ? accessToken : null;
   },
 
+  destroyJWT: async (publicAddress) => {
+    const user = await User.findByAddress(publicAddress);
+    user.refreshToken = null;
+    await user.save();
+
+    return true;
+  },
+
   refreshTokenHandle: async (refreshToken) => {
     if (!refreshToken) return null;
     const refreshTokenExists = await User.findOne({

@@ -36,7 +36,6 @@ const User = new Schema(
     },
     refreshToken: {
       type: String,
-      unique: true,
     },
   },
   {

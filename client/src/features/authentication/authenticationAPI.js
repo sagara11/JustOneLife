@@ -28,3 +28,7 @@ export function checkExpiredAPI(params) {
 export function refreshTokenAPI(params) {
   return axios.post(`${URL}/auth/refreshToken`, params, config);
 }
+
+export function signoutAPI(params) {
+  return axios.post(`${URL}/auth/signout`, params, config);
+}

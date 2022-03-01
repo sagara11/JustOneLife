@@ -3,11 +3,23 @@ import {Col, Container, Dropdown, Row} from "react-bootstrap";
 import "./styles.scss";
 import appLogo from "../../assets/images/app-logo.png";
 import {globalState} from "../../features/global/globalSlice";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {isEmpty} from "lodash";
+import {signout} from "../../features/authentication/authenticationSlice";
 
 function Header() {
   const {currentUser} = useSelector(globalState);
+  const dispatch = useDispatch();
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+
+    dispatch(
+      signout({
+        publicAddress: currentUser.publicAddress,
+      })
+    );
+  };
 
   return (
     <div id="header">
@@ -36,7 +48,9 @@ function Header() {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                      <Dropdown.Item href="#">Logout</Dropdown.Item>
+                      <Dropdown.Item href="#" onClick={handleLogout}>
+                        Logout
+                      </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
                 </div>

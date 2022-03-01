@@ -46,6 +46,22 @@ class AuthenticationController {
     res.json({accessToken: accessToken});
     next();
   }
+
+  async signout(req, res, next) {
+    const {publicAddress} = req.body;
+
+    if (publicAddress === req.account.publicAddress) {
+      const isDestroyed = await authenticationServices.destroyJWT(
+        publicAddress
+      );
+
+      res.json(isDestroyed);
+      next();
+    }
+
+    res.json(false);
+    next();
+  }
 }
 
 module.exports = new AuthenticationController();
