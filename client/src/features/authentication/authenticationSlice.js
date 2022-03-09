@@ -6,12 +6,21 @@ import {
   updateAccountAPI,
   checkExpiredAPI,
   refreshTokenAPI,
+  signoutAPI,
 } from "./authenticationAPI";
 
 const initialState = {
   newUser: null,
-  tokenValid: false
+  tokenValid: false,
 };
+
+export const signout = createAsyncThunk(
+  "authentication/signout",
+  async (payload) => {
+    const {data} = await signoutAPI(payload);
+    return data;
+  }
+);
 
 export const signin = createAsyncThunk(
   "authentication/signin",
@@ -61,8 +70,8 @@ export const authenticationSlice = createSlice({
       return initialState;
     },
     changeTokenValid: (state, action) => {
-      state.tokenValid = action.payload
-    }
+      state.tokenValid = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -90,8 +99,16 @@ export const authenticationSlice = createSlice({
       .addCase(refreshToken.fulfilled, (state, action) => {
         const res = action.payload;
         localStorage.setItem("authToken", res.accessToken);
-        console.log(res.accessToken)
-        state.tokenValid = true
+        state.tokenValid = true;
+      })
+      .addCase(signout.fulfilled, (state, action) => {
+        const res = action.payload;
+        if (res) {
+          localStorage.removeItem("authToken");
+          localStorage.removeItem("refreshToken");
+          state.tokenValid = false;
+          window.location.href = "/login";
+        }
       });
   },
 });
