@@ -26,6 +26,19 @@ class UsersController {
       next(err);
     }
   }
+
+  async getUserList(req, res, next) {
+    try {
+      const userAddresses = req.body;
+      const userList = await userServices.getList(userAddresses);
+
+      res.status(200).json(userList);
+      next();
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
 }
 
 module.exports = new UsersController();

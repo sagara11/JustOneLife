@@ -17,11 +17,11 @@ function authorizationServices(params) {
     );
     let hasRole = await instance.methods
       .hasRole(roleHash, this.currentUser.publicAddress)
-      .call({from: this.accounts[0]});
+      .call({from: this.currentUser.publicAddress});
     if (!hasRole) {
       await instance.methods
         .setPatient(this.currentUser.publicAddress)
-        .send({from: this.accounts[0]});
+        .send({from: this.currentUser.publicAddress});
     }
 
     const data = await instance.getPastEvents("RoleGranted");

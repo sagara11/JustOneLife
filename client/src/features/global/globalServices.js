@@ -12,10 +12,11 @@ function globalServices(params) {
       AuthorizeContract.abi,
       deployedNetwork && deployedNetwork.address
     );
-
-    const userRole = await instance.methods.getRole(this.accounts[0]).call();
+    const userRole = await instance.methods
+      .getRole(this.currentUser.publicAddress)
+      .call();
     return userRole;
-  }
+  };
 }
 
 export default globalServices;

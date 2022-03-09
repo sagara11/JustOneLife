@@ -8,29 +8,31 @@ import {
   Container,
   FormControl,
   InputGroup,
-  Modal,
   Pagination,
   Row,
   Table,
 } from "react-bootstrap";
 import {BsSearch, BsPlusLg} from "react-icons/bs";
-import {useForm} from "react-hook-form";
-import {ErrorMessage} from "@hookform/error-message";
+import AddDoctorForm from "../../features/doctor/AddDoctorForm";
+import {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {doctorState, getDoctorList} from "../../features/doctor/doctorSlice";
+import {globalState} from "../../features/global/globalSlice";
 
 function DoctorPage() {
-  const {
-    register,
-    handleSubmit,
-    formState: {errors},
-  } = useForm();
+  const dispatch = useDispatch();
+  const {web3, accounts, currentUser} = useSelector(globalState);
+  const {doctorList} = useSelector(doctorState);
   const [show, setShow] = useState(false);
 
   const handleCloseAddDoctorModal = () => setShow(false);
   const handleOpenAddDoctorModal = () => setShow(true);
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
+  useEffect(() => {
+    if(!show) {
+      dispatch(getDoctorList({web3, accounts, currentUser}));
+    }
+  }, [accounts, currentUser, dispatch, show, web3]);
 
   return (
     <>
@@ -74,12 +76,12 @@ function DoctorPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {[...Array(12)].map((x, i) => (
-                    <tr key={i}>
-                      <td>1</td>
-                      <td>John Smith</td>
-                      <td>0x8423310d9aF3631f12BcAf861Bc53A881C14f1bE</td>
-                      <td>Anesthetics & Recovery</td>
+                  {doctorList.map((doctor, key) => (
+                    <tr key={key}>
+                      <td>{key}</td>
+                      <td>{doctor.name}</td>
+                      <td>{doctor.publicAddress}</td>
+                      <td>{doctor.specialites}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -117,31 +119,10 @@ function DoctorPage() {
           </div>
         </Container>
       </div>
-      <Modal
+      <AddDoctorForm
         show={show}
-        onHide={handleCloseAddDoctorModal}
-        centered
-        dialogClassName="add-doctor-form__dialog"
-        contentClassName="add-doctor-form__content"
-      >
-        <form
-          className="add-doctor-form"
-          onSubmit={handleSubmit(onSubmit)}
-          id="add-doctor-form"
-        >
-          <ErrorMessage
-            errors={errors}
-            name="address"
-            render={({message}) => <p>{message}</p>}
-          />
-          <input
-            {...register("address", {required: "This is required."})}
-            className="form-control"
-            placeholder="New doctor address..."
-          />
-          <button className="btn btn-primary">ADD</button>
-        </form>
-      </Modal>
+        handleCloseAddDoctorModal={handleCloseAddDoctorModal}
+      />
     </>
   );
 }
