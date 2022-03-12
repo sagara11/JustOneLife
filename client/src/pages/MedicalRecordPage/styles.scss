@@ -65,3 +65,55 @@
     }
   }
 }
+
+.body__wrapper {
+  height: 90%;
+  background-color: #E5E5E5;
+  position: relative;
+}
+
+.homepage__wrapper {
+  display: flex;
+  justify-content: center;
+
+  .section-wrapper {
+    padding-top: 40px;
+    width: 75%;
+  }
+}
+
+.medicalrecord__section {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.25);
+  margin-bottom: 24px;
+
+  .section-header {
+    padding: 15px;
+    border-bottom: 1px solid rgba(142, 142, 142, 0.79);
+
+    p {
+      color: gray;
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0;
+    }
+  }
+
+  .section-body {
+    padding: 15px;
+  }
+}
+
+.filters__section, .lists__section {
+  height: 100%;
+  position: relative;
+
+  .btn-primary {
+    font-size: 14px;
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    padding: 3px 30px;
+  }
+}
