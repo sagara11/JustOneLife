@@ -1,0 +1,67 @@
+.medical-record__wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.new-medical-record__tab {
+  margin-top: 40px;
+  display: flex;
+  border-radius: 20px;
+  height: fit-content;
+  background-color: white;
+  box-shadow: 0 0.0625rem 0.2rem 0 rgba(0, 0, 0, 0.4);
+
+  .tab__pane {
+    font-size: 14px;
+    padding: 10px 25px;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+
+  .active {
+    background-color: #29A9F5;
+    color: white;
+    transition: 0.3s;
+    transform: scale(1.05);
+  }
+}
+
+.new-medical-record__form {
+  position: relative;
+  margin-top: 20px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 20px;
+  width: 75%;
+  min-height: 350px;
+  box-shadow: 0 0.0625rem 0.2rem 0 rgba(0, 0, 0, 0.4);
+
+  .next-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: 4px 40px;
+    margin-top: 40px
+  }
+
+  .field-input {
+    margin-bottom: 20px;
+
+    label {
+      font-weight: 600;
+    }
+  }
+
+  .nested {
+    background-color: #F3F3F3;
+    padding: 20px;
+    border-radius: 12px;
+
+    .secondary-title {
+      margin-top: 8px;
+      display: block;
+      color: gray;
+    }
+  }
+}
