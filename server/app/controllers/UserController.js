@@ -29,8 +29,19 @@ class UsersController {
 
   async getUserList(req, res, next) {
     try {
-      const userAddresses = req.body;
-      const userList = await userServices.getList(userAddresses);
+      const {userAddresses, perPage, offset} = req.body;
+      const usersData = await userServices.getList(
+        userAddresses,
+        perPage,
+        offset
+      );
+      const totalPage = await userServices.getListCount(userAddresses);
+
+      const userList = {
+        data: usersData,
+        totalPage: Math.ceil(totalPage / perPage),
+        offset: offset,
+      };
 
       res.status(200).json(userList);
       next();

@@ -3,9 +3,19 @@ const User = require("../models/users");
 const {sendEmailJob} = require("../queues/email");
 
 const userServices = {
-  getList: async (userAddresses) => {
-    const userList = User.find({publicAddress: {$in: userAddresses}});
+  getList: async (userAddresses, perPage, offset) => {
+    const userList = User.find({publicAddress: {$in: userAddresses}})
+      .skip(offset)
+      .limit(perPage);
+
     return userList;
+  },
+  getListCount: async (userAddresses) => {
+    const totalAmount = await User.find({
+      publicAddress: {$in: userAddresses},
+    }).count();
+
+    return totalAmount;
   },
   addNewUser: async (publicAddress) => {
     const user = await User.findByAddress(publicAddress);
