@@ -23,6 +23,7 @@ import {
   setRolePatient,
 } from "./features/authorization/authorizationSlice";
 import {isEmpty} from "lodash";
+import NewMedicalRecordPage from './pages/MedicalRecordPage/new';
 const jwt = require("jsonwebtoken");
 
 const App = () => {
@@ -85,7 +86,7 @@ const App = () => {
           path="/vaccination-certificate/:patientPublicAddress"
           component={HomePage}
         />
-        <PrivateRoute path="/medical-records" component={HomePage} />
+        <PrivateRoute path="/medical-records" component={NewMedicalRecordPage} />
         <PrivateRoute path="/vaccination-certificates" component={HomePage} />
         <PrivateRoute path="/doctors" component={DoctorPage} />
         <PrivateRoute path="/managers" component={ManagerPage} />
