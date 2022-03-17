@@ -43,8 +43,8 @@ class AuthenticationController {
       res.json({errors: 403});
       next();
     }
-    res.json({accessToken: accessToken});
-    next();
+
+    return res.status(200).json({accessToken: accessToken});
   }
 
   async signout(req, res, next) {
@@ -55,12 +55,10 @@ class AuthenticationController {
         publicAddress
       );
 
-      res.json(isDestroyed);
-      next();
+      return res.json(isDestroyed);
     }
 
-    res.json(false);
-    next();
+    return res.json(false);
   }
 }
 

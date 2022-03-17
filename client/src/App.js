@@ -4,11 +4,7 @@ import {BrowserRouter, Switch, Route} from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import AuthenticationPage from "./pages/AuthenticationPage";
 import NotFound from "./components/NotFound";
-import {
-  globalState,
-  setAccounts,
-  setWeb3,
-} from "./features/global/globalSlice";
+import {globalState, setAccounts, setWeb3} from "./features/global/globalSlice";
 import {
   authenticationState,
   refreshToken,
@@ -24,6 +20,7 @@ import {
 } from "./features/authorization/authorizationSlice";
 import {isEmpty} from "lodash";
 import NewMedicalRecordPage from './pages/MedicalRecordPage/new';
+import MedicalRecordPage from "./pages/MedicalRecordPage";
 const jwt = require("jsonwebtoken");
 
 const App = () => {
@@ -80,7 +77,7 @@ const App = () => {
         <PrivateRoute path="/" exact component={HomePage} />
         <PrivateRoute
           path="/medical-record/:patientPublicAddress"
-          component={HomePage}
+          component={MedicalRecordPage}
         />
         <PrivateRoute
           path="/vaccination-certificate/:patientPublicAddress"
