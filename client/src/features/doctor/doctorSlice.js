@@ -3,7 +3,11 @@ import {fetchDoctorListAPI} from "./doctorAPI";
 import doctorServices from "./doctorServices";
 
 const initialState = {
-  doctorList: [],
+  doctorList: {
+    data: [],
+    totalPage: 0,
+    offset: 0,
+  },
 };
 
 export const getDoctorList = createAsyncThunk(
@@ -12,7 +16,11 @@ export const getDoctorList = createAsyncThunk(
     const doctorService = new doctorServices(payload);
     const userAddresses = await doctorService.getDoctorList();
 
-    const {data} = await fetchDoctorListAPI(userAddresses);
+    const {data} = await fetchDoctorListAPI({
+      userAddresses,
+      perPage: payload.perPage,
+      offset: payload.offset,
+    });
     return data;
   }
 );
@@ -24,15 +32,25 @@ export const doctorSlice = createSlice({
     resetState: () => {
       return initialState;
     },
+    setDoctorListOffsetPage: (state, action) => {
+      const offset = action.payload;
+      if (offset < 0) return;
+
+      state.doctorList.offset = offset;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getDoctorList.fulfilled, (state, action) => {
-      state.doctorList = action.payload;
+      const {data, totalPage, offset} = action.payload;
+      if (offset === state.doctorList.offset) {
+        state.doctorList.data = data;
+        state.doctorList.totalPage = totalPage;
+      }
     });
   },
 });
 
-export const {resetState} = doctorSlice.actions;
+export const {resetState, setDoctorListOffsetPage} = doctorSlice.actions;
 
 export const doctorState = (state) => state.doctor;
 
