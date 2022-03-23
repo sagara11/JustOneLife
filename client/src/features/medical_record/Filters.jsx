@@ -4,23 +4,23 @@ import "./styles.scss";
 function Filters() {
   return (
     <div className="filter-buttons">
-      <div class="form-group filter-buttons">
-        <label for="inputState">Doctor</label>
-        <select class="form-control">
+      <div className="form-group filter-buttons">
+        <label htmlFor="inputState">Doctor</label>
+        <select className="form-control">
           <option selected>Choose...</option>
           <option>...</option>
         </select>
       </div>
-      <div class="form-group filter-buttons">
-        <label for="inputState">Date</label>
-        <select class="form-control">
+      <div className="form-group filter-buttons">
+        <label htmlFor="inputState">Date</label>
+        <select className="form-control">
           <option selected>Choose...</option>
           <option>...</option>
         </select>
       </div>
-      <div class="form-group filter-buttons">
-        <label for="inputState">Doctor</label>
-        <select class="form-control">
+      <div className="form-group filter-buttons">
+        <label htmlFor="inputState">Doctor</label>
+        <select className="form-control">
           <option selected>Choose...</option>
           <option>...</option>
         </select>

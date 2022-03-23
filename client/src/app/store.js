@@ -3,6 +3,7 @@ import authenticationReducer from "../features/authentication/authenticationSlic
 import authorizationReducer from "../features/authorization/authorizationSlice";
 import globalReducer from "../features/global/globalSlice";
 import doctorReducer from "../features/doctor/doctorSlice";
+import medicalRecordReducer from "../features/medical_record/medicalRecordSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     authorization: authorizationReducer,
     global: globalReducer,
     doctor: doctorReducer,
+    medicalRecord: medicalRecordReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
