@@ -2,8 +2,8 @@ import React from "react";
 import "./styles.scss";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
-import List from "../../features/medicalRecord/List";
-import Filters from "../../features/medicalRecord/Filters";
+import Filters from "../../features/medical_record/Filters";
+import List from "../../features/medical_record/List";
 
 function MedicalRecordPage() {
   return (
