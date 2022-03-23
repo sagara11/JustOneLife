@@ -1,22 +1,28 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import "./styles.scss";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
-import MedicalRecordForm from '../../features/medical_record/newForm';
+import MedicalRecordForm from "../../features/medicalRecord/NewForm";
 
 const NewMedicalRecordPage = () => {
   const [page, setPage] = useState(0);
-  const formTitle = ["General Information", "Patient Management", "Diagnose", "Treatment", "Medical Media Storage"];
+  const formTitle = [
+    "General Information",
+    "Patient Management",
+    "Diagnose",
+    "Treatment",
+    "Medical Media Storage",
+  ];
 
   const handleChangePage = () => {
     setPage((currentPage) => {
       return currentPage + 1;
     });
-  }
+  };
 
   const handleTabClick = (tabIndex) => {
     setPage(tabIndex);
-  }
+  };
 
   const setActive = (index) => {
     if (index === page) {
@@ -24,7 +30,7 @@ const NewMedicalRecordPage = () => {
     }
 
     return "";
-  }
+  };
 
   return (
     <>
@@ -34,8 +40,14 @@ const NewMedicalRecordPage = () => {
         <section className="new-medical-record__tab">
           {formTitle.map((title, index) => {
             return (
-              <div key={"tab-" + index} onClick={() => handleTabClick(index)} className={"tab__pane " + setActive(index)}>{title}</div>
-            )
+              <div
+                key={"tab-" + index}
+                onClick={() => handleTabClick(index)}
+                className={"tab__pane " + setActive(index)}
+              >
+                {title}
+              </div>
+            );
           })}
         </section>
         <section className="new-medical-record__form">
@@ -44,6 +56,6 @@ const NewMedicalRecordPage = () => {
       </div>
     </>
   );
-}
+};
 
 export default NewMedicalRecordPage;
