@@ -6,6 +6,7 @@ import {globalState} from "../../features/global/globalSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {isEmpty} from "lodash";
 import {signout} from "../../features/authentication/authenticationSlice";
+import {NavLink} from "react-router-dom";
 
 function Header() {
   const {currentUser} = useSelector(globalState);
@@ -48,6 +49,11 @@ function Header() {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
+                      <Dropdown.Item href="#">
+                        <NavLink to={`/user/${currentUser.publicAddress}`} exact>
+                          Profile
+                        </NavLink>
+                      </Dropdown.Item>
                       <Dropdown.Item href="#" onClick={handleLogout}>
                         Logout
                       </Dropdown.Item>
