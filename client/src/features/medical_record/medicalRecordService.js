@@ -1,5 +1,5 @@
 const MedicalRecord = require("../../contracts/MedicalRecord.json");
-const { create } = require("ipfs-http-client");
+const {create} = require("ipfs-http-client");
 
 const client = create("https://ipfs.infura.io:5001");
 
@@ -14,6 +14,14 @@ function medicalRecordService(params) {
     console.log("submiting...");
     if (!this.file) {
       alert("There is no file");
+      return;
+    }
+
+    if (!this.patientAddress) {
+      return;
+    }
+
+    if (this.patientAddress === this.currentUser.publicAddress) {
       return;
     }
 
