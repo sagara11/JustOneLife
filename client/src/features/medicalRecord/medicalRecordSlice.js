@@ -1,16 +1,16 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import medicalRecordService from "./medicalRecordService";
+import medicalRecordServices from "./medicalRecordServices";
 
 const initialState = {
-
+  medicalRecordList: [],
 };
 
 export const saveIPFSFile = createAsyncThunk(
   "medicalRecord/saveIPFSFile",
   async (payload) => {
     const params = payload;
-    const medicalRecordServices = new medicalRecordService(params);
-    const data = await medicalRecordServices.saveFile(params);
+    const medicalRecordService = new medicalRecordServices(params);
+    const data = await medicalRecordService.saveFile(params);
     return data;
   }
 );
@@ -22,17 +22,24 @@ export const medicalRecordSlice = createSlice({
     resetState: () => {
       return initialState;
     },
+    setMedicalRecordListOffsetPage: (state, action) => {
+      const offset = action.payload;
+      if (offset < 0) return;
+
+      state.medicalRecordList.offset = offset;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(saveIPFSFile.fulfilled, (state, action) => {
         alert("Uploaded");
         console.log(action.payload);
-      })
+      });
   },
 });
 
-export const {resetState} = medicalRecordSlice.actions;
+export const {resetState, setMedicalRecordListOffsetPage} =
+  medicalRecordSlice.actions;
 
 export const medicalRecordState = (state) => state.medicalRecord;
 

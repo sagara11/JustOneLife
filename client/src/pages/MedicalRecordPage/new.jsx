@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./styles.scss";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
-import MedicalRecordForm from '../../features/medical_record/NewForm';
+import MedicalRecordForm from '../../features/medicalRecord/NewForm';
 
 const NewMedicalRecordPage = () => {
   const [page, setPage] = useState(0);
