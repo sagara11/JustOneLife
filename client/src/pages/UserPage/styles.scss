@@ -1,0 +1,62 @@
+.user__wrapper {
+  .user-profile__section {
+    margin-top: 50px;
+    height: 65%;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.25);
+  }
+
+  .user-identities {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px 20px 30px;
+
+    .identities-container {
+      width: fit-content;
+      height: fit-content;
+      padding: 10px 20px;
+      border-radius: 5px;
+      background-color: lightgray;
+      transition: 0.2s;
+      cursor: pointer;
+
+      span {
+        font-size: 16px;
+        text-align: center;
+        display: block;
+      }
+
+      .address {
+        color: gray;
+      }
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+
+    .copied {
+      background-color: rgba($color: #29a9f5, $alpha: 0.8);
+      color: white;
+
+      .address {
+        color: white;
+      }
+    }
+  }
+}
+
+.user-info__container {
+  padding: 30px;
+
+  .item {
+    width: 90%;
+
+    label {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+  }
+}

@@ -14,6 +14,7 @@ import getWeb3 from "./getWeb3";
 import HomePage from "./pages/HomePage";
 import ManagerPage from "./pages/ManagerPage";
 import DoctorPage from "./pages/DoctorPage";
+import UserPage from './pages/UserPage';
 import {
   authorizationState,
   setRolePatient,
@@ -75,6 +76,7 @@ const App = () => {
     <BrowserRouter>
       <Switch>
         <PrivateRoute path="/" exact component={HomePage} />
+        <PrivateRoute path="/user/:patientPublicAddress" component={UserPage} />
         <PrivateRoute
           path="/medical-record/:patientPublicAddress"
           component={MedicalRecordPage}
