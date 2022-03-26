@@ -1,14 +1,29 @@
-const MedicalRecord = require("../../contracts/MedicalRecord.json");
-const {create} = require("ipfs-http-client");
+import MedicalRecord from "../../contracts/MedicalRecord.json";
+const { create } = require("ipfs-http-client");
 
 const client = create("https://ipfs.infura.io:5001");
 
-function medicalRecordService(params) {
+function medicalRecordServices(params) {
   this.web3 = params.web3;
   this.accounts = params.accounts;
   this.currentUser = params.currentUser;
   this.file = params.file;
   this.patientAddress = params.patientAddress;
+
+  this.getMedicalRecordList = async () => {
+    const networkId = await this.web3.eth.net.getId();
+    const deployedNetwork = MedicalRecord.networks[networkId];
+    const instance = new this.web3.eth.Contract(
+      MedicalRecord.abi,
+      deployedNetwork && deployedNetwork.address
+    );
+
+    let medicalRecordList = await instance.methods
+    .getMedicalRecord(this.currentUser.publicAddress, 0)
+    .call({from: this.currentUser.publicAddress});
+
+    return medicalRecordList;
+  };
 
   this.saveFile = async () => {
     console.log("submiting...");
@@ -45,4 +60,4 @@ function medicalRecordService(params) {
   };
 }
 
-export default medicalRecordService;
+export default medicalRecordServices;

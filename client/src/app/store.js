@@ -3,7 +3,7 @@ import authenticationReducer from "../features/authentication/authenticationSlic
 import authorizationReducer from "../features/authorization/authorizationSlice";
 import globalReducer from "../features/global/globalSlice";
 import doctorReducer from "../features/doctor/doctorSlice";
-import medicalRecordReducer from "../features/medical_record/medicalRecordSlice";
+import medicalRecordReducer from "../features/medicalRecord/medicalRecordSlice";
 
 export const store = configureStore({
   reducer: {
