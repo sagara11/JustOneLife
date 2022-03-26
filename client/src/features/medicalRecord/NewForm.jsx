@@ -13,22 +13,22 @@ const MedicalRecordForm = (props) => {
   const dispatch = useDispatch();
   const {web3, accounts, currentUser} = useSelector(globalState);
 
-  const {register, handleSubmit} = useForm();
+  const {register, handleSubmit, setValue} = useForm();
   const renderPage = () => {
     const pageNumber = props.page;
     switch (pageNumber) {
       case 0:
-        return <GeneralInfo register={register} />;
+        return <GeneralInfo register={register} setValue={setValue} />;
       case 1:
-        return <PatientManagement register={register} />;
+        return <PatientManagement register={register} setValue={setValue} />;
       case 2:
-        return <Diagnose register={register} />;
+        return <Diagnose register={register} setValue={setValue} />;
       case 3:
-        return <Treatment register={register} />;
+        return <Treatment register={register} setValue={setValue} />;
       case 4:
         return <MedicalMediaStorage />;
       default:
-        return <GeneralInfo register={register} />;
+        return <GeneralInfo register={register} setValue={setValue} />;
     }
   };
 
