@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import "./styles.scss";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
@@ -14,7 +14,6 @@ function MedicalRecordPage() {
   const {web3, accounts, currentUser} = useSelector(globalState);
   const [medicalRecords, setMedicalRecords] = useState([]);
 
-
   useEffect(() => {
     const processMedicalRecord = async () => {
       const medicalRecordService = new medicalRecordServices({
@@ -23,7 +22,8 @@ function MedicalRecordPage() {
         currentUser,
       });
 
-      const medicalRecordIPFSSTring = await medicalRecordService.getMedicalRecordList();
+      const medicalRecordIPFSSTring =
+        await medicalRecordService.getMedicalRecordList();
       let medicalRecordList = [];
 
       for await (const element of medicalRecordIPFSSTring) {
@@ -34,9 +34,8 @@ function MedicalRecordPage() {
       setMedicalRecords(medicalRecordList);
     };
 
-    processMedicalRecord()
+    processMedicalRecord();
   }, []);
-
 
   return (
     <>

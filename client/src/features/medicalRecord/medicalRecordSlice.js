@@ -30,11 +30,10 @@ export const medicalRecordSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(saveIPFSFile.fulfilled, (state, action) => {
-        alert("Uploaded");
-        console.log(action.payload);
-      });
+    builder.addCase(saveIPFSFile.fulfilled, (state, action) => {
+      alert("Uploaded");
+      console.log(action.payload);
+    });
   },
 });
 

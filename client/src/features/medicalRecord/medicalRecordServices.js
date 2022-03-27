@@ -1,5 +1,5 @@
 import MedicalRecord from "../../contracts/MedicalRecord.json";
-const { create } = require("ipfs-http-client");
+const {create} = require("ipfs-http-client");
 
 const client = create("https://ipfs.infura.io:5001");
 
@@ -19,8 +19,8 @@ function medicalRecordServices(params) {
     );
 
     let medicalRecordList = await instance.methods
-    .getMedicalRecord(this.currentUser.publicAddress, 0)
-    .call({from: this.currentUser.publicAddress});
+      .getMedicalRecord(this.currentUser.publicAddress, 0)
+      .call({from: this.currentUser.publicAddress});
 
     return medicalRecordList;
   };
