@@ -1,5 +1,6 @@
 import MedicalRecord from "../../contracts/MedicalRecord.json";
-const {create} = require("ipfs-http-client");
+const { create } = require("ipfs-http-client");
+const {sha256} = require('js-sha256').sha256;
 
 const client = create("https://ipfs.infura.io:5001");
 
@@ -9,6 +10,7 @@ function medicalRecordServices(params) {
   this.currentUser = params.currentUser;
   this.file = params.file;
   this.patientAddress = params.patientAddress;
+  this.password = params.password
 
   this.getMedicalRecordList = async () => {
     const networkId = await this.web3.eth.net.getId();
@@ -58,6 +60,12 @@ function medicalRecordServices(params) {
 
     return Promise.reject("File save failed");
   };
+
+  this.hashingPassword = async () => {
+    const {password} = this.password
+    const data = await sha256(password)
+    return data
+  }
 }
 
 export default medicalRecordServices;

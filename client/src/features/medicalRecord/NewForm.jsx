@@ -1,19 +1,19 @@
-import React from "react";
+import React, {useState} from "react";
 import GeneralInfo from "../../components/NewMedicalRecord/GeneralInfo";
 import Diagnose from "../../components/NewMedicalRecord/Diagnose";
 import PatientManagement from "../../components/NewMedicalRecord/PatientManagement";
 import Treatment from "../../components/NewMedicalRecord/Treatment";
 import {useForm} from "react-hook-form";
 import MedicalMediaStorage from "../../components/NewMedicalRecord/MedicalMediaStorage";
-import {useDispatch, useSelector} from "react-redux";
-import {saveIPFSFile} from "./medicalRecordSlice";
-import {globalState} from "../global/globalSlice";
+import PasswordModal from "./PasswordModal";
 
 const MedicalRecordForm = (props) => {
-  const dispatch = useDispatch();
-  const {web3, accounts, currentUser} = useSelector(globalState);
-
   const {register, handleSubmit, setValue} = useForm();
+  const [show, setShow] = useState(false);
+  let dataRegister;
+
+  const handleClosePasswordModal = () => setShow(false);
+  const handleOpenPasswordModal = () => setShow(true);
   const renderPage = () => {
     const pageNumber = props.page;
     switch (pageNumber) {
@@ -33,20 +33,8 @@ const MedicalRecordForm = (props) => {
   };
 
   const onSubmit = (data) => {
-    const doctorInfo = {
-      doctorAddress: currentUser.publicAddress,
-      doctorName: currentUser.name,
-    };
-    const jsonData = JSON.stringify({...data, ...doctorInfo});
-    dispatch(
-      saveIPFSFile({
-        web3,
-        accounts,
-        currentUser,
-        file: jsonData,
-        patientAddress: data.generalInfo.publicAddress,
-      })
-    );
+    dataRegister = data;
+    handleOpenPasswordModal();
   };
 
   return (
@@ -66,6 +54,11 @@ const MedicalRecordForm = (props) => {
           </button>
         )}
       </form>
+      <PasswordModal
+        show={show}
+        handleClosePasswordModal={handleClosePasswordModal}
+        dataRegister={dataRegister}
+      />
     </>
   );
 };
