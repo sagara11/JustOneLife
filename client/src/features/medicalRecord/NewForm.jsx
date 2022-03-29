@@ -33,7 +33,10 @@ const MedicalRecordForm = (props) => {
   };
 
   const onSubmit = (data) => {
-    const doctorInfo = {doctorAddress: currentUser.publicAddress, doctorName: currentUser.name}
+    const doctorInfo = {
+      doctorAddress: currentUser.publicAddress,
+      doctorName: currentUser.name,
+    };
     const jsonData = JSON.stringify({...data, ...doctorInfo});
     dispatch(
       saveIPFSFile({
