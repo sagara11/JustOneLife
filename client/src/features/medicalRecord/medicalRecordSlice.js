@@ -15,6 +15,16 @@ export const saveIPFSFile = createAsyncThunk(
   }
 );
 
+export const hasingPassword = createAsyncThunk(
+  "medicalRecord/hashingPassword",
+  async (payload) => {
+    const params = payload;
+    const medicalRecordService = new medicalRecordServices(params);
+    const hashedPassword = await medicalRecordService.hashingPassword(params);
+    return hashedPassword;
+  }
+)
+
 export const medicalRecordSlice = createSlice({
   name: "medicalRecord",
   initialState,
@@ -30,10 +40,15 @@ export const medicalRecordSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(saveIPFSFile.fulfilled, (state, action) => {
-      alert("Uploaded");
-      console.log(action.payload);
-    });
+    builder
+      .addCase(saveIPFSFile.fulfilled, (state, action) => {
+        alert("Uploaded");
+        console.log(action.payload);
+      })
+      .addCase(hasingPassword.fulfilled, (state, action) => {
+        alert("Hashed Password");
+        console.log("hashed password", action.payload);
+      });
   },
 });
 
