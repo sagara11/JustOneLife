@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import GeneralInfo from "../../components/NewMedicalRecord/GeneralInfo";
 import Diagnose from "../../components/NewMedicalRecord/Diagnose";
 import PatientManagement from "../../components/NewMedicalRecord/PatientManagement";
@@ -10,7 +10,7 @@ import PasswordModal from "./PasswordModal";
 const MedicalRecordForm = (props) => {
   const {register, handleSubmit, setValue} = useForm();
   const [show, setShow] = useState(false);
-  let dataRegister;
+  const [dataRegister, setDataRegister] = useState("");
 
   const handleClosePasswordModal = () => setShow(false);
   const handleOpenPasswordModal = () => setShow(true);
@@ -33,7 +33,7 @@ const MedicalRecordForm = (props) => {
   };
 
   const onSubmit = (data) => {
-    dataRegister = data;
+    setDataRegister(data)
     handleOpenPasswordModal();
   };
 

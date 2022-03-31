@@ -37,6 +37,9 @@ const User = new Schema(
     refreshToken: {
       type: String,
     },
+    hash_2: {
+      type: String,
+    },
   },
   {
     timestamps: true,
