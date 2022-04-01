@@ -1,5 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import medicalRecordServices from "./medicalRecordServices";
+import {authenticateIPFSAPI} from "./medicalRecordAPI";
 
 const initialState = {
   medicalRecordList: [],
@@ -14,16 +15,6 @@ export const saveIPFSFile = createAsyncThunk(
     return data;
   }
 );
-
-export const hasingPassword = createAsyncThunk(
-  "medicalRecord/hashingPassword",
-  async (payload) => {
-    const params = payload;
-    const medicalRecordService = new medicalRecordServices(params);
-    const hashedPassword = await medicalRecordService.hashingPassword(params);
-    return hashedPassword;
-  }
-)
 
 export const medicalRecordSlice = createSlice({
   name: "medicalRecord",
@@ -40,15 +31,10 @@ export const medicalRecordSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(saveIPFSFile.fulfilled, (state, action) => {
-        alert("Uploaded");
-        console.log(action.payload);
-      })
-      .addCase(hasingPassword.fulfilled, (state, action) => {
-        alert("Hashed Password");
-        console.log("hashed password", action.payload);
-      });
+    builder.addCase(saveIPFSFile.fulfilled, (state, action) => {
+      alert("Uploaded");
+      console.log(action.payload);
+    });
   },
 });
 

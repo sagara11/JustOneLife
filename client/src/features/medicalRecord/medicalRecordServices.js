@@ -1,6 +1,7 @@
 import MedicalRecord from "../../contracts/MedicalRecord.json";
 const { create } = require("ipfs-http-client");
 const {sha256} = require('js-sha256').sha256;
+const aes256 = require('aes256');
 
 const client = create("https://ipfs.infura.io:5001");
 
@@ -11,6 +12,7 @@ function medicalRecordServices(params) {
   this.file = params.file;
   this.patientAddress = params.patientAddress;
   this.password = params.password
+  this.hash_1 = params.hash_1
 
   this.getMedicalRecordList = async () => {
     const networkId = await this.web3.eth.net.getId();
@@ -42,7 +44,12 @@ function medicalRecordServices(params) {
       return;
     }
 
-    const uploadFile = await client.add(this.file);
+    const encryptedPlainText = aes256.encrypt(this.hash_1, this.file);
+    const uploadFile = await client.add(encryptedPlainText);
+
+    // const decryptedPlainText = aes256.decrypt(this.hash_1, encryptedPlainText);
+    // console.log(decryptedPlainText)
+
     console.log(uploadFile);
     if (uploadFile) {
       console.log("Saving cid to blockchain...");
@@ -63,8 +70,9 @@ function medicalRecordServices(params) {
 
   this.hashingPassword = async () => {
     const {password} = this.password
-    const data = await sha256(password)
-    return data
+    const hash_1 = await sha256(password)
+    const hash_2 = await sha256(hash_1)
+    return {hash_1, hash_2}
   }
 }
 
