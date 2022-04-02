@@ -1,6 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import medicalRecordServices from "./medicalRecordServices";
-import {authenticateIPFSAPI} from "./medicalRecordAPI";
 
 const initialState = {
   medicalRecordList: [],

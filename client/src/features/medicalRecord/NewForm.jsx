@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import GeneralInfo from "../../components/NewMedicalRecord/GeneralInfo";
 import Diagnose from "../../components/NewMedicalRecord/Diagnose";
 import PatientManagement from "../../components/NewMedicalRecord/PatientManagement";

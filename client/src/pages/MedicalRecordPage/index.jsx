@@ -9,10 +9,17 @@ import {useEffect} from "react";
 import {useSelector} from "react-redux";
 import axios from "axios";
 import medicalRecordServices from "../../features/medicalRecord/medicalRecordServices";
+import ConfirmModal from "../../features/medicalRecord/ConfirmModal";
+
+const aes256 = require("aes256");
 
 function MedicalRecordPage() {
-  const {web3, accounts, currentUser} = useSelector(globalState);
+  const {web3, accounts, currentUser, hash_1, confirm} =
+    useSelector(globalState);
   const [medicalRecords, setMedicalRecords] = useState([]);
+  const [show, setShow] = useState(false);
+  const handleCloseConfirmModal = () => setShow(false);
+  const handleOpenConfirmModal = () => setShow(true);
 
   useEffect(() => {
     const processMedicalRecord = async () => {
@@ -28,14 +35,21 @@ function MedicalRecordPage() {
 
       for await (const element of medicalRecordIPFSSTring) {
         const file = await axios.get(`https://ipfs.infura.io/ipfs/${element}`);
-        medicalRecordList.push(file.data);
+        const decryptedFile = await aes256.decrypt(hash_1, file.data);
+        const decryptedFileObjects = JSON.parse(decryptedFile);
+        medicalRecordList.push(decryptedFileObjects);
       }
 
       setMedicalRecords(medicalRecordList);
     };
 
-    processMedicalRecord();
-  }, []);
+    if (confirm || hash_1) {
+      processMedicalRecord();
+      handleCloseConfirmModal();
+    } else {
+      handleOpenConfirmModal();
+    }
+  }, [hash_1, confirm]);
 
   return (
     <>
@@ -55,6 +69,11 @@ function MedicalRecordPage() {
               <section className="lists__section">
                 <div className="section-body">
                   <List medicalRecordList={medicalRecords} />
+                  <ConfirmModal
+                    show={show}
+                    handleCloseConfirmModal={handleCloseConfirmModal}
+                    handleOpenConfirmModal={handleOpenConfirmModal}
+                  />
                 </div>
               </section>
             </div>
