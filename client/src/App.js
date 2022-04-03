@@ -22,6 +22,8 @@ import {
 import {isEmpty} from "lodash";
 import NewMedicalRecordPage from './pages/MedicalRecordPage/new';
 import MedicalRecordPage from "./pages/MedicalRecordPage";
+import ShowMedicalRecord from './pages/MedicalRecordPage/show';
+
 const jwt = require("jsonwebtoken");
 
 const App = () => {
@@ -77,6 +79,11 @@ const App = () => {
       <Switch>
         <PrivateRoute path="/" exact component={HomePage} />
         <PrivateRoute path="/user/:patientPublicAddress" component={UserPage} />
+        <PrivateRoute
+          exact
+          path="/medical-record/detail"
+          component={ShowMedicalRecord}
+        />
         <PrivateRoute
           path="/medical-record/:patientPublicAddress"
           component={MedicalRecordPage}
