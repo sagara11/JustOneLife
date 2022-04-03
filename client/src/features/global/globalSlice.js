@@ -9,6 +9,8 @@ const initialState = {
   accounts: null,
   contract: null,
   storageValue: 0,
+  hash_1: null,
+  confirm: false,
 };
 
 export const fetchCurrentUser = createAsyncThunk(
@@ -38,6 +40,12 @@ export const globalSlice = createSlice({
     setStorageValue: (state, payload) => {
       state.storageValue = payload.payload;
     },
+    setHash_1: (state, payload) => {
+      state.hash_1 = payload.payload;
+    },
+    setConfirm: (state, payload) => {
+      state.confirm = payload.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -45,13 +53,20 @@ export const globalSlice = createSlice({
         state.currentUser = null;
       })
       .addCase(fetchCurrentUser.fulfilled, (state, action) => {
-        state.currentUser = isEmpty(action.payload) ? null : action.payload
+        state.currentUser = isEmpty(action.payload) ? null : action.payload;
       });
   },
 });
 
-export const {resetState, setWeb3, setAccounts, setContract, setStorageValue} =
-  globalSlice.actions;
+export const {
+  resetState,
+  setWeb3,
+  setAccounts,
+  setContract,
+  setStorageValue,
+  setHash_1,
+  setConfirm,
+} = globalSlice.actions;
 
 export const globalState = (state) => state.global;
 
