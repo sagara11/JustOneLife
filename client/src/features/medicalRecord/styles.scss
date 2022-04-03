@@ -13,6 +13,13 @@
   }
 
   .lists {
+    transition: 0.3s;
+
+    a {
+      text-decoration: none;
+      color: black;
+    }
+
     .list-element {
       .card {
         margin-bottom: 24px;
@@ -35,6 +42,125 @@
           margin-top: 10px;
         }
       }
+    }
+  }
+}
+
+.medical-detail__wrapper {
+  .field-input {
+    .data {
+      font-size: 17px;
+      color: gray;
+      padding: 10px 0;
+    }
+
+    .gender {
+      font-size: 13px;
+      width: fit-content;
+      padding: 5px 10px;
+      border-radius: 8px;
+      color: white;
+    }
+
+    .gender.male {
+      background-color: green;
+    }
+
+    .gender-female {
+      color: orangered;
+    }
+
+    .address {
+      display: flex;
+      align-items: center;
+      position: relative;
+
+      .dot {
+        position: absolute;
+        left: 0;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: gray;
+      }
+
+      .address-data {
+        padding-left: 20px;
+      }
+    }
+
+    .time-data {
+      display: flex;
+      align-items: center;
+      position: relative;
+
+      .icon {
+        position: absolute;
+        left: 0;
+      }
+
+      .time {
+        padding-left: 25px;
+      }
+    }
+  }
+
+  .group-field {
+    padding: 10px 10px;
+    border-radius: 5px;
+    background-color: #e8e8e8;
+
+    .title {
+      margin-bottom: 15px;
+    }
+
+    .data {
+      padding: 0 0 10px 0;
+      font-size: 14px;
+    }
+
+    .time {
+      font-size: 14px;
+    }
+  }
+
+  .number-data__pillar {
+    background-color: white;
+
+    .title {
+      font-size: 17px;
+      margin-bottom: 15px;
+    }
+
+    .data {
+      padding: 0;
+    }
+
+    .content {
+      display: block;
+    }
+
+    .number-data {
+      text-align: center;
+      color: white;
+      font-size: 14px;
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    .number-data.high {
+      width: 75%;
+      background-color: red;
+    }
+
+    .number-data.low {
+      width: 20%;
+      background-color: #61affe;
+    }
+
+    .number-data.normal {
+      width: 60%;
+      background-color: green;
     }
   }
 }
