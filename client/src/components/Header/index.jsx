@@ -7,9 +7,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {isEmpty} from "lodash";
 import {signout} from "../../features/authentication/authenticationSlice";
 import {NavLink} from "react-router-dom";
+import { authorizationState } from '../../features/authorization/authorizationSlice';
+import DropdownItem from 'react-bootstrap/esm/DropdownItem';
 
 function Header() {
   const {currentUser} = useSelector(globalState);
+  const { userRole } = useSelector(authorizationState);
   const dispatch = useDispatch();
 
   const handleLogout = (e) => {
@@ -21,6 +24,28 @@ function Header() {
       })
     );
   };
+
+  const roleClass = () => {
+    if (userRole.includes("ADMIN")) {
+      return "admin";
+    }
+    if (userRole.includes("MANAGER")) {
+      return "manager";
+    }
+    if (userRole.includes("DOCTOR")) {
+      return "doctor";
+    }
+
+    return "patient"
+  }
+
+  const displayRole = () => {
+    if (userRole.length === 1) {
+      return <span className="user-role__badge">{userRole[0]}</span>
+    }
+
+    return <span className={`user-role__badge ${roleClass()}`}>Roles</span>
+  }
 
   return (
     <div id="header">
@@ -44,8 +69,24 @@ function Header() {
               <Col md={3}>
                 <div className="header-submenu__wrapper">
                   <Dropdown>
+                    <Dropdown.Toggle as="div" className="header-submenu__toggle">
+                      {displayRole()}
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      {
+                        userRole.map((role, index) => {
+                          return (
+                            <Dropdown.Item key={index}>
+                              {role}
+                            </Dropdown.Item>
+                          )
+                        })
+                      }
+                    </Dropdown.Menu>
+                  </Dropdown>
+                  <Dropdown>
                     <Dropdown.Toggle as="p" className="header-submenu__toggle">
-                      {currentUser.name}
+                      <span>{currentUser.name}</span>
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
@@ -65,7 +106,7 @@ function Header() {
           ) : (
             <Col md={9}>
               <div className="header-submenu__wrapper">
-                <p className="header-submenu__item">Đăng nhập</p>
+                <p className="header-submenu__item">Login</p>
               </div>
             </Col>
           )}
