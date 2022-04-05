@@ -27,6 +27,7 @@ function Sidebar() {
               }
             >
               <ImHome className="sidebar__icon" />
+              <span className="sidebar-text">Home</span>
             </NavLink>
             {/* Patient icons */}
             <NavLink
@@ -36,6 +37,7 @@ function Sidebar() {
               }
             >
               <MdDocumentScanner className="sidebar__icon" />
+              <span className="sidebar-text">Your Record</span>
             </NavLink>
             <NavLink
               to={`/vaccination-certificate/${currentUser.publicAddress}`}
@@ -44,6 +46,7 @@ function Sidebar() {
               }
             >
               <AiFillSafetyCertificate className="sidebar__icon" />
+              <span className="sidebar-text">Vaccines</span>
             </NavLink>
             {/* Doctor icons */}
             {userRole.includes(process.env.REACT_APP_ROLE_DOCTOR) &&
@@ -54,6 +57,7 @@ function Sidebar() {
                 }
               >
                 <IoDocumentsSharp className="sidebar__icon" />
+                <span className="sidebar-text">Record</span>
               </NavLink>
             }
             {userRole.includes(process.env.REACT_APP_ROLE_DOCTOR) &&
@@ -64,6 +68,7 @@ function Sidebar() {
                 }
               >
                 <AiFillSafetyCertificate className="sidebar__icon" />
+                <span className="sidebar-text">Certificate</span>
               </NavLink>
             }
             {/* Manager icons */}
@@ -75,6 +80,7 @@ function Sidebar() {
                 }
               >
                 <BsPeopleFill className="sidebar__icon" />
+                <span className="sidebar-text">Doctor</span>
               </NavLink>
             }
             {/* Admin icons */}
@@ -86,6 +92,7 @@ function Sidebar() {
                 }
               >
                 <BsFillPersonPlusFill className="sidebar__icon" />
+                <span className="sidebar-text">Manager</span>
               </NavLink>
             }
           </div>
