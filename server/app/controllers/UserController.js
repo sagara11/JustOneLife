@@ -50,6 +50,18 @@ class UsersController {
       next(err);
     }
   }
+
+  async index(req, res, next) {
+    try {
+      const userList = await User.find({ email: { $ne: null } });
+
+      res.status(200).json(userList);
+      next();
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
 }
 
 module.exports = new UsersController();

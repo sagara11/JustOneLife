@@ -12,3 +12,7 @@ const config = {
 export function fetchDoctorListAPI(params) {
   return axios.post(`${URL}/users/getUserList`, params, config);
 }
+
+export function fetchUserInSystem(params) {
+  return axios.post(`${URL}/users/index`, params, config);
+}
