@@ -37,6 +37,12 @@ const User = new Schema(
     refreshToken: {
       type: String,
     },
+    medicalTransactions: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "MedicalTransaction"
+      }
+    ]
   },
   {
     timestamps: true,
