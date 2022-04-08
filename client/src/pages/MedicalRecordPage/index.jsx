@@ -35,7 +35,7 @@ function MedicalRecordPage() {
     };
 
     processMedicalRecord();
-  }, []);
+  }, [accounts, currentUser, web3]);
 
   return (
     <>

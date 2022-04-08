@@ -1,23 +1,18 @@
 import React from "react";
-import { BsCalendar2DateFill } from 'react-icons/bs';
+import { BsCalendar2DateFill } from "react-icons/bs";
 
 function GeneralInfo(props) {
-  const {
-    address,
-    dateOfBirth,
-    gender,
-    name,
-    phone
-  } = props.medicalData.generalInfo;
+  const { address, dateOfBirth, gender, name, phone } =
+    props.medicalData.generalInfo;
 
   const displayGender = (gender) => {
     let genderClass = "gender female";
     if (gender === "Male") {
-      genderClass = "gender male"
+      genderClass = "gender male";
     }
 
     return genderClass;
-  }
+  };
 
   return (
     <div className="row">

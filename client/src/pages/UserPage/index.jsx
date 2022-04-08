@@ -11,7 +11,7 @@ function UserPage() {
 
   useEffect(() => {
     console.log(currentUser);
-  }, [])
+  }, [currentUser])
 
   const convertAddressForDisplay = (address) => {
     return address.substring(0, 4) + "..." + address.substring(address.length - 5, address.length - 1)

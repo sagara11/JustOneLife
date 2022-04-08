@@ -1,31 +1,31 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "./styles.scss";
-import {useForm} from "react-hook-form";
-import {ErrorMessage} from "@hookform/error-message";
-import {Modal} from "react-bootstrap";
-import {useDispatch, useSelector} from "react-redux";
-import {globalState} from "../global/globalSlice";
-import {setRoleDoctor} from "../authorization/authorizationSlice";
-import {fetchUserInSystem} from "../doctor/doctorAPI";
+import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+import { Modal } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { globalState } from "../global/globalSlice";
+import { setRoleDoctor } from "../authorization/authorizationSlice";
+import { fetchUserInSystem } from "../doctor/doctorAPI";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 
 const animatedComponents = makeAnimated();
 
-const AddDoctorForm = ({show, handleCloseAddDoctorModal}) => {
+const AddDoctorForm = ({ show, handleCloseAddDoctorModal }) => {
   const {
     handleSubmit,
     setValue,
-    formState: {errors},
+    formState: { errors },
   } = useForm();
   const dispatch = useDispatch();
-  const {web3, accounts, currentUser} = useSelector(globalState);
+  const { web3, accounts, currentUser } = useSelector(globalState);
   const [userList, setUserList] = useState("");
   const [selectedOptions, setSelectedOptions] = useState([]);
   const options = [];
 
   if (userList) {
-    userList.map((item) => {
+    userList.forEach((item) => {
       options.push({
         value: item.publicAddress,
         label: `${item.name} - ${item.publicAddress}`,
@@ -50,11 +50,11 @@ const AddDoctorForm = ({show, handleCloseAddDoctorModal}) => {
     setSelectedOptions(selectedOptions);
   };
 
-  const onSubmit = () => {
-    selectedOptions.map((item) => {
+  const onSubmit = async () => {
+    for await (const item of selectedOptions) {
       const address = item.value;
-      dispatch(setRoleDoctor({web3, accounts, currentUser, address}));
-    });
+      dispatch(setRoleDoctor({ web3, accounts, currentUser, address }));
+    }
     setSelectedOptions([]);
   };
 
@@ -91,7 +91,7 @@ const AddDoctorForm = ({show, handleCloseAddDoctorModal}) => {
         <ErrorMessage
           errors={errors}
           name="address"
-          render={({message}) => <p>{message}</p>}
+          render={({ message }) => <p>{message}</p>}
         />
         <AnimatedMulti />
         <button className="btn btn-primary">ADD</button>
