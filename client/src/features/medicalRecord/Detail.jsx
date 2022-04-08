@@ -7,7 +7,6 @@ import MedicalMediaStorage from "../../components/DetailMedicalRecord/MedicalMed
 
 const MedicalRecordDetail = (props) => {
   const { medicalData } = props;
-  console.log(medicalData, "data");
 
   const renderPage = () => {
     const pageNumber = props.page;

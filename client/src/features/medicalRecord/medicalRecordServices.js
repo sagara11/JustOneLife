@@ -1,4 +1,5 @@
 import MedicalRecord from "../../contracts/MedicalRecord.json";
+import { createMedicalTransactionAPI } from "./medicalRecordAPI";
 const {create} = require("ipfs-http-client");
 
 const client = create("https://ipfs.infura.io:5001");
@@ -53,6 +54,16 @@ function medicalRecordServices(params) {
       const tx = await instance.methods
         .addMedicalRecord(this.patientAddress, uploadFile.path)
         .send({from: this.currentUser.publicAddress});
+
+      if (tx) {
+        const data = await createMedicalTransactionAPI({
+          publicAddress: this.patientAddress,
+          IpfsHash: uploadFile.path,
+          transactionHash: tx.transactionHash
+        });
+
+        console.log(data);
+      }
       return tx;
     }
 
