@@ -2,6 +2,20 @@ const User = require("../../models/users");
 const medicalTransaction = require("../../models/medical_transaction");
 
 class MedicalTransactionsController {
+  async show(req, res, next) {
+    const { ipfsHash } = req.params;
+    const transaction = await medicalTransaction.findOne({
+      IpfsHash: ipfsHash
+    });
+
+    res.status(200).json({
+      transaction: transaction,
+      status: "OK"
+    });
+
+    next();
+  }
+
   async create(req, res, next) {
     try {
       const user = await User.findOne(

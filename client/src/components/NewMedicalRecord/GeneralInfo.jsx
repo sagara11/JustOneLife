@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { getUser } from '../../features/authorization/authorizationAPI';
 
 function GeneralInfo(props) {

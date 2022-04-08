@@ -28,7 +28,7 @@ function MedicalRecordPage() {
 
       for await (const element of medicalRecordIPFSSTring) {
         const file = await axios.get(`https://ipfs.infura.io/ipfs/${element}`);
-        medicalRecordList.push(file.data);
+        medicalRecordList.push({...file.data, ipfsHash: element});
       }
 
       setMedicalRecords(medicalRecordList);
@@ -41,10 +41,10 @@ function MedicalRecordPage() {
     <>
       <Header />
       <Sidebar />
-      <div className="body__wrapper">
+      <div className="medical__wrapper">
         <div className="body__wrapper homepage__wrapper">
           <div className="row section-wrapper">
-            <div className="col-3">
+            <div className="col-3 medical-record-list__filter">
               <section className="medicalrecord__section filters__section">
                 <div className="section-body">
                   <Filters />

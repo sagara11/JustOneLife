@@ -8,7 +8,6 @@ import {isEmpty} from "lodash";
 import {signout} from "../../features/authentication/authenticationSlice";
 import {NavLink} from "react-router-dom";
 import { authorizationState } from '../../features/authorization/authorizationSlice';
-import DropdownItem from 'react-bootstrap/esm/DropdownItem';
 
 function Header() {
   const {currentUser} = useSelector(globalState);

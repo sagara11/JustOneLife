@@ -5,5 +5,6 @@ const medicalTransactionsController = require("../app/controllers/MedicalTransac
 const {secondStepCheck} = require("../middleware/auth");
 
 route.post("/", secondStepCheck, medicalTransactionsController.create);
+route.get("/:ipfsHash", secondStepCheck, medicalTransactionsController.show);
 
 module.exports = route;

@@ -7,8 +7,7 @@ function GeneralInfo(props) {
     dateOfBirth,
     gender,
     name,
-    phone,
-    publicAddress
+    phone
   } = props.medicalData.generalInfo;
 
   const displayGender = (gender) => {
