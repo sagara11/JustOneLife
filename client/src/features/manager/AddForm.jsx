@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "./styles.scss";
-import {useForm} from "react-hook-form";
-import {ErrorMessage} from "@hookform/error-message";
-import {useDispatch, useSelector} from "react-redux";
-import {setRoleManager} from "../authorization/authorizationSlice";
-import {globalState} from "../global/globalSlice";
-import {fetchUserInSystem} from "../doctor/doctorAPI";
+import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+import { useDispatch, useSelector } from "react-redux";
+import { setRoleManager } from "../authorization/authorizationSlice";
+import { globalState } from "../global/globalSlice";
+import { fetchUserInSystem } from "../doctor/doctorAPI";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 
@@ -14,16 +14,16 @@ const animatedComponents = makeAnimated();
 const AddManagerForm = () => {
   const {
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
   } = useForm();
   const dispatch = useDispatch();
-  const {web3, accounts, currentUser} = useSelector(globalState);
+  const { web3, accounts, currentUser } = useSelector(globalState);
   const [userList, setUserList] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const options = [];
 
   if (userList) {
-    userList.map((item) => {
+    userList.forEach((item) => {
       options.push({
         value: item.publicAddress,
         label: `${item.name} - ${item.publicAddress}`,
@@ -48,11 +48,12 @@ const AddManagerForm = () => {
     setSelectedOptions(selectedOptions);
   };
 
-  const onSubmit = () => {
-    selectedOptions.map((item) => {
+  const onSubmit = async () => {
+    for await (const item of selectedOptions) {
       const address = item.value;
-      dispatch(setRoleManager({web3, accounts, currentUser, address}));
-    });
+      dispatch(setRoleManager({ web3, accounts, currentUser, address }));
+    }
+
     setSelectedOptions([]);
   };
 
@@ -79,7 +80,7 @@ const AddManagerForm = () => {
         <ErrorMessage
           errors={errors}
           name="address"
-          render={({message}) => <p>{message}</p>}
+          render={({ message }) => <p>{message}</p>}
         />
         <button className="btn btn-primary">ADD</button>
       </form>

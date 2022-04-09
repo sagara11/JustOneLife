@@ -23,7 +23,7 @@ import {isEmpty} from "lodash";
 import NewMedicalRecordPage from './pages/MedicalRecordPage/new';
 import MedicalRecordPage from "./pages/MedicalRecordPage";
 import ShowMedicalRecord from './pages/MedicalRecordPage/show';
-
+import VaccineCertificatePage from "./pages/VaccineCertificatePage";
 const jwt = require("jsonwebtoken");
 
 const App = () => {
@@ -90,7 +90,7 @@ const App = () => {
         />
         <PrivateRoute
           path="/vaccination-certificate/:patientPublicAddress"
-          component={HomePage}
+          component={VaccineCertificatePage}
         />
         <PrivateRoute path="/medical-records" component={NewMedicalRecordPage} />
         <PrivateRoute path="/vaccination-certificates" component={HomePage} />

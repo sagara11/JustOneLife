@@ -1,16 +1,16 @@
 import React from "react";
-import {Col, Container, Dropdown, Row} from "react-bootstrap";
+import { Col, Container, Dropdown, Row } from "react-bootstrap";
 import "./styles.scss";
 import appLogo from "../../assets/images/app-logo.png";
-import {globalState} from "../../features/global/globalSlice";
-import {useDispatch, useSelector} from "react-redux";
-import {isEmpty} from "lodash";
-import {signout} from "../../features/authentication/authenticationSlice";
-import {NavLink} from "react-router-dom";
-import { authorizationState } from '../../features/authorization/authorizationSlice';
+import { globalState } from "../../features/global/globalSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { isEmpty } from "lodash";
+import { signout } from "../../features/authentication/authenticationSlice";
+import { authorizationState } from "../../features/authorization/authorizationSlice";
+import { Link } from "react-router-dom";
 
 function Header() {
-  const {currentUser} = useSelector(globalState);
+  const { currentUser } = useSelector(globalState);
   const { userRole } = useSelector(authorizationState);
   const dispatch = useDispatch();
 
@@ -35,16 +35,16 @@ function Header() {
       return "doctor";
     }
 
-    return "patient"
-  }
+    return "patient";
+  };
 
   const displayRole = () => {
     if (userRole.length === 1) {
-      return <span className="user-role__badge">{userRole[0]}</span>
+      return <span className="user-role__badge">{userRole[0]}</span>;
     }
 
-    return <span className={`user-role__badge ${roleClass()}`}>Roles</span>
-  }
+    return <span className={`user-role__badge ${roleClass()}`}>Roles</span>;
+  };
 
   return (
     <div id="header">
@@ -68,19 +68,18 @@ function Header() {
               <Col md={3}>
                 <div className="header-submenu__wrapper">
                   <Dropdown>
-                    <Dropdown.Toggle as="div" className="header-submenu__toggle">
+                    <Dropdown.Toggle
+                      as="div"
+                      className="header-submenu__toggle"
+                    >
                       {displayRole()}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                      {
-                        userRole.map((role, index) => {
-                          return (
-                            <Dropdown.Item key={index}>
-                              {role}
-                            </Dropdown.Item>
-                          )
-                        })
-                      }
+                      {userRole.map((role, index) => {
+                        return (
+                          <Dropdown.Item key={index}>{role}</Dropdown.Item>
+                        );
+                      })}
                     </Dropdown.Menu>
                   </Dropdown>
                   <Dropdown>
@@ -89,10 +88,11 @@ function Header() {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                      <Dropdown.Item href="#">
-                        <NavLink to={`/user/${currentUser.publicAddress}`} exact>
-                          Profile
-                        </NavLink>
+                      <Dropdown.Item
+                        as={Link}
+                        to={`/user/${currentUser.publicAddress}`}
+                      >
+                        Profile
                       </Dropdown.Item>
                       <Dropdown.Item href="#" onClick={handleLogout}>
                         Logout

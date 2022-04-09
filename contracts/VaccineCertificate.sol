@@ -8,11 +8,11 @@ contract VaccineCertificate {
         string name;
         string lotNumber;
         string location;
-        uint256 date;
+        string date;
     }
 
     Authorize internal authorize;
-    mapping(address => vaccineCertificateInfo[]) public userToData;
+    mapping(address => vaccineCertificateInfo[]) private userToData;
 
     event addNewVaccineCertificate(address _userAdress);
 
@@ -30,12 +30,12 @@ contract VaccineCertificate {
         string memory _name,
         string memory _lotNumber,
         string memory _location,
-        uint256 _date
+        string memory _date
     ) public onlyAllowedRole(authorize.DOCTOR_ROLE(), msg.sender) {
         require(
             bytes(_name).length != 0 &&
                 bytes(_location).length != 0 &&
-                _date != 0,
+                bytes(_date).length != 0,
             "Insufficient data"
         );
         vaccineCertificateInfo memory newCertificate;
@@ -48,5 +48,13 @@ contract VaccineCertificate {
         userToData[_userAddress].push(newCertificate);
 
         emit addNewVaccineCertificate(_userAddress);
+    }
+
+    function getVaccineCertificate(address _userAddress)
+        public
+        view
+        returns (vaccineCertificateInfo[] memory)
+    {
+        return userToData[_userAddress];
     }
 }

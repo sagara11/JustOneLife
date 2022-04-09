@@ -1,0 +1,136 @@
+.body__wrapper {
+  height: 90%;
+  background-color: #e5e5e5;
+  position: relative;
+}
+
+.homepage__wrapper {
+  display: flex;
+  justify-content: center;
+
+  .section-wrapper {
+    padding-top: 40px;
+    width: 75%;
+  }
+}
+
+.vaccinecertificate__section {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.25);
+  margin-bottom: 24px;
+
+  .section-header {
+    padding: 15px;
+    border-bottom: 1px solid rgba(142, 142, 142, 0.79);
+
+    p {
+      color: gray;
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0;
+    }
+  }
+
+  .section-body {
+    padding: 15px;
+  }
+}
+
+.new-certificate-form {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.25);
+  margin-bottom: 24px;
+
+  .form-title {
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    text-align: center;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .form-detail {
+    padding: 1rem;
+
+    .field-input {
+      margin-bottom: 20px;
+
+      label {
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+.filters__section,
+.lists__section {
+  height: 100%;
+  position: relative;
+
+  .btn-primary {
+    font-size: 14px;
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    padding: 3px 30px;
+  }
+}
+
+.new-form-button {
+  button {
+    display: block;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.25);
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    padding: 12px;
+    background-color: #ffffff;
+    color: #29a9f5;
+    border: 1px #29a9f5 solid;
+    font-weight: 600;
+
+    svg {
+      margin-right: 5px;
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: #ffffff;
+      color: #29a9f5;
+      border: 1px #29a9f5 solid;
+    }
+  }
+}
+
+.list-button {
+  button {
+    display: block;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.25);
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    padding: 12px;
+    background-color: #ffffff;
+    color: #29a9f5;
+    border: 1px #29a9f5 solid;
+    font-weight: 600;
+
+    svg {
+      margin-right: 5px;
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: #ffffff;
+      color: #29a9f5;
+      border: 1px #29a9f5 solid;
+    }
+  }
+}
