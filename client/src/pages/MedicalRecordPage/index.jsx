@@ -31,6 +31,7 @@ function MedicalRecordPage() {
 
       const medicalRecordIPFSSTring =
         await medicalRecordService.getMedicalRecordList();
+
       let medicalRecordList = [];
 
       for await (const element of medicalRecordIPFSSTring) {

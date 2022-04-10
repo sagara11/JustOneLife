@@ -20,17 +20,31 @@ const PasswordModal = ({show, handleClosePasswordModal, dataRegister}) => {
   const {web3, accounts, currentUser} = useSelector(globalState);
 
   const hasingPassword = async (payload) => {
-    const {password, patientAddress} = payload;
-    const medicalRecordService = new medicalRecordServices({password});
-    const {hash_1, hash_2} = await medicalRecordService.hashingPassword({
-      password,
+    const {passwordPatient, passwordDoctor, patientAddress, doctorAddress} =
+      payload;
+    const medicalRecordService = new medicalRecordServices({
+      passwordPatient,
+      passwordDoctor,
     });
-    const result = await authenticateIPFSAPI({
-      hash_2,
-      patientAddress,
+    const {hash_1_Patient, hash_2_Patient, hash_1_Doctor, hash_2_Doctor} =
+      await medicalRecordService.hashingPassword();
+
+    const resultPatient = await authenticateIPFSAPI({
+      hash_2: hash_2_Patient,
+      userAddress: patientAddress,
     });
 
-    return {result: result.data, hash_1: hash_1};
+    const resultDoctor = await authenticateIPFSAPI({
+      hash_2: hash_2_Doctor,
+      userAddress: doctorAddress,
+    });
+
+    return {
+      resultPatient: resultPatient.data,
+      resultDoctor: resultDoctor.data,
+      hash_1_Patient,
+      hash_1_Doctor,
+    };
   };
 
   const onSubmit = async (data) => {
@@ -39,12 +53,15 @@ const PasswordModal = ({show, handleClosePasswordModal, dataRegister}) => {
       doctorName: currentUser.name,
     };
     const jsonData = JSON.stringify({...dataRegister, ...doctorInfo});
-    const {result, hash_1} = await hasingPassword({
-      password: data,
-      patientAddress: dataRegister.generalInfo.publicAddress,
-    });
+    const {resultPatient, resultDoctor, hash_1_Patient, hash_1_Doctor} =
+      await hasingPassword({
+        passwordPatient: data.passwordPatient,
+        passwordDoctor: data.passwordDoctor,
+        patientAddress: dataRegister.generalInfo.publicAddress,
+        doctorAddress: currentUser.publicAddress,
+      });
 
-    if (result) {
+    if (resultPatient && resultDoctor) {
       dispatch(
         saveIPFSFile({
           web3,
@@ -52,11 +69,15 @@ const PasswordModal = ({show, handleClosePasswordModal, dataRegister}) => {
           currentUser,
           file: jsonData,
           patientAddress: dataRegister.generalInfo.publicAddress,
-          hash_1,
+          hash_1_Patient,
+          hash_1_Doctor,
         })
       );
+      console.log("Authenticated successs");
+      handleClosePasswordModal();
+    } else {
+      console.log("Authenticated failed");
     }
-    handleClosePasswordModal();
   };
 
   const onHideModal = () => {
@@ -70,25 +91,55 @@ const PasswordModal = ({show, handleClosePasswordModal, dataRegister}) => {
       onHide={onHideModal}
       centered
       dialogClassName="add-doctor-form__dialog"
-      contentClassName="add-doctor-form__content"
+      contentClassName="add-doctor-form__content row"
     >
       <form
         className="add-doctor-form"
         onSubmit={handleSubmit(onSubmit)}
         id="add-doctor-form"
       >
-        <ErrorMessage
-          errors={errors}
-          name="password"
-          render={({message}) => <p>{message}</p>}
-        />
-        <input
-          {...register("password", {required: "Please confirm you request"})}
-          className="form-control"
-          placeholder="Password"
-          type="password"
-        />
-        <button className="btn btn-primary">Confirm</button>
+        <div className="row signature-confirm">
+          <div className="col-6">
+            <h5 class="modal-title signature-title" id="exampleModalLongTitle">
+              Signature of Patient
+            </h5>
+
+            <ErrorMessage
+              errors={errors}
+              name="passwordPatient"
+              render={({message}) => <p>{message}</p>}
+            />
+            <input
+              {...register("passwordPatient", {
+                required: "Please confirm you request",
+              })}
+              className="form-control"
+              placeholder="Password"
+              type="password"
+            />
+          </div>
+          <div className="col-6">
+            <ErrorMessage
+              errors={errors}
+              name="passwordDoctor"
+              render={({message}) => <p>{message}</p>}
+            />
+            <h5 class="modal-title signature-title" id="exampleModalLongTitle">
+              Signature of Doctor
+            </h5>
+            <input
+              {...register("passwordDoctor", {
+                required: "Please confirm you request",
+              })}
+              className="form-control"
+              placeholder="Password"
+              type="password"
+            />
+          </div>
+        </div>
+        <button className="btn btn-primary signature-confirm-button">
+          Confirm
+        </button>
       </form>
     </Modal>
   );

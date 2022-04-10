@@ -10,7 +10,7 @@ import {authenticateIPFSAPI} from "./medicalRecordAPI";
 
 const ConfirmModal = ({
   show,
-  handleClosePasswordModal,
+  handleCloseConfirmModal,
   handleOpenConfirmModal,
 }) => {
   const {
@@ -23,14 +23,15 @@ const ConfirmModal = ({
   const dispatch = useDispatch();
 
   const hasingPassword = async (payload) => {
-    const {password, patientAddress} = payload;
+    const {password, userAddress} = payload;
     const medicalRecordService = new medicalRecordServices({password});
-    const {hash_1, hash_2} = await medicalRecordService.hashingPassword({
-      password,
-    });
+    const {hash_1, hash_2} = await medicalRecordService.processHashing(
+      password
+    );
+
     const result = await authenticateIPFSAPI({
       hash_2,
-      patientAddress,
+      userAddress,
     });
 
     return {result: result.data, hash_1: hash_1};
@@ -38,15 +39,17 @@ const ConfirmModal = ({
 
   const onSubmit = async (data) => {
     const {result, hash_1} = await hasingPassword({
-      password: data,
-      patientAddress: currentUser.publicAddress,
+      password: data.password,
+      userAddress: currentUser.publicAddress,
     });
 
     if (result) {
+      console.log("Authenticated success!");
       dispatch(setHash_1(hash_1));
       dispatch(setConfirm(true));
-      handleClosePasswordModal();
+      handleCloseConfirmModal();
     } else {
+      console.log("Authenticated Failed!");
       dispatch(setConfirm(false));
       handleOpenConfirmModal();
     }
@@ -54,7 +57,7 @@ const ConfirmModal = ({
 
   const onHideModal = () => {
     setValue("password", "");
-    handleClosePasswordModal();
+    handleCloseConfirmModal();
   };
 
   return (
@@ -70,6 +73,9 @@ const ConfirmModal = ({
         onSubmit={handleSubmit(onSubmit)}
         id="add-doctor-form"
       >
+        <h5 class="modal-title signature-title" id="exampleModalLongTitle">
+          Please fill in your signature
+        </h5>
         <ErrorMessage
           errors={errors}
           name="password"
