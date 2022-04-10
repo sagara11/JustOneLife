@@ -5,6 +5,7 @@ import {ErrorMessage} from "@hookform/error-message";
 import {useDispatch, useSelector} from "react-redux";
 import {updateAccount} from "./authenticationSlice";
 import {globalState} from "../global/globalSlice";
+const {sha256} = require("js-sha256").sha256;
 
 function AdditionalRegisterForm() {
   const {
@@ -16,15 +17,30 @@ function AdditionalRegisterForm() {
 
   const {currentUser} = useSelector(globalState);
 
-  const onSubmit = (data) => {
-    currentUser &&
+  const hasingPassword = async (payload) => {
+    const hash_1 = await sha256(payload.password);
+    const hash_2 = await sha256(hash_1);
+
+    return {hash_1, hash_2};
+  };
+
+  const onSubmit = async (data) => {
+    const {hash_2} = await hasingPassword({
+      password: data.password,
+    });
+
+    data = {...data, hash_2: hash_2};
+
+    if (currentUser) {
       dispatch(
         updateAccount({publicAddress: currentUser.publicAddress, data: data})
       );
+    }
   };
 
   // eslint-disable-next-line no-useless-escape
-  const regexEmail = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+  const regexEmail =
+    /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} id="additional-register-form">
@@ -75,6 +91,20 @@ function AdditionalRegisterForm() {
         <ErrorMessage
           errors={errors}
           name="phone"
+          render={({message}) => <p>{message}</p>}
+        />
+      </div>
+      <div className="form-element">
+        <label htmlFor="form_phone">Password</label>
+        <input
+          className="form-control"
+          id="form_password"
+          type="password"
+          {...register("password")}
+        />
+        <ErrorMessage
+          errors={errors}
+          name="password"
           render={({message}) => <p>{message}</p>}
         />
       </div>
