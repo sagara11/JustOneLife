@@ -1,7 +1,7 @@
 .section-wrapper {
   .filter-buttons {
     margin: 10px;
-    label{
+    label {
       margin-bottom: 10px;
     }
     select {
@@ -37,4 +37,19 @@
       }
     }
   }
+}
+
+.signature-confirm {
+  width: 100%;
+  input {
+    width: 90% !important;
+  }
+
+  .signature-confirm-button {
+    margin-top: 50px !important;
+  }
+}
+
+.signature-title {
+  margin-bottom: 20px;
 }
