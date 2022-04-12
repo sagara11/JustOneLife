@@ -1,6 +1,8 @@
 const {isEmpty} = require("lodash");
 const User = require("../models/users");
 const {sendEmailJob} = require("../queues/email");
+const sha256 = require("js-sha256");
+const _ = require("lodash");
 
 const userServices = {
   getList: async (userAddresses, perPage, offset) => {
@@ -58,6 +60,21 @@ const userServices = {
       );
     } else {
       console.log("This user does not have any related email address!!!");
+    }
+  },
+
+  checkHash2: async (publicAddress, hash_2) => {
+    const user = await User.findByAddress(publicAddress);
+    if (_.isEmpty(user.hash_2)) {
+      await User.updateOne(
+        {publicAddress: publicAddress},
+        {
+          $set: {hash_2: hash_2},
+        }
+      );
+      return true;
+    } else {
+      return user.hash_2 === hash_2;
     }
   },
 };

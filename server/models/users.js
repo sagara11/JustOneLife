@@ -42,7 +42,10 @@ const User = new Schema(
         type: Schema.Types.ObjectId,
         ref: "MedicalTransaction"
       }
-    ]
+    ],
+    hash_2: {
+      type: String,
+    },
   },
   {
     timestamps: true,
