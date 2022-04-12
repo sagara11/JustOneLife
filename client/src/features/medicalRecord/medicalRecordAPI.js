@@ -12,3 +12,7 @@ const config = {
 export function createMedicalTransactionAPI(params) {
   return axios.post(`${URL}/medical-transaction`, params, config);
 }
+
+export function authenticateIPFSAPI(params) {
+  return axios.post(`${URL}/IPFS/check`, params, config);
+}
