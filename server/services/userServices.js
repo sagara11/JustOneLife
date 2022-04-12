@@ -1,4 +1,5 @@
 const {isEmpty} = require("lodash");
+const mongoose = require('mongoose');
 const User = require("../models/users");
 const {sendEmailJob} = require("../queues/email");
 const sha256 = require("js-sha256");
@@ -34,6 +35,10 @@ const userServices = {
   },
   updateUser: async (publicAddress, data) => {
     const preUpdateUser = await User.findByAddress(publicAddress);
+
+    if (data.receptionist) {
+      data.receptionist.addedBy = mongoose.Types.ObjectId(data.receptionist.addedBy);
+    }
 
     const user = await User.findOneAndUpdate(
       {publicAddress: publicAddress},
