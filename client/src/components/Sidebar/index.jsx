@@ -83,6 +83,17 @@ function Sidebar() {
                 <span className="sidebar-text">Doctor</span>
               </NavLink>
             }
+            {userRole.includes(process.env.REACT_APP_ROLE_MANAGER) &&
+              <NavLink
+                to="/receptionists"
+                className={(isActive) =>
+                  "sidebar__item" + (isActive ? " active-item" : "")
+                }
+              >
+                <BsPeopleFill className="sidebar__icon" />
+                <span className="sidebar-text">Receptionist</span>
+              </NavLink>
+            }
             {/* Admin icons */}
             {userRole.includes(process.env.REACT_APP_ROLE_ADMIN) &&
               <NavLink

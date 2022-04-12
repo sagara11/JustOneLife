@@ -1,6 +1,10 @@
 .doctor-page__wrapper {
   padding: 30px 0;
 
+  .container {
+    max-width: 75%;
+  }
+
   button,
   input,
   a {

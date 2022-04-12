@@ -37,6 +37,15 @@ const User = new Schema(
     refreshToken: {
       type: String,
     },
+    receptionist: {
+      isReceptionist: {
+        type: Boolean,
+        default: false
+      },
+      addedBy: {
+        type: Schema.Types.ObjectId
+      }
+    },
     medicalTransactions: [
       {
         type: Schema.Types.ObjectId,

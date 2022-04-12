@@ -62,6 +62,22 @@ class UsersController {
       next(err);
     }
   }
+
+  async getReceptionist(req, res, next) {
+    const managerId = req.params.managerId;
+    try {
+      const receptionists = await User.find({
+        "receptionist.isReceptionist": true,
+        "receptionist.addedBy": managerId
+      })
+
+      console.log("Users", receptionists);
+      res.status(200).json(receptionists);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
 }
 
 module.exports = new UsersController();
