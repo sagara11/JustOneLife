@@ -1,32 +1,32 @@
 import React from "react";
 import "./styles.scss";
-import {useForm} from "react-hook-form";
-import {ErrorMessage} from "@hookform/error-message";
-import {Modal} from "react-bootstrap";
-import {useDispatch, useSelector} from "react-redux";
-import {globalState} from "../global/globalSlice";
-import {saveIPFSFile} from "./medicalRecordSlice";
+import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+import { Modal } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { globalState } from "../global/globalSlice";
+import { saveIPFSFile } from "./medicalRecordSlice";
 import medicalRecordServices from "./medicalRecordServices";
-import {authenticateIPFSAPI} from "./medicalRecordAPI";
+import { authenticateIPFSAPI } from "./medicalRecordAPI";
 
-const PasswordModal = ({show, handleClosePasswordModal, dataRegister}) => {
+const PasswordModal = ({ show, handleClosePasswordModal, dataRegister }) => {
   const {
     register,
     handleSubmit,
     setValue,
-    formState: {errors},
+    formState: { errors },
   } = useForm();
   const dispatch = useDispatch();
-  const {web3, accounts, currentUser} = useSelector(globalState);
+  const { web3, accounts, currentUser } = useSelector(globalState);
 
   const hasingPassword = async (payload) => {
-    const {passwordPatient, passwordDoctor, patientAddress, doctorAddress} =
+    const { passwordPatient, passwordDoctor, patientAddress, doctorAddress } =
       payload;
     const medicalRecordService = new medicalRecordServices({
       passwordPatient,
       passwordDoctor,
     });
-    const {hash_1_Patient, hash_2_Patient, hash_1_Doctor, hash_2_Doctor} =
+    const { hash_1_Patient, hash_2_Patient, hash_1_Doctor, hash_2_Doctor } =
       await medicalRecordService.hashingPassword();
 
     const resultPatient = await authenticateIPFSAPI({
@@ -52,8 +52,8 @@ const PasswordModal = ({show, handleClosePasswordModal, dataRegister}) => {
       doctorAddress: currentUser.publicAddress,
       doctorName: currentUser.name,
     };
-    const jsonData = JSON.stringify({...dataRegister, ...doctorInfo});
-    const {resultPatient, resultDoctor, hash_1_Patient, hash_1_Doctor} =
+    const jsonData = JSON.stringify({ ...dataRegister, ...doctorInfo });
+    const { resultPatient, resultDoctor, hash_1_Patient, hash_1_Doctor } =
       await hasingPassword({
         passwordPatient: data.passwordPatient,
         passwordDoctor: data.passwordDoctor,
@@ -100,14 +100,17 @@ const PasswordModal = ({show, handleClosePasswordModal, dataRegister}) => {
       >
         <div className="row signature-confirm">
           <div className="col-6">
-            <h5 class="modal-title signature-title" id="exampleModalLongTitle">
+            <h5
+              className="modal-title signature-title"
+              id="exampleModalLongTitle"
+            >
               Signature of Patient
             </h5>
 
             <ErrorMessage
               errors={errors}
               name="passwordPatient"
-              render={({message}) => <p>{message}</p>}
+              render={({ message }) => <p>{message}</p>}
             />
             <input
               {...register("passwordPatient", {
@@ -122,9 +125,12 @@ const PasswordModal = ({show, handleClosePasswordModal, dataRegister}) => {
             <ErrorMessage
               errors={errors}
               name="passwordDoctor"
-              render={({message}) => <p>{message}</p>}
+              render={({ message }) => <p>{message}</p>}
             />
-            <h5 class="modal-title signature-title" id="exampleModalLongTitle">
+            <h5
+              className="modal-title signature-title"
+              id="exampleModalLongTitle"
+            >
               Signature of Doctor
             </h5>
             <input

@@ -73,7 +73,7 @@ const ConfirmModal = ({
         onSubmit={handleSubmit(onSubmit)}
         id="add-doctor-form"
       >
-        <h5 class="modal-title signature-title" id="exampleModalLongTitle">
+        <h5 className="modal-title signature-title" id="exampleModalLongTitle">
           Please fill in your signature
         </h5>
         <ErrorMessage

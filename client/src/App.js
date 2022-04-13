@@ -1,10 +1,14 @@
-import React, {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {BrowserRouter, Switch, Route} from "react-router-dom";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import AuthenticationPage from "./pages/AuthenticationPage";
 import NotFound from "./components/NotFound";
-import {globalState, setAccounts, setWeb3} from "./features/global/globalSlice";
+import {
+  globalState,
+  setAccounts,
+  setWeb3,
+} from "./features/global/globalSlice";
 import {
   authenticationState,
   refreshToken,
@@ -14,23 +18,23 @@ import getWeb3 from "./getWeb3";
 import HomePage from "./pages/HomePage";
 import ManagerPage from "./pages/ManagerPage";
 import DoctorPage from "./pages/DoctorPage";
-import UserPage from './pages/UserPage';
+import UserPage from "./pages/UserPage";
 import {
   authorizationState,
   setRolePatient,
 } from "./features/authorization/authorizationSlice";
-import {isEmpty} from "lodash";
-import NewMedicalRecordPage from './pages/MedicalRecordPage/new';
+import { isEmpty } from "lodash";
+import NewMedicalRecordPage from "./pages/MedicalRecordPage/new";
 import MedicalRecordPage from "./pages/MedicalRecordPage";
-import ShowMedicalRecord from './pages/MedicalRecordPage/show';
+import ShowMedicalRecord from "./pages/MedicalRecordPage/show";
 import VaccineCertificatePage from "./pages/VaccineCertificatePage";
-import ReceptionistPage from './pages/ReceptionistPage';
+import ReceptionistPage from "./pages/ReceptionistPage";
 const jwt = require("jsonwebtoken");
 
 const App = () => {
-  const {web3, accounts, currentUser} = useSelector(globalState);
-  const {userRole} = useSelector(authorizationState);
-  const {tokenValid} = useSelector(authenticationState);
+  const { web3, accounts, currentUser } = useSelector(globalState);
+  const { userRole } = useSelector(authorizationState);
+  const { tokenValid } = useSelector(authenticationState);
   const dispatch = useDispatch();
   useEffect(() => {
     const init = async () => {
@@ -59,7 +63,7 @@ const App = () => {
       } catch (err) {
         dispatch(changeTokenValid(false));
         dispatch(
-          refreshToken({refreshToken: localStorage.getItem("refreshToken")})
+          refreshToken({ refreshToken: localStorage.getItem("refreshToken") })
         );
       }
     };
@@ -68,7 +72,7 @@ const App = () => {
 
   useEffect(() => {
     if (currentUser && isEmpty(userRole))
-      dispatch(setRolePatient({web3, accounts, currentUser}));
+      dispatch(setRolePatient({ web3, accounts, currentUser }));
   }, [accounts, currentUser, dispatch, web3, userRole]);
 
   if (web3 === null) {
@@ -93,8 +97,15 @@ const App = () => {
           path="/vaccination-certificate/:patientPublicAddress"
           component={VaccineCertificatePage}
         />
-        <PrivateRoute path="/medical-records" component={NewMedicalRecordPage} />
-        <PrivateRoute path="/vaccination-certificates" component={HomePage} />
+        <PrivateRoute
+          path="/vaccination-certificates"
+          component={VaccineCertificatePage}
+        />
+        <PrivateRoute
+          path="/medical-records"
+          component={NewMedicalRecordPage}
+        />
+        <PrivateRoute path="/doctor-certificates" component={HomePage} />
         <PrivateRoute path="/doctors" component={DoctorPage} />
         <PrivateRoute path="/managers" component={ManagerPage} />
         <PrivateRoute path="/receptionists" component={ReceptionistPage} />

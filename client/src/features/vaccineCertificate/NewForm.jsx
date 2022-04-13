@@ -15,6 +15,7 @@ function NewForm() {
     dispatch(
       createNewVaccineCertificate({ web3, accounts, currentUser, data })
     );
+    alert("Create successfully!");
     reset();
   };
 

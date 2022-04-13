@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./styles.scss";
 import Item from "./Item";
 
-function List({medicalRecordList}) {
+function List({ medicalRecordList }) {
   const renderMedicalRecord = medicalRecordList.map((medicalRecord, key) => (
     <Item key={key} medicalRecord={medicalRecord} />
   ));
