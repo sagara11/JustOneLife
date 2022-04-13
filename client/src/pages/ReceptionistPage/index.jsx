@@ -19,7 +19,7 @@ import AddModal from '../../features/receptionist/AddModal';
 
 function ReceptionistPage() {
   const dispatch = useDispatch();
-  const {web3, accounts, currentUser} = useSelector(globalState);
+  const {accounts, currentUser} = useSelector(globalState);
   const {receptionist} = useSelector(doctorState);
   const [show, setShow] = useState(false);
 

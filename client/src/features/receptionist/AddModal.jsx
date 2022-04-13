@@ -4,7 +4,6 @@ import { ErrorMessage } from "@hookform/error-message";
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { globalState } from "../global/globalSlice";
-import { setRoleDoctor } from "../authorization/authorizationSlice";
 import { fetchUserInSystem } from "../doctor/doctorAPI";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
