@@ -28,7 +28,8 @@ import NewMedicalRecordPage from "./pages/MedicalRecordPage/new";
 import MedicalRecordPage from "./pages/MedicalRecordPage";
 import ShowMedicalRecord from "./pages/MedicalRecordPage/show";
 import VaccineCertificatePage from "./pages/VaccineCertificatePage";
-import ReceptionistPage from "./pages/ReceptionistPage";
+import ReceptionistPage from './pages/ReceptionistPage';
+import WaitingRoomPage from './pages/WaitingRoomPage';
 const jwt = require("jsonwebtoken");
 
 const App = () => {
@@ -84,6 +85,7 @@ const App = () => {
       <Switch>
         <PrivateRoute path="/" exact component={HomePage} />
         <PrivateRoute path="/user/:patientPublicAddress" component={UserPage} />
+        <PrivateRoute path="/waiting-room" exact component={WaitingRoomPage} />
         <PrivateRoute
           exact
           path="/medical-record/detail"

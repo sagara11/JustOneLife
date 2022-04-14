@@ -30,6 +30,17 @@ function Sidebar() {
               <ImHome className="sidebar__icon" />
               <span className="sidebar-text">Home</span>
             </NavLink>
+            {currentUser.receptionist.isReceptionist &&
+              <NavLink
+                to="/waiting-room"
+                className={(isActive) =>
+                  "sidebar__item" + (isActive ? " active-item" : "")
+                }
+              >
+                <IoDocumentsSharp className="sidebar__icon" />
+                <span className="sidebar-text">Waiting room</span>
+              </NavLink>
+            }
             {/* Patient icons */}
             <NavLink
               to={`/medical-record/${currentUser.publicAddress}`}
