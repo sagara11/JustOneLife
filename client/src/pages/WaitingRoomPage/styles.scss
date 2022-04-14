@@ -1,0 +1,35 @@
+.waiting-room__container {
+  position: relative;
+  margin-top: 40px;
+  width: 72%;
+
+  .add-waiting-item {
+    margin-bottom: 15px;
+  }
+
+  .waiting-room__item {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    margin-bottom: 10px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0.0625rem 0.2rem 0 rgba(0, 0, 0, 0.4);
+
+    .title {
+      font-size: 18px;
+      font-weight: 550;
+      margin-bottom: 8px;
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .item-public-address {
+      color: gray;
+      font-size: 14px;
+    }
+  }
+}

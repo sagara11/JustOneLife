@@ -2,6 +2,9 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  background-color: #e5e5e5;
+  position: relative;
+  padding-bottom: 20px;
 }
 
 .new-medical-record__tab {
@@ -64,12 +67,6 @@
       color: gray;
     }
   }
-}
-
-.body__wrapper {
-  height: 90%;
-  background-color: #E5E5E5;
-  position: relative;
 }
 
 .homepage__wrapper {
