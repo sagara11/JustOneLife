@@ -45,7 +45,7 @@ export default function WaitingRoomPage() {
     <>
       <Header />
       <Sidebar />
-      <div className="medical-record__wrapper">
+      <div className="medical-record__wrapper waiting-room__wrapper">
         <div className="waiting-room__container">
           <div className="add-waiting-item">
             <button onClick={openWaitingModal} className="btn btn-primary">New patient</button>
@@ -55,9 +55,9 @@ export default function WaitingRoomPage() {
               <div key={index} className="waiting-room__item">
                 <div className="item user-info">
                   <div className="title">User Info</div>
-                  <span className='item-name'>{waitingItem.user.name}</span>
-                  <span className='item-public-address'>{formatAddress(waitingItem.user.publicAddress)}</span>
-                  <span className="item-phone">{waitingItem.user.phone}</span>
+                  <span className='item-name'>{waitingItem.user[0].name}</span>
+                  <span className='item-public-address'>{formatAddress(waitingItem.user[0].publicAddress)}</span>
+                  <span className="item-phone">{waitingItem.user[0].phone}</span>
                 </div>
                 <div className="item medical-falculty">
                   <div className="title">Falculty</div>
@@ -65,7 +65,7 @@ export default function WaitingRoomPage() {
                 </div>
                 <div className="item admitted-date">
                   <div className="title">Time</div>
-                  {waitingItem.admittedToHopital}
+                  {waitingItem.admittedToHospital}
                 </div>
               </div>
             )
@@ -167,7 +167,7 @@ function WaitingModal({
           id="add-doctor-form"
         >
           <div className="new-doctor">
-            <label>Add new Patient to waiting room</label>
+            <label>Add new patient to waiting room</label>
           </div>
           <ErrorMessage
             errors={errors}

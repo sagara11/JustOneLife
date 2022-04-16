@@ -1,9 +1,15 @@
-import React from "react";
+import { isEmpty } from 'lodash';
+import React, { useEffect } from "react";
 
 function PatientManagement(props) {
-  const {
-    register
-  } = props;
+  const {register, setValue, preloadData} = props;
+
+  useEffect(() => {
+    if (preloadData) {
+      setValue("patientManagement.medicalFalculty.falculty", preloadData.medicalFalculty);
+      setValue("patientManagement.admittedHospitalAt", preloadData.admittedToHospital);
+    }
+  }, [preloadData])
 
   return (
     <div className="row">
@@ -22,6 +28,7 @@ function PatientManagement(props) {
           <div className="nested">
             <span className="secondary-title">Falculty</span>
             <input
+              readOnly={!isEmpty(preloadData.medicalFalculty)}
               {...register("patientManagement.medicalFalculty.falculty")}
               className="form-control" />
             <span className="secondary-title">Time</span>

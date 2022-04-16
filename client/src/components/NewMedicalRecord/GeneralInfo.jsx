@@ -1,22 +1,15 @@
-import React from "react";
-import { getUser } from '../../features/authorization/authorizationAPI';
+import React, { useEffect } from "react";
 
 function GeneralInfo(props) {
-  const {register, setValue} = props;
+  const {register, setValue, preloadData} = props;
 
-  const renderPatientData = async (e) => {
-    let patientAddress = e.target.value;
-    const userData = await getUser({address: patientAddress});
-    if (!userData.data) {
-      alert("The system can't find any data related to this public address!");
-      setValue("generalInfo.name", "");
-      setValue("generalInfo.phone", "");
-      return;
+  useEffect(() => {
+    if (preloadData) {
+      setValue("generalInfo.publicAddress", preloadData.user[0].publicAddress);
+      setValue("generalInfo.phone", preloadData.user[0].phone);
+      setValue("generalInfo.name", preloadData.user[0].name);
     }
-
-    setValue("generalInfo.name", userData.data.name);
-    setValue("generalInfo.phone", userData.data.phone);
-  }
+  }, [preloadData]);
 
   return (
     <div className="row">
@@ -24,23 +17,23 @@ function GeneralInfo(props) {
         <div className="field-input">
           <label htmlFor="">Patient public address</label>
           <input
+            readOnly
             {...register("generalInfo.publicAddress", {
               required: "This is required.",
             })}
-            onBlur={renderPatientData}
             className="form-control"
           />
         </div>
         <div className="field-input">
           <label htmlFor="">Phone</label>
-          <input disabled {...register("generalInfo.phone")} className="form-control" />
+          <input readOnly {...register("generalInfo.phone")} className="form-control" />
         </div>
       </div>
       <div className="col-4">
         <div className="field-input">
           <label htmlFor="">Patient name</label>
           <input
-            disabled
+            readOnly
             {...register("generalInfo.name", {required: "This is required."})}
             className="form-control"
           />

@@ -37,7 +37,6 @@ function DoctorPage() {
   useEffect(() => {
     if (!show) {
       if (currentOffset < 0) return;
-
       dispatch(
         getDoctorList({
           web3,

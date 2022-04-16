@@ -64,7 +64,7 @@ function Sidebar() {
             {userRole.includes(process.env.REACT_APP_ROLE_DOCTOR) && (
               <>
                 <NavLink
-                  to="/medical-records"
+                  to="/waiting-list"
                   className={(isActive) =>
                     "sidebar__item" + (isActive ? " active-item" : "")
                   }

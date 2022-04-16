@@ -9,8 +9,8 @@ contract Authorize is Ownable, AccessControl {
   bytes32 public constant PATIENT_ROLE = keccak256("PATIENT");
   bytes32 public constant DOCTOR_ROLE = keccak256("DOCTOR");
 
-  mapping(address => address[]) private managerToDoctors;
-  mapping(address => address) private doctorToManager;
+  mapping(address => address[]) public managerToDoctors;
+  mapping(address => address) public doctorToManager;
 
   constructor() {
     _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
