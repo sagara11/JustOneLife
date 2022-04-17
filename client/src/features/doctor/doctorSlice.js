@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {fetchDoctorListAPI, fetchReceptionistListAPI} from "./doctorAPI";
+import {fetchDoctorListAPI} from "./doctorAPI";
 import doctorServices from "./doctorServices";
 
 const initialState = {
@@ -7,9 +7,6 @@ const initialState = {
     data: [],
     totalPage: 0,
     offset: 0,
-  },
-  receptionist: {
-    data: []
   }
 };
 
@@ -24,15 +21,6 @@ export const getDoctorList = createAsyncThunk(
       perPage: payload.perPage,
       offset: payload.offset,
     });
-    return data;
-  }
-);
-
-export const getReceptionist = createAsyncThunk(
-  "doctor/getReceptionist",
-  async (payload) => {
-    const { managerId } = payload;
-    const {data} = await fetchReceptionistListAPI(managerId);
     return data;
   }
 );
@@ -58,10 +46,6 @@ export const doctorSlice = createSlice({
         state.doctorList.data = data;
         state.doctorList.totalPage = totalPage;
       }
-    })
-    builder.addCase(getReceptionist.fulfilled, (state, action) => {
-      const data = action.payload;
-      state.receptionist.data = data;
     });
   },
 });

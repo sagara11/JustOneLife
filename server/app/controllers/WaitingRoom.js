@@ -36,16 +36,7 @@ class WaitingRoomController {
       delete req.query.manager;
     }
 
-    let waitingList = await WaitingRoom.find(req.query)
-      .sort({ createdAt: -1 })
-      .populate({
-        path: "user",
-        select: {name: 1, publicAddress: 1, email: 1, phone: 1}
-      })
-      .populate({
-        path: "manager",
-        select: {name: 1, publicAddress: 1, email: 1, phone: 1}
-      })
+    let waitingList = await WaitingRoom.findList(req.query)
 
     res.status(200).json(waitingList);
 
@@ -53,7 +44,11 @@ class WaitingRoomController {
   }
 
   async destroy(req, res, next) {
-    res.send("Destroy");
+    let deletedItem = await WaitingRoom.findOneAndDelete({_id: req.params.id});
+    console.log("deleted", deletedItem);
+    res.status(200).json({ deletedItem: deletedItem });
+
+    next();
   }
 }
 

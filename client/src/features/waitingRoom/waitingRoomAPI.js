@@ -24,3 +24,7 @@ export function getWaitingRooomAPI(params) {
 
   return axios.get(`${URL}/waiting-room/?receeptionist=${params.receptionist}?manager=${params.manager}`, config);
 }
+
+export function deleteWaitingRoomAPI(params) {
+  return axios.delete(`${URL}/waiting-room/${params.id}`, config);
+}

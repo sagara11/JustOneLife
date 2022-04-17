@@ -1,7 +1,3 @@
-.waiting-room__wrapper {
-  height: 100%;
-}
-
 .waiting-room__container {
   position: relative;
   margin-top: 40px;
@@ -11,7 +7,13 @@
     margin-bottom: 15px;
   }
 
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
   .waiting-room__item {
+    text-decoration: none;
     display: flex;
     justify-content: space-between;
     background-color: white;

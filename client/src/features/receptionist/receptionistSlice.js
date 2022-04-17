@@ -1,8 +1,12 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import { updateAccountAPI } from '../authentication/authenticationAPI';
+import { fetchReceptionistListAPI } from '../doctor/doctorAPI';
 
 const initialState = {
   medicalRecordList: [],
+  receptionist: {
+    data: []
+  }
 };
 
 export const addReceptionist = createAsyncThunk(
@@ -10,6 +14,15 @@ export const addReceptionist = createAsyncThunk(
   async (payload) => {
     const params = payload;
     const { data } = await updateAccountAPI(params);
+    return data;
+  }
+);
+
+export const getReceptionist = createAsyncThunk(
+  "doctor/getReceptionist",
+  async (payload) => {
+    const { managerId } = payload;
+    const {data} = await fetchReceptionistListAPI(managerId);
     return data;
   }
 );
@@ -26,6 +39,11 @@ export const receptionistSlice = createSlice({
     builder.addCase(addReceptionist.fulfilled, (state, action) => {
       alert("Added");
       console.log(action.payload);
+      state.receptionist.data.push(action.payload);
+    })
+    builder.addCase(getReceptionist.fulfilled, (state, action) => {
+      const data = action.payload;
+      state.receptionist.data = data;
     });
   },
 });

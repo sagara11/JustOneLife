@@ -8,8 +8,9 @@ import { globalState } from "../global/globalSlice";
 import { saveIPFSFile } from "./medicalRecordSlice";
 import medicalRecordServices from "./medicalRecordServices";
 import { authenticateIPFSAPI } from "./medicalRecordAPI";
+import { deleteWaitingRoomAPI } from '../waitingRoom/waitingRoomAPI';
 
-const PasswordModal = ({ show, handleClosePasswordModal, dataRegister }) => {
+const PasswordModal = ({ show, handleClosePasswordModal, dataRegister, waitingItemId }) => {
   const {
     register,
     handleSubmit,
@@ -74,6 +75,8 @@ const PasswordModal = ({ show, handleClosePasswordModal, dataRegister }) => {
         })
       );
       console.log("Authenticated successs");
+      await deleteWaitingRoomAPI({id: waitingItemId});
+      console.log("waiting item removed");
       handleClosePasswordModal();
     } else {
       console.log("Authenticated failed");

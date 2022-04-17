@@ -13,14 +13,14 @@ import ReactPaginate from 'react-paginate';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
-import { doctorState, getReceptionist } from '../../features/doctor/doctorSlice';
 import { globalState } from '../../features/global/globalSlice';
 import AddModal from '../../features/receptionist/AddModal';
+import { getReceptionist, receptionistState } from '../../features/receptionist/receptionistSlice';
 
 function ReceptionistPage() {
   const dispatch = useDispatch();
   const {accounts, currentUser} = useSelector(globalState);
-  const {receptionist} = useSelector(doctorState);
+  const {receptionist} = useSelector(receptionistState);
   const [show, setShow] = useState(false);
 
   const handleCloseReceptionistModal = () => setShow(false);

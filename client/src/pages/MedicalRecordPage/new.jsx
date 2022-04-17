@@ -1,11 +1,18 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./styles.scss";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import MedicalRecordForm from "../../features/medicalRecord/NewForm";
+import { useLocation } from 'react-router-dom';
 
 const NewMedicalRecordPage = () => {
   const [page, setPage] = useState(0);
+  const { state } = useLocation();
+
+  useEffect(() => {
+    console.log("waiting room data" , state.preloadData)
+  }, [state]);
+
   const formTitle = [
     "General Information",
     "Patient Management",
@@ -51,7 +58,7 @@ const NewMedicalRecordPage = () => {
           })}
         </section>
         <section className="new-medical-record__form">
-          <MedicalRecordForm page={page} handleChangePage={handleChangePage} />
+          <MedicalRecordForm preloadData={state.preloadData} page={page} handleChangePage={handleChangePage} />
         </section>
       </div>
     </>
