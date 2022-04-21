@@ -8,11 +8,11 @@ function Item({ data }) {
         <div className="card-header">{data["name"]}</div>
         <div className="card-body">
           <blockquote className="blockquote mb-0">
-            <p>Location: {data["location"]}</p>
+            <p>Địa điểm: {data["location"]}</p>
             <br />
-            <p>Lot number: {data["lotNumber"]}</p>
+            <p>Số lô: {data["lotNumber"]}</p>
             <footer className="blockquote-footer">
-              Date <cite title="Source Title">{data["date"]}</cite>
+              Ngày tiêm <cite title="Source Title">{data["date"]}</cite>
             </footer>
           </blockquote>
         </div>

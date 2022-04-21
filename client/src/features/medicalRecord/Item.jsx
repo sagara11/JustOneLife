@@ -18,8 +18,8 @@ function Item({medicalRecord}) {
               <div className='doctor-address'>{formatAddress(medicalRecord.doctorAddress)}</div>
             </div>
             <div className="card-body">
-              <p className='title'>Primary Condition: </p>
-              <p>{medicalRecord.diagnose.primaryCondition}</p>
+              <p className='title'>Bệnh chính: </p>
+              <p>{medicalRecord.diagnose.primaryCondition || "..."}</p>
             </div>
           </div>
         </div>
@@ -29,9 +29,9 @@ function Item({medicalRecord}) {
       </div>
       <div className='medical-item__date'>
         <div className='element-date'>
-          <div>Admitted day</div>
+          <div>Ngày nhập viện</div>
           <span>
-            {medicalRecord.patientManagement.admittedHospitalAt}
+            {medicalRecord.patientManagement.admittedHospitalAt || "..."}
           </span>
         </div>
       </div>

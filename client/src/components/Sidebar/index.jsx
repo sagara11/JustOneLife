@@ -28,7 +28,7 @@ function Sidebar() {
               }
             >
               <ImHome className="sidebar__icon" />
-              <span className="sidebar-text">Home</span>
+              <span className="sidebar-text">Trang chủ</span>
             </NavLink>
             {currentUser.receptionist.isReceptionist &&
               <NavLink
@@ -38,7 +38,7 @@ function Sidebar() {
                 }
               >
                 <IoDocumentsSharp className="sidebar__icon" />
-                <span className="sidebar-text">Waiting room</span>
+                <span className="sidebar-text">Phòng chờ</span>
               </NavLink>
             }
             {/* Patient icons */}
@@ -49,7 +49,7 @@ function Sidebar() {
               }
             >
               <MdDocumentScanner className="sidebar__icon" />
-              <span className="sidebar-text">Your Record</span>
+              <span className="sidebar-text">Bệnh án</span>
             </NavLink>
             <NavLink
               to={`/vaccination-certificate/${currentUser.publicAddress}`}
@@ -58,7 +58,7 @@ function Sidebar() {
               }
             >
               <AiFillSafetyCertificate className="sidebar__icon" />
-              <span className="sidebar-text">Your Vaccine</span>
+              <span className="sidebar-text">Vaccine</span>
             </NavLink>
             {/* Doctor icons */}
             {userRole.includes(process.env.REACT_APP_ROLE_DOCTOR) && (
@@ -70,7 +70,7 @@ function Sidebar() {
                   }
                 >
                   <IoDocumentsSharp className="sidebar__icon" />
-                  <span className="sidebar-text">Record</span>
+                  <span className="sidebar-text">Hàng chờ</span>
                 </NavLink>
                 <NavLink
                   to="/vaccination-certificates"
@@ -79,7 +79,7 @@ function Sidebar() {
                   }
                 >
                   <BiSelectMultiple className="sidebar__icon" />
-                  <span className="sidebar-text">Vaccine</span>
+                  <span className="sidebar-text">Thêm vaccine</span>
                 </NavLink>
               </>
             )}
@@ -103,7 +103,7 @@ function Sidebar() {
                 }
               >
                 <BsPeopleFill className="sidebar__icon" />
-                <span className="sidebar-text">Doctor</span>
+                <span className="sidebar-text">Bác sĩ</span>
               </NavLink>
             )}
             {userRole.includes(process.env.REACT_APP_ROLE_MANAGER) && (
@@ -114,7 +114,7 @@ function Sidebar() {
                 }
               >
                 <BsPeopleFill className="sidebar__icon" />
-                <span className="sidebar-text">Receptionist</span>
+                <span className="sidebar-text">Lễ tân</span>
               </NavLink>
             )}
             {/* Admin icons */}
@@ -126,7 +126,7 @@ function Sidebar() {
                 }
               >
                 <BsFillPersonPlusFill className="sidebar__icon" />
-                <span className="sidebar-text">Manager</span>
+                <span className="sidebar-text">Bệnh viện</span>
               </NavLink>
             )}
           </div>
@@ -138,7 +138,7 @@ function Sidebar() {
               }
             >
               <IoSettingsSharp className="sidebar__icon" />
-              <span className="sidebar-text">Setting</span>
+              <span className="sidebar-text">Cài đặt</span>
             </NavLink>
           </div>
         </div>

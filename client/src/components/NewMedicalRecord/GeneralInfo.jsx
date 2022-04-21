@@ -15,7 +15,7 @@ function GeneralInfo(props) {
     <div className="row">
       <div className="col-4">
         <div className="field-input">
-          <label htmlFor="">Patient public address</label>
+          <label htmlFor="">Địa chỉ công khai</label>
           <input
             readOnly
             {...register("generalInfo.publicAddress", {
@@ -25,13 +25,13 @@ function GeneralInfo(props) {
           />
         </div>
         <div className="field-input">
-          <label htmlFor="">Phone</label>
+          <label htmlFor="">Điện thoại</label>
           <input readOnly {...register("generalInfo.phone")} className="form-control" />
         </div>
       </div>
       <div className="col-4">
         <div className="field-input">
-          <label htmlFor="">Patient name</label>
+          <label htmlFor="">Tên</label>
           <input
             readOnly
             {...register("generalInfo.name", {required: "This is required."})}
@@ -39,7 +39,7 @@ function GeneralInfo(props) {
           />
         </div>
         <div className="field-input">
-          <label htmlFor="">Date of birth</label>
+          <label htmlFor="">Ngày sinh</label>
           <input
             type="date"
             {...register("generalInfo.dateOfBirth")}
@@ -49,14 +49,14 @@ function GeneralInfo(props) {
       </div>
       <div className="col-4">
         <div className="field-input">
-          <label htmlFor="">Gender</label>
+          <label htmlFor="">Giới tính</label>
           <select className="form-control" {...register("generalInfo.gender")}>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
+            <option value="Male">Nam</option>
+            <option value="Female">Nữ</option>
           </select>
         </div>
         <div className="field-input">
-          <label htmlFor="">Address</label>
+          <label htmlFor="">Địa chỉ thường trú</label>
           <input
             {...register("generalInfo.address")}
             className="form-control"

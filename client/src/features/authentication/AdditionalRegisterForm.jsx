@@ -44,7 +44,7 @@ function AdditionalRegisterForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} id="additional-register-form">
       <div className="form-element">
-        <label htmlFor="form_username">Username</label>
+        <label htmlFor="form_username">Tên đăng nhập</label>
         <input
           {...register("name", { required: "This is required." })}
           className="form-control"
@@ -76,7 +76,7 @@ function AdditionalRegisterForm() {
         />
       </div>
       <div className="form-element">
-        <label htmlFor="form_phone">Phone</label>
+        <label htmlFor="form_phone">Điện thoại</label>
         <input
           className="form-control"
           id="form_phone"
@@ -94,7 +94,7 @@ function AdditionalRegisterForm() {
         />
       </div>
       <div className="form-element">
-        <label htmlFor="form_phone">Password</label>
+        <label htmlFor="form_phone">Mật khẩu</label>
         <input
           className="form-control"
           id="form_password"
@@ -108,7 +108,7 @@ function AdditionalRegisterForm() {
         />
       </div>
       <button className="btn btn-primary" id="form_submit">
-        Submit
+        Tiếp tục
       </button>
     </form>
   );

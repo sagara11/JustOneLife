@@ -9,13 +9,13 @@ function Diagnose(props) {
     <div className="row">
       <div className="col-4">
         <div className="field-input">
-          <label htmlFor="">Medical Falculty</label>
+          <label htmlFor="">Khoa khám bệnh</label>
           <input
             {...register("diagnose.medicalFalculty")}
             className="form-control" />
         </div>
         <div className="field-input">
-          <label htmlFor="">Emergency Aid</label>
+          <label htmlFor="">Cấp cứu</label>
           <input
             {...register("diagnose.emergencyAid")}
             className="form-control" />
@@ -23,14 +23,14 @@ function Diagnose(props) {
       </div>
       <div className="col-4">
         <div className="field-input">
-          <label className="title" htmlFor="">Method</label>
+          <label className="title" htmlFor="">Phương pháp</label>
           <div className="nested">
-            <span className="secondary-title">Medical Procedure</span>
+            <span className="secondary-title">Thủ tục y tế</span>
             <textarea
               {...register("diagnose.method.medicalProcedure")}
               className="form-control">
             </textarea>
-            <span className="secondary-title">Surgery</span>
+            <span className="secondary-title">Phẫu thuật</span>
             <textarea
               {...register("diagnose.method.surgery")}
               className="form-control">
@@ -40,14 +40,14 @@ function Diagnose(props) {
       </div>
       <div className="col-4">
         <div className="field-input">
-          <label htmlFor="">Primary Condition</label>
+          <label htmlFor="">Bệnh chính</label>
           <textarea
             {...register("diagnose.primaryCondition")}
             className="form-control">
           </textarea>
         </div>
         <div className="field-input">
-          <label htmlFor="">Cormobilites</label>
+          <label htmlFor="">Bệnh phụ</label>
           <textarea
             {...register("diagnose.cormobilities")}
             className="form-control">

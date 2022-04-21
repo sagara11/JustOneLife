@@ -64,23 +64,23 @@ export default function WaitingListPage() {
       <Sidebar />
       <div className="medical-record__wrapper waiting-room__wrapper">
         <div className="waiting-room__container">
-          <h2>Waiting List</h2>
+          <h2>Danh sách chờ</h2>
           {
             waitingList.map((waitingItem, index) =>
               <NavLink key={index} to={{pathname: `/medical-records`, state: {preloadData: waitingItem}}}>
                 <div className="waiting-room__item">
                   <div className="item user-info">
-                    <div className="title">User Info</div>
+                    <div className="title">Thông tin bệnh nhân</div>
                     <span className='item-name'>{waitingItem.user[0].name}</span>
                     <span className='item-public-address'>{formatAddress(waitingItem.user[0].publicAddress)}</span>
                     <span className="item-phone">{waitingItem.user[0].phone}</span>
                   </div>
                   <div className="item medical-falculty">
-                    <div className="title">Falculty</div>
+                    <div className="title">Khoa khám bệnh</div>
                     {waitingItem.medicalFalculty || "No falculty selected"}
                   </div>
                   <div className="item admitted-date">
-                    <div className="title">Time</div>
+                    <div className="title">Ngày khám</div>
                     {waitingItem.admittedToHospital}
                   </div>
                 </div>

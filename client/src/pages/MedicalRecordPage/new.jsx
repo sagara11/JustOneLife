@@ -14,11 +14,11 @@ const NewMedicalRecordPage = () => {
   }, [state]);
 
   const formTitle = [
-    "General Information",
-    "Patient Management",
-    "Diagnose",
-    "Treatment",
-    "Medical Media Storage",
+    "Thông tin chung",
+    "Quản lý người bệnh",
+    "Chẩn đoán",
+    "Điều trị",
+    "Hình ảnh",
   ];
 
   const handleChangePage = () => {

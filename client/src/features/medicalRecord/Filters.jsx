@@ -5,23 +5,16 @@ function Filters() {
   return (
     <div className="filter-buttons">
       <div className="form-group filter-buttons">
-        <label htmlFor="inputState">Doctor</label>
+        <label htmlFor="inputState">Bác sĩ</label>
         <select className="form-control">
-          <option selected>Choose...</option>
+          <option selected>Chọn...</option>
           <option>...</option>
         </select>
       </div>
       <div className="form-group filter-buttons">
-        <label htmlFor="inputState">Date</label>
+        <label htmlFor="inputState">Ngày khám</label>
         <select className="form-control">
-          <option selected>Choose...</option>
-          <option>...</option>
-        </select>
-      </div>
-      <div className="form-group filter-buttons">
-        <label htmlFor="inputState">Doctor</label>
-        <select className="form-control">
-          <option selected>Choose...</option>
+          <option selected>Chọn...</option>
           <option>...</option>
         </select>
       </div>

@@ -29,7 +29,7 @@ function UserPage() {
       <div className="body__wrapper homepage__wrapper user__wrapper">
         <div className="section-wrapper user-profile__section">
           <div className="user-identities">
-            <h1>Your Profile</h1>
+            <h1>Thông tin tài khoản</h1>
             <div className={`identities-container ${copy ? "copied" : ""}`} onClick={copyAddress}>
               <span className="address">{convertAddressForDisplay(currentUser.publicAddress)}</span>
               <span>{currentUser.name}</span>
@@ -44,7 +44,7 @@ function UserPage() {
             </div>
             <div className="col-6">
               <div className="item">
-                <label>Phone</label>
+                <label>Điện thoại</label>
                 <input type="text" disabled className="form-control" value={currentUser.phone} />
               </div>
             </div>

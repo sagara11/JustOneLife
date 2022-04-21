@@ -12,19 +12,19 @@ function PatientManagement(props) {
     <div className="row">
       <div className="col-4">
         <div className="field-input">
-          <label htmlFor="">Admitted Hospital At</label>
+          <label htmlFor="">Ngày nhập viện</label>
           <div className="data">{admittedHospitalAt}</div>
         </div>
       </div>
       <div className="col-4">
         <div className="field-input group-field">
-          <label className="title" htmlFor="">Medical Faculty</label>
+          <label className="title" htmlFor="">Khoa khám bệnh</label>
           <div className="content">
-            <div className="sub-title">Falculty</div>
+            <div className="sub-title">Khoa</div>
             <div className="data">{medicalFalculty.falculty}</div>
           </div>
           <div className="content">
-            <div className="sub-title">Time</div>
+            <div className="sub-title">Thời gian vào khám</div>
             <div className="data time-data">
               <div className="icon">
                 <BsCalendar2DateFill />
@@ -36,13 +36,13 @@ function PatientManagement(props) {
       </div>
       <div className="col-4">
         <div className="field-input group-field">
-          <label className="title" htmlFor="">Change Faculty</label>
+          <label className="title" htmlFor="">Chuyển khoa</label>
           <div className="content">
-            <div className="sub-title">Falculty</div>
+            <div className="sub-title">Khoa</div>
             <div className="data">{changeFalculty.falculty}</div>
           </div>
           <div className="content">
-            <div className="sub-title">Time</div>
+            <div className="sub-title">Thời gian</div>
             <div className="data time-data">
               <div className="icon">
                 <BsCalendar2DateFill />

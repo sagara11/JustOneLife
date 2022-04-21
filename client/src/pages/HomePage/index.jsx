@@ -13,32 +13,32 @@ function HomePage() {
           <div className="col-7">
             <section className="home__section medical-record__section">
               <div className="section-header">
-                <p>Last Record</p>
+                <p>Bệnh án </p>
               </div>
               <div className="section-body">
                 body
               </div>
-              <div className="btn btn-primary">View</div>
+              <div className="btn btn-primary">Xem thêm</div>
             </section>
             <section className="home__section medicine__section">
               <div className="section-header">
-                <p>Medicine</p>
+                <p>Đơn thuốc</p>
               </div>
               <div className="section-body">
                 body
               </div>
-              <div className="btn btn-primary">View</div>
+              <div className="btn btn-primary">Xem thêm</div>
             </section>
           </div>
           <div className="col-5">
             <section className="home__section vaccine__section">
               <div className="section-header">
-                <p>Vaccine certification</p>
+                <p>Chứng chỉ vaccine</p>
               </div>
               <div className="section-body">
                 body
               </div>
-              <div className="btn btn-primary">View</div>
+              <div className="btn btn-primary">Xem thêm</div>
             </section>
             <section className="home__section post__section">
               <div className="background-image">

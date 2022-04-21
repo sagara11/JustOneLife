@@ -48,23 +48,23 @@ export default function WaitingRoomPage() {
       <div className="medical-record__wrapper waiting-room__wrapper">
         <div className="waiting-room__container">
           <div className="add-waiting-item">
-            <button onClick={openWaitingModal} className="btn btn-primary">New patient</button>
+            <button onClick={openWaitingModal} className="btn btn-primary">Bệnh nhân mới</button>
           </div>
           {
             waitingList.map((waitingItem, index) =>
               <div key={index} className="waiting-room__item">
                 <div className="item user-info">
-                  <div className="title">User Info</div>
+                  <div className="title">Thông tin</div>
                   <span className='item-name'>{waitingItem.user[0].name}</span>
                   <span className='item-public-address'>{formatAddress(waitingItem.user[0].publicAddress)}</span>
                   <span className="item-phone">{waitingItem.user[0].phone}</span>
                 </div>
                 <div className="item medical-falculty">
-                  <div className="title">Falculty</div>
+                  <div className="title">Khoa khám bệnh</div>
                   {waitingItem.medicalFalculty || "No falculty selected"}
                 </div>
                 <div className="item admitted-date">
-                  <div className="title">Time</div>
+                  <div className="title">Ngày nhập viện</div>
                   {waitingItem.admittedToHospital}
                 </div>
               </div>
@@ -121,7 +121,7 @@ function WaitingModal({
         value={selectedOptions}
         isMulti
         options={options}
-        placeholder="User Name..."
+        placeholder="Nhập tên..."
       />
     );
   };
@@ -167,7 +167,7 @@ function WaitingModal({
           id="add-doctor-form"
         >
           <div className="new-doctor">
-            <label>Add new patient to waiting room</label>
+            <label>Thêm người bệnh vào phòng chờ</label>
           </div>
           <ErrorMessage
             errors={errors}
@@ -181,7 +181,7 @@ function WaitingModal({
             placeholder="Medical Falculty"
             type="text"
           />
-          <button className="btn btn-primary">ADD</button>
+          <button className="btn btn-primary">THÊM</button>
         </form>
       </Modal>
     </>

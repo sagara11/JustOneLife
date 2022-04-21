@@ -27,7 +27,7 @@ const MedicalRecordDetail = (props) => {
       return hash.substring(0, 5) + "....." + hash.substring(hash.length - 5, hash.length)
     }
 
-    return "";
+    return "...";
   }
 
   const renderPage = () => {
@@ -54,7 +54,7 @@ const MedicalRecordDetail = (props) => {
         {renderPage()}
         <div className="medical-hash">
           <span>
-            {`Verified onchain by: ${formatTransaction(transactionHash)}`}
+            {`Xác thực bởi giao dịch: ${formatTransaction(transactionHash)}`}
           </span>
         </div>
       </div>

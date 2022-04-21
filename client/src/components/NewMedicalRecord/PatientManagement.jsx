@@ -15,7 +15,7 @@ function PatientManagement(props) {
     <div className="row">
       <div className="col-4">
         <div className="field-input">
-          <label htmlFor="">Admitted Hospital At</label>
+          <label htmlFor="">Ngày nhập viện</label>
           <input
             type="date"
             {...register("patientManagement.admittedHospitalAt")}
@@ -24,14 +24,14 @@ function PatientManagement(props) {
       </div>
       <div className="col-4">
         <div className="field-input">
-          <label className="title" htmlFor="">Medical Faculty</label>
+          <label className="title" htmlFor="">Khoa khám bệnh</label>
           <div className="nested">
-            <span className="secondary-title">Falculty</span>
+            <span className="secondary-title">Khoa</span>
             <input
               readOnly={!isEmpty(preloadData.medicalFalculty)}
               {...register("patientManagement.medicalFalculty.falculty")}
               className="form-control" />
-            <span className="secondary-title">Time</span>
+            <span className="secondary-title">Thời gian vào khám</span>
             <input
               type="date"
               {...register("patientManagement.medicalFalculty.time")}
@@ -41,13 +41,13 @@ function PatientManagement(props) {
       </div>
       <div className="col-4">
         <div className="field-input">
-          <label className="title" htmlFor="">Change Faculty</label>
+          <label className="title" htmlFor="">Chuyển khoa</label>
           <div className="nested">
-            <span className="secondary-title">Falculty</span>
+            <span className="secondary-title">Khoa</span>
             <input
               {...register("patientManagement.changeFalculty.falculty")}
               className="form-control" />
-            <span className="secondary-title">Time</span>
+            <span className="secondary-title">Thời gian</span>
             <input
               type="date"
               {...register("patientManagement.changeFalculty.time")}

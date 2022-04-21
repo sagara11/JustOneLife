@@ -66,7 +66,7 @@ const AddManagerForm = () => {
         id="add-manager-form"
       >
         <div className="new-manager">
-          <label>Add New Manager</label>
+          <label>Thêm quản lý bệnh viện</label>
         </div>
         <AnimatedMulti />
         <ErrorMessage
@@ -74,7 +74,7 @@ const AddManagerForm = () => {
           name="address"
           render={({message}) => <p>{message}</p>}
         />
-        <button className="btn btn-primary">ADD</button>
+        <button className="btn btn-primary">THÊM</button>
       </form>
     </>
   );

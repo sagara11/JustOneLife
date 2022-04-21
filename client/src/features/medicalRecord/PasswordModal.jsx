@@ -107,7 +107,7 @@ const PasswordModal = ({ show, handleClosePasswordModal, dataRegister, waitingIt
               className="modal-title signature-title"
               id="exampleModalLongTitle"
             >
-              Signature of Patient
+              Khóa của bệnh nhân
             </h5>
 
             <ErrorMessage
@@ -134,7 +134,7 @@ const PasswordModal = ({ show, handleClosePasswordModal, dataRegister, waitingIt
               className="modal-title signature-title"
               id="exampleModalLongTitle"
             >
-              Signature of Doctor
+              Khóa của bác sĩ
             </h5>
             <input
               {...register("passwordDoctor", {
@@ -147,7 +147,7 @@ const PasswordModal = ({ show, handleClosePasswordModal, dataRegister, waitingIt
           </div>
         </div>
         <button className="btn btn-primary signature-confirm-button">
-          Confirm
+          Xác nhận
         </button>
       </form>
     </Modal>

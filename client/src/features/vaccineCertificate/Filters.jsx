@@ -14,11 +14,6 @@ function Filters() {
         <select className="form-control">
         </select>
       </div>
-      <div className="form-group filter-buttons">
-        <label htmlFor="inputState">Doctor</label>
-        <select className="form-control">
-        </select>
-      </div>
     </div>
   );
 }

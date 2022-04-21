@@ -43,7 +43,7 @@ function Header() {
       return <span className="user-role__badge">{userRole[0]}</span>;
     }
 
-    return <span className={`user-role__badge ${roleClass()}`}>Roles</span>;
+    return <span className={`user-role__badge ${roleClass()}`}>Vai trò</span>;
   };
 
   return (
@@ -59,9 +59,8 @@ function Header() {
             <>
               <Col md={6}>
                 <div className="header-navbar__wrapper">
-                  <div className="header-navbar__item">Home</div>
-                  <div className="header-navbar__item">About</div>
-                  <div className="header-navbar__item">Research</div>
+                  <div className="header-navbar__item">Trang chủ</div>
+                  <div className="header-navbar__item">Thông tin</div>
                   <div className="header-navbar__item">Chat</div>
                 </div>
               </Col>
@@ -92,10 +91,10 @@ function Header() {
                         as={Link}
                         to={`/user/${currentUser.publicAddress}`}
                       >
-                        Profile
+                        Thông tin cá nhân
                       </Dropdown.Item>
                       <Dropdown.Item href="#" onClick={handleLogout}>
-                        Logout
+                        Thoát
                       </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
@@ -105,7 +104,7 @@ function Header() {
           ) : (
             <Col md={9}>
               <div className="header-submenu__wrapper">
-                <p className="header-submenu__item">Login</p>
+                <p className="header-submenu__item">Đăng nhập</p>
               </div>
             </Col>
           )}
