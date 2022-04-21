@@ -74,7 +74,7 @@ const ConfirmModal = ({
         id="add-doctor-form"
       >
         <h5 className="modal-title signature-title" id="exampleModalLongTitle">
-          Please fill in your signature
+          Điền mật khẩu
         </h5>
         <ErrorMessage
           errors={errors}
@@ -87,7 +87,7 @@ const ConfirmModal = ({
           placeholder="Password"
           type="password"
         />
-        <button className="btn btn-primary">Confirm</button>
+        <button className="btn btn-primary">Xác nhận</button>
       </form>
     </Modal>
   );

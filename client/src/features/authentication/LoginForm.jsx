@@ -46,9 +46,9 @@ function LoginForm() {
 
   return (
     <div className="login-form">
-      <h1 className="login-form__title">Medical Records System</h1>
+      <h1 className="login-form__title">Quản lý hồ sơ bệnh án</h1>
       <div className="login-form__content">
-        <h3>Connect your wallet</h3>
+        <h3>Kết nối với MetaMask</h3>
         <div className="metamask__wrapper" onClick={handleClick}>
           <img src={metaMaskLogo} alt="meta-mask-logo" />
         </div>

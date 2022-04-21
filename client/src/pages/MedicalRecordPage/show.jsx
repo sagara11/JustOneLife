@@ -9,11 +9,11 @@ function ShowMedicalRecord({medicalRecord}) {
   let { state } = useLocation();
   const [page, setPage] = useState(0);
   const tabTitle = [
-    "General Information",
-    "Patient Management",
-    "Diagnose",
-    "Treatment",
-    "Medical Media Storage",
+    "Thông tin chung",
+    "Quản lý người bệnh",
+    "Chẩn đoán",
+    "Điều trị",
+    "Hình ảnh",
   ];
 
   const handleChangePage = () => {

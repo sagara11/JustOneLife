@@ -39,7 +39,7 @@ function VaccineCertificatePage() {
                 <div className="col-12">
                   <div className="new-certificate-form">
                     <div className="form-title">
-                      Add New Vaccine Certificate
+                      Thêm chứng chỉ vaccine mới
                     </div>
                     <div className="form-detail">
                       <NewForm />

@@ -79,7 +79,7 @@ const AddDoctorForm = ({show, handleCloseAddDoctorModal}) => {
         id="add-doctor-form"
       >
         <div className="new-doctor">
-          <label>Add New Doctor</label>
+          <label>Thêm bác sĩ mới</label>
         </div>
         <ErrorMessage
           errors={errors}
@@ -87,7 +87,7 @@ const AddDoctorForm = ({show, handleCloseAddDoctorModal}) => {
           render={({message}) => <p>{message}</p>}
         />
         <AnimatedMulti />
-        <button className="btn btn-primary">ADD</button>
+        <button className="btn btn-primary">THÊM</button>
       </form>
     </Modal>
   );

@@ -54,7 +54,7 @@ function NewForm() {
       <div className="row">
         <div className="col-4">
           <div className="field-input">
-            <label htmlFor="">Patient</label>
+            <label htmlFor="">Tên</label>
             <Select
               className="form-control"
               closeMenuOnSelect={true}
@@ -65,7 +65,7 @@ function NewForm() {
             />
           </div>
           <div className="field-input">
-            <label htmlFor="">Location</label>
+            <label htmlFor="">Địa điểm</label>
             <input
               {...register("vaccine.location", {
                 required: "This is required.",
@@ -85,7 +85,7 @@ function NewForm() {
             />
           </div>
           <div className="field-input">
-            <label htmlFor="">Date</label>
+            <label htmlFor="">Ngày tiêm</label>
             <input
               type="date"
               {...register("vaccine.date", {
@@ -97,7 +97,7 @@ function NewForm() {
         </div>
         <div className="col-4">
           <div className="field-input">
-            <label htmlFor="">Lot number</label>
+            <label htmlFor="">Số lô</label>
             <input
               {...register("vaccine.lotNumber")}
               className="form-control"
@@ -106,7 +106,7 @@ function NewForm() {
         </div>
       </div>
       <div className="button-submit__wrapper">
-        <button className="btn btn-primary">Submit</button>
+        <button className="btn btn-primary">Thêm</button>
       </div>
     </form>
   );

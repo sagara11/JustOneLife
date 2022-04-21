@@ -18,17 +18,17 @@ function GeneralInfo(props) {
     <div className="row">
       <div className="col-4">
         <div className="field-input">
-          <label htmlFor="">Name</label>
+          <label htmlFor="">Tên</label>
           <div className="data">{name}</div>
         </div>
         <div className="field-input">
-          <label htmlFor="">Phone number</label>
+          <label htmlFor="">Điện thoại</label>
           <div className="data">{phone}</div>
         </div>
       </div>
       <div className="col-4">
         <div className="field-input">
-          <label htmlFor="">Date of birth</label>
+          <label htmlFor="">Ngày sinh</label>
           <div className="data time-data">
             <div className="icon">
               <BsCalendar2DateFill />
@@ -39,11 +39,11 @@ function GeneralInfo(props) {
       </div>
       <div className="col-4">
         <div className="field-input">
-          <label htmlFor="">Gender</label>
+          <label htmlFor="">Giới tính</label>
           <div className={displayGender(gender)}>{gender}</div>
         </div>
         <div className="field-input">
-          <label htmlFor="">Address</label>
+          <label htmlFor="">Địa chỉ thường trú</label>
           <div className="data address">
             <div className="dot"></div>
             <div className="address-data">{address}</div>

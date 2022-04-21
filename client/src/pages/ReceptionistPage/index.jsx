@@ -38,7 +38,7 @@ function ReceptionistPage() {
       <td>{user.name}</td>
       <td>{user.publicAddress}</td>
       <td>
-        <button className="btn btn-danger">Revoke role</button>
+        <button className="btn btn-danger">Thu hồi quyền</button>
       </td>
     </tr>
   ));
@@ -54,7 +54,7 @@ function ReceptionistPage() {
       <div className="body__wrapper doctor-page__wrapper">
         <Container>
         <div className="doctor-page__body">
-            <h1 className="table__title">Receptionist Management</h1>
+            <h1 className="table__title">Quản lý lễ tân</h1>
             <div className="table__services">
               <Row>
                 <Col md={3}>
@@ -62,7 +62,7 @@ function ReceptionistPage() {
                     className="table__services--add-button"
                     onClick={handleOpenReceptionistModal}
                   >
-                    <BsPlusLg /> Add Receptionist
+                    <BsPlusLg /> Thêm lễ tân
                   </Button>
                 </Col>
                 <Col md={2}></Col>
@@ -106,8 +106,8 @@ function ReceptionistPage() {
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Name</th>
-                  <th>Public Address</th>
+                  <th>Tên</th>
+                  <th>Địa chỉ</th>
                   <th></th>
                 </tr>
               </thead>

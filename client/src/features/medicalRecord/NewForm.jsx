@@ -44,7 +44,7 @@ const MedicalRecordForm = (props) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         {renderPage()}
         {props.page === 4 && (
-          <button className="btn btn-primary next-button">Submit</button>
+          <button className="btn btn-primary next-button">Lưu</button>
         )}
         {props.page !== 4 && (
           <button
@@ -52,7 +52,7 @@ const MedicalRecordForm = (props) => {
             onClick={props.handleChangePage}
             className="btn btn-primary next-button"
           >
-            Next
+            Tiếp theo
           </button>
         )}
       </form>

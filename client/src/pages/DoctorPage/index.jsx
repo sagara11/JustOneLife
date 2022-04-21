@@ -70,7 +70,7 @@ function DoctorPage() {
       <div className="body__wrapper doctor-page__wrapper">
         <Container>
           <div className="doctor-page__body">
-            <h1 className="table__title">Doctor Management</h1>
+            <h1 className="table__title">Quản lý bác sĩ</h1>
             <div className="table__services">
               <Row>
                 <Col md={3}>
@@ -78,7 +78,7 @@ function DoctorPage() {
                     className="table__services--add-button"
                     onClick={handleOpenAddDoctorModal}
                   >
-                    <BsPlusLg /> Add Doctor
+                    <BsPlusLg /> Thêm mới bác sĩ
                   </Button>
                 </Col>
                 <Col md={2}></Col>
@@ -122,9 +122,9 @@ function DoctorPage() {
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Name</th>
-                  <th>Public Address</th>
-                  <th>Speciality</th>
+                  <th>Tên</th>
+                  <th>Địa chỉ</th>
+                  <th>Chuyên khoa</th>
                 </tr>
               </thead>
               <tbody>{renderDoctorList}</tbody>

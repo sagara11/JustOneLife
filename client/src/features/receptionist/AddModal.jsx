@@ -87,7 +87,7 @@ const AddModal = ({show, handleCloseAddDoctorModal}) => {
         id="add-doctor-form"
       >
         <div className="new-doctor">
-          <label>Add New Receptionist</label>
+          <label>Thêm lê tân</label>
         </div>
         <ErrorMessage
           errors={errors}
@@ -95,7 +95,7 @@ const AddModal = ({show, handleCloseAddDoctorModal}) => {
           render={({message}) => <p>{message}</p>}
         />
         <AnimatedMulti />
-        <button className="btn btn-primary">ADD</button>
+        <button className="btn btn-primary">THÊM</button>
       </form>
     </Modal>
   );
