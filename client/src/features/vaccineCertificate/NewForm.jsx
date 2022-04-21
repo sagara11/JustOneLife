@@ -5,7 +5,6 @@ import { globalState } from "../global/globalSlice";
 import "./styles.scss";
 import { createNewVaccineCertificate } from "./vaccineSlice";
 import Select from "react-select";
-import makeAnimated from "react-select/animated";
 import { useEffect } from "react";
 import { fetchUserInSystem } from "../../features/doctor/doctorAPI";
 
@@ -24,20 +23,19 @@ function NewForm() {
 
     getAllUser();
   }, []);
-  const [selectedOptions, setSelectedOptions] = useState(null);
+  const [selectedOption, setSelectedOption] = useState(null);
 
   const onSubmit = (data) => {
-    data.vaccine.patientPublicAddress = selectedOptions.value;
-    setSelectedOptions(null);
+    data.vaccine.patientPublicAddress = selectedOption.value;
+    setSelectedOption(null);
     dispatch(
       createNewVaccineCertificate({ web3, accounts, currentUser, data })
     );
     reset();
   };
-  const animatedComponents = makeAnimated();
 
-  const handleChange = (selectedOptions) => {
-    setSelectedOptions(selectedOptions);
+  const handleChange = (selectedOption) => {
+    setSelectedOption(selectedOption);
   };
 
   const options = [];
@@ -46,7 +44,7 @@ function NewForm() {
     userList.forEach((item) => {
       options.push({
         value: item.publicAddress,
-        label: `${item.name} - ${item.publicAddress}`,
+        label: `${item.name} - ${item.email}`,
       });
     });
   }
@@ -56,13 +54,12 @@ function NewForm() {
       <div className="row">
         <div className="col-4">
           <div className="field-input">
-            <label htmlFor="">Patient public address</label>
+            <label htmlFor="">Patient</label>
             <Select
               className="form-control"
-              closeMenuOnSelect={false}
-              components={animatedComponents}
+              closeMenuOnSelect={true}
               onChange={handleChange}
-              value={selectedOptions}
+              value={selectedOption}
               options={options}
               placeholder="Search your patient..."
             />

@@ -1,33 +1,30 @@
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
-import { Modal } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { globalState } from "../global/globalSlice";
-import { fetchUserInSystem } from "../doctor/doctorAPI";
+import React, {useEffect, useState} from "react";
+import {useForm} from "react-hook-form";
+import {ErrorMessage} from "@hookform/error-message";
+import {Modal} from "react-bootstrap";
+import {useDispatch, useSelector} from "react-redux";
+import {globalState} from "../global/globalSlice";
+import {fetchUserInSystem} from "../doctor/doctorAPI";
 import Select from "react-select";
-import makeAnimated from "react-select/animated";
-import { addReceptionist } from './receptionistSlice';
+import {addReceptionist} from "./receptionistSlice";
 
-const animatedComponents = makeAnimated();
-
-const AddModal = ({ show, handleCloseAddDoctorModal }) => {
+const AddModal = ({show, handleCloseAddDoctorModal}) => {
   const {
     handleSubmit,
     setValue,
-    formState: { errors },
+    formState: {errors},
   } = useForm();
   const dispatch = useDispatch();
-  const { currentUser } = useSelector(globalState);
+  const {currentUser} = useSelector(globalState);
   const [userList, setUserList] = useState("");
-  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [selectedOption, setSelectedOption] = useState("");
   const options = [];
 
   if (userList) {
     userList.forEach((item) => {
       options.push({
         value: {id: item._id, address: item.publicAddress},
-        label: `${item.name} - ${item.publicAddress}`,
+        label: `${item.name} - ${item.email}`,
       });
     });
   }
@@ -36,33 +33,30 @@ const AddModal = ({ show, handleCloseAddDoctorModal }) => {
     return (
       <Select
         closeMenuOnSelect={false}
-        components={animatedComponents}
         onChange={handleChange}
-        value={selectedOptions}
-        isMulti
+        value={selectedOption}
         options={options}
       />
     );
   };
 
-  const handleChange = (selectedOptions) => {
-    setSelectedOptions(selectedOptions);
+  const handleChange = (selectedOption) => {
+    setSelectedOption(selectedOption);
   };
 
   const onSubmit = async () => {
-    for await (const item of selectedOptions) {
-      const address = item.value.address;
-      dispatch(addReceptionist({
+    dispatch(
+      addReceptionist({
         data: {
           receptionist: {
             isReceptionist: true,
-            addedBy: currentUser._id
+            addedBy: currentUser._id,
           },
         },
-        publicAddress: address
-      }));
-    }
-    setSelectedOptions([]);
+        publicAddress: selectedOption.value.address,
+      })
+    );
+    setSelectedOption("");
   };
 
   const onHideModal = () => {
@@ -98,7 +92,7 @@ const AddModal = ({ show, handleCloseAddDoctorModal }) => {
         <ErrorMessage
           errors={errors}
           name="address"
-          render={({ message }) => <p>{message}</p>}
+          render={({message}) => <p>{message}</p>}
         />
         <AnimatedMulti />
         <button className="btn btn-primary">ADD</button>

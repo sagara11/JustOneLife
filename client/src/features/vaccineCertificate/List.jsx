@@ -5,7 +5,7 @@ import Item from "./Item";
 function List({ vaccineList }) {
   return (
     <div className="lists">
-      {vaccineList.map((item, key) => (
+      {vaccineList && vaccineList.map((item, key) => (
         <Item data={item} key={key} />
       ))}
     </div>
