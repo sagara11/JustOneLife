@@ -83,7 +83,7 @@ function Sidebar() {
                 </NavLink>
               </>
             )}
-            {userRole.includes(process.env.REACT_APP_ROLE_DOCTOR) && (
+            {/* {userRole.includes(process.env.REACT_APP_ROLE_DOCTOR) && (
               <NavLink
                 to="/doctor-certificates"
                 className={(isActive) =>
@@ -93,7 +93,7 @@ function Sidebar() {
                 <AiFillSafetyCertificate className="sidebar__icon" />
                 <span className="sidebar-text">Certificate</span>
               </NavLink>
-            )}
+            )} */}
             {/* Manager icons */}
             {userRole.includes(process.env.REACT_APP_ROLE_MANAGER) && (
               <NavLink

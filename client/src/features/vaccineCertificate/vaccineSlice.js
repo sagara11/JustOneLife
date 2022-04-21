@@ -34,6 +34,7 @@ export const vaccineSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(createNewVaccineCertificate.fulfilled, (state, action) => {
       state.vaccineList.push(action.payload);
+      alert("Create successfully!");
     });
     builder.addCase(getVaccineCertificateList.fulfilled, (state, action) => {
       state.vaccineList = action.payload;
