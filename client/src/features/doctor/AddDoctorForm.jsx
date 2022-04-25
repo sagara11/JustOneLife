@@ -47,7 +47,7 @@ const AddDoctorForm = ({show, handleCloseAddDoctorModal}) => {
 
   const onSubmit = async () => {
     const addressDoctor = selectedOption.value
-    dispatch(setRoleDoctor({web3, accounts, currentUser, addressDoctor}));
+    dispatch(setRoleDoctor({web3, accounts, currentUser, address: addressDoctor}));
     setSelectedOption("");
   };
 
