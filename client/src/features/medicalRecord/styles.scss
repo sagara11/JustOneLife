@@ -246,6 +246,25 @@
 
 .signature-confirm {
   width: 100%;
+
+  .confirm-text {
+    color: gray;
+    margin-right: 7px;
+    font-size: 14px;
+  }
+
+  svg {
+    font-size: 40px;
+  }
+
+  .received {
+    color: green;
+  }
+
+  .waiting {
+    color: gray;
+  }
+
   input {
     width: 90% !important;
   }
