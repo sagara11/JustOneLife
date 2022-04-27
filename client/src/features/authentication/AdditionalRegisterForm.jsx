@@ -1,59 +1,63 @@
 import React from "react";
 import "./styles.scss";
-import { useForm } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
-import { useDispatch, useSelector } from "react-redux";
-import { updateAccount } from "./authenticationSlice";
-import { globalState } from "../global/globalSlice";
-const { sha256 } = require("js-sha256").sha256;
+import {useForm} from "react-hook-form";
+import {ErrorMessage} from "@hookform/error-message";
+import {useDispatch, useSelector} from "react-redux";
+import {updateAccount} from "./authenticationSlice";
+import {globalState} from "../global/globalSlice";
+const {sha256} = require("js-sha256").sha256;
 
 function AdditionalRegisterForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: {errors},
   } = useForm();
   const dispatch = useDispatch();
 
-  const { currentUser } = useSelector(globalState);
+  const {currentUser} = useSelector(globalState);
 
   const hasingPassword = async (payload) => {
     const hash_1 = await sha256(payload.password);
     const hash_2 = await sha256(hash_1);
 
-    return { hash_1, hash_2 };
+    return {hash_1, hash_2};
   };
 
   const onSubmit = async (data) => {
-    const { hash_2 } = await hasingPassword({
-      password: data.password,
+    const password = data.password;
+    const {hash_2} = await hasingPassword({
+      password: password,
     });
 
-    data = { ...data, hash_2: hash_2 };
-
     if (currentUser) {
+      const keyPatient = await sha256(
+        password.concat(currentUser.email, currentUser.publicAddress)
+      );
+      data = {...data, hash_2: hash_2, keyPatient: keyPatient};
       dispatch(
-        updateAccount({ publicAddress: currentUser.publicAddress, data: data })
+        updateAccount({publicAddress: currentUser.publicAddress, data: data})
       );
     }
   };
 
   // eslint-disable-next-line no-useless-escape
-  const regexEmail = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+  const regexEmail =
+    /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} id="additional-register-form">
       <div className="form-element">
         <label htmlFor="form_username">Tên đăng nhập</label>
         <input
-          {...register("name", { required: "This is required." })}
+          {...register("name", {required: "This is required."})}
           className="form-control"
           id="form_username"
         />
         <ErrorMessage
           errors={errors}
           name="name"
-          render={({ message }) => <p>{message}</p>}
+          render={({message}) => <p>{message}</p>}
         />
       </div>
       <div className="form-element">
@@ -72,7 +76,7 @@ function AdditionalRegisterForm() {
         <ErrorMessage
           errors={errors}
           name="email"
-          render={({ message }) => <p>{message}</p>}
+          render={({message}) => <p>{message}</p>}
         />
       </div>
       <div className="form-element">
@@ -90,7 +94,7 @@ function AdditionalRegisterForm() {
         <ErrorMessage
           errors={errors}
           name="phone"
-          render={({ message }) => <p>{message}</p>}
+          render={({message}) => <p>{message}</p>}
         />
       </div>
       <div className="form-element">
@@ -104,7 +108,7 @@ function AdditionalRegisterForm() {
         <ErrorMessage
           errors={errors}
           name="password"
-          render={({ message }) => <p>{message}</p>}
+          render={({message}) => <p>{message}</p>}
         />
       </div>
       <button className="btn btn-primary" id="form_submit">

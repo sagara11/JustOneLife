@@ -45,7 +45,7 @@ const AddManagerForm = () => {
 
   const onSubmit = async () => {
     const addressManager = selectedOption.value;
-    dispatch(setRoleManager({web3, accounts, currentUser, addressManager}));
+    dispatch(setRoleManager({web3, accounts, currentUser, address: addressManager}));
     setSelectedOption("");
   };
 
