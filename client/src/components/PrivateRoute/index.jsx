@@ -8,6 +8,8 @@ import {
 import { getCurrentUserRole } from "../../features/authorization/authorizationSlice";
 import { useEffect } from "react";
 import { isEmpty } from "lodash";
+import io from 'socket.io-client';
+let socket;
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const dispatch = useDispatch();
@@ -20,7 +22,21 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     if (currentUser) {
       dispatch(getCurrentUserRole({ web3, accounts, currentUser }));
     }
-  }, [accounts, currentUser, dispatch, web3]);
+
+    socket = io(process.env.REACT_APP_API_URL || "http://localhost:8080");
+
+    socket.emit('join', currentUser?._id, (response) => {
+      console.log("Connected to your room", response.data);
+    })
+
+    socket.on('password-sent', (res) => {
+      const { doctor } = res;
+      if (doctor) {
+        let patientPassword = prompt(`Doctor ${doctor.name} wants to access your data, please type in your password?`);
+        socket.emit('respond-password', patientPassword, currentUser._id);
+      }
+    })
+  }, [currentUser]);
 
   const isAlreadyRegister =
     currentUser && !isEmpty(currentUser.email) && !isEmpty(currentUser.name);

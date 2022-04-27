@@ -6,15 +6,41 @@ import Treatment from "../../components/NewMedicalRecord/Treatment";
 import {useForm} from "react-hook-form";
 import MedicalMediaStorage from "../../components/NewMedicalRecord/MedicalMediaStorage";
 import PasswordModal from "./PasswordModal";
+import io from 'socket.io-client';
+import { useSelector } from 'react-redux';
+import { globalState } from '../global/globalSlice';
+let socket;
 
 const MedicalRecordForm = (props) => {
   const {register, handleSubmit, setValue} = useForm();
   const [show, setShow] = useState(false);
   const [dataRegister, setDataRegister] = useState("");
   const { preloadData } = props;
+  const { currentUser } = useSelector(globalState);
+  const [patientPassword, setPatientPassword] = useState("");
+
+  useEffect(() => {
+    socket = io(process.env.REACT_APP_API_URL || "http://localhost:8080");
+
+    socket.emit('join-patient', preloadData.user[0]._id, (res) => {
+      console.log(`Connected to room ${res.data}`);
+    });
+
+    socket.on('password-received', (res) => {
+      const { password } = res;
+      if (password) {
+        console.log(`Patient password is ${password}`);
+        setPatientPassword(password);
+      }
+    })
+  }, [preloadData])
 
   const handleClosePasswordModal = () => setShow(false);
-  const handleOpenPasswordModal = () => setShow(true);
+  const handleOpenPasswordModal = () => {
+    setShow(true);
+    socket.emit('request-password', { _id: currentUser._id, name: currentUser.name }, preloadData?.user[0]?._id);
+    console.log("Request password from patient....");
+  }
 
   const renderPage = () => {
     const pageNumber = props.page;
@@ -61,6 +87,7 @@ const MedicalRecordForm = (props) => {
         show={show}
         handleClosePasswordModal={handleClosePasswordModal}
         dataRegister={dataRegister}
+        patientPassword={patientPassword}
       />
     </>
   );

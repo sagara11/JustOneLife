@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./styles.scss";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
@@ -9,8 +9,11 @@ import { saveIPFSFile } from "./medicalRecordSlice";
 import medicalRecordServices from "./medicalRecordServices";
 import { authenticateIPFSAPI } from "./medicalRecordAPI";
 import { deleteWaitingRoomAPI } from '../waitingRoom/waitingRoomAPI';
+import { isEmpty } from 'lodash';
+import { AiOutlineCheckCircle } from 'react-icons/ai';
+import { BsClockHistory } from 'react-icons/bs';
 
-const PasswordModal = ({ show, handleClosePasswordModal, dataRegister, waitingItemId }) => {
+const PasswordModal = ({ show, handleClosePasswordModal, dataRegister, waitingItemId, patientPassword }) => {
   const {
     register,
     handleSubmit,
@@ -19,6 +22,10 @@ const PasswordModal = ({ show, handleClosePasswordModal, dataRegister, waitingIt
   } = useForm();
   const dispatch = useDispatch();
   const { web3, accounts, currentUser } = useSelector(globalState);
+
+  useEffect(() => {
+    setValue("passwordPatient", patientPassword);
+  }, [patientPassword])
 
   const hasingPassword = async (payload) => {
     const { passwordPatient, passwordDoctor, patientAddress, doctorAddress } =
@@ -56,7 +63,7 @@ const PasswordModal = ({ show, handleClosePasswordModal, dataRegister, waitingIt
     const jsonData = JSON.stringify({ ...dataRegister, ...doctorInfo });
     const { resultPatient, resultDoctor, hash_1_Patient, hash_1_Doctor } =
       await hasingPassword({
-        passwordPatient: data.passwordPatient,
+        passwordPatient: patientPassword,
         passwordDoctor: data.passwordDoctor,
         patientAddress: dataRegister.generalInfo.publicAddress,
         doctorAddress: currentUser.publicAddress,
@@ -110,16 +117,23 @@ const PasswordModal = ({ show, handleClosePasswordModal, dataRegister, waitingIt
               Khóa của bệnh nhân
             </h5>
 
-            <ErrorMessage
-              errors={errors}
-              name="passwordPatient"
-              render={({ message }) => <p>{message}</p>}
-            />
+            {patientPassword &&
+              <>
+                <span className='confirm-text'>Đã được chấp nhận</span>
+                <AiOutlineCheckCircle className='received' />
+              </>
+            }
+            {!patientPassword &&
+              <>
+                <span className='confirm-text'>Đợi mã xác thực của bệnh nhân...</span>
+                <BsClockHistory className='waiting' />
+              </>
+            }
             <input
               {...register("passwordPatient", {
                 required: "Please confirm you request",
               })}
-              className="form-control"
+              className="form-control d-none"
               placeholder="Password"
               type="password"
             />
@@ -146,7 +160,7 @@ const PasswordModal = ({ show, handleClosePasswordModal, dataRegister, waitingIt
             />
           </div>
         </div>
-        <button className="btn btn-primary signature-confirm-button">
+        <button disabled={isEmpty(patientPassword)} className="btn btn-primary signature-confirm-button">
           Xác nhận
         </button>
       </form>
