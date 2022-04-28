@@ -49,6 +49,7 @@ const ConfirmModal = ({
       dispatch(setConfirm(true));
       handleCloseConfirmModal();
     } else {
+      alert("Wrong password, please retype your password or send password request to patient again")
       console.log("Authenticated Failed!");
       dispatch(setConfirm(false));
       handleOpenConfirmModal();

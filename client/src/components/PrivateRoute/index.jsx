@@ -9,6 +9,7 @@ import { getCurrentUserRole } from "../../features/authorization/authorizationSl
 import { useEffect } from "react";
 import { isEmpty } from "lodash";
 import io from 'socket.io-client';
+import MedicalRecord from "../../contracts/MedicalRecord.json";
 let socket;
 const NodeRSA = require("node-rsa");
 const key = new NodeRSA();
@@ -34,11 +35,35 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     socket.on('password-sent', async(res) => {
       const { doctor, publicKey } = res;
       const doctorKey = await key.importKey(publicKey, "pkcs8-public-pem")
-      if (doctor) {
-        let patientPassword = prompt(`Doctor ${doctor.name} wants to access your data, please type in your password?`);
-        const encrypPatientPassword = await doctorKey.encrypt(patientPassword, "base64")
-        socket.emit('respond-password', encrypPatientPassword, currentUser._id);
+      if (!doctor) {
+        return;
       }
+
+      let patientPassword = prompt(`Doctor ${doctor.name} wants to access your data, please type in your password and submit?`);
+      const encrypPatientPassword = await doctorKey.encrypt(patientPassword, "base64")
+
+      const networkId = await web3.eth.net.getId();
+      const deployedNetwork = MedicalRecord.networks[networkId];
+      const instance = new web3.eth.Contract(
+        MedicalRecord.abi,
+        deployedNetwork && deployedNetwork.address
+      );
+
+      const inWhiteList = await instance.methods
+        .whitelist(currentUser.publicAddress, doctor.publicAddress)
+        .call();
+      if (!inWhiteList) {
+        const tx = await instance.methods
+          .setWhiteList(doctor.publicAddress, true)
+          .send({ from: currentUser.publicAddress });
+
+        if (!tx) {
+          alert("Failed to add doctor to whitelist");
+          return;
+        }
+      }
+
+      socket.emit('respond-password', encrypPatientPassword, currentUser._id);
     })
   }, [currentUser]);
 
