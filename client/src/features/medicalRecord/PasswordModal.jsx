@@ -7,13 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { globalState } from "../global/globalSlice";
 import { saveIPFSFile } from "./medicalRecordSlice";
 import medicalRecordServices from "./medicalRecordServices";
-import { authenticateIPFSAPI } from "./medicalRecordAPI";
+import { authenticateIPFSAPI, getKeyAPI } from "./medicalRecordAPI";
 import { deleteWaitingRoomAPI } from '../waitingRoom/waitingRoomAPI';
 import { isEmpty } from 'lodash';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { BsClockHistory } from 'react-icons/bs';
 
-const PasswordModal = ({ show, handleClosePasswordModal, dataRegister, waitingItemId, patientPassword }) => {
+const PasswordModal = ({ show, handleClosePasswordModal, dataRegister, waitingItemId, patientPassword, keyRSA }) => {
   const {
     register,
     handleSubmit,
@@ -47,11 +47,18 @@ const PasswordModal = ({ show, handleClosePasswordModal, dataRegister, waitingIt
       userAddress: doctorAddress,
     });
 
+    const getKey = await getKeyAPI({
+      publicAddress: currentUser.publicAddress,
+      doctorAddress: doctorAddress,
+      patientAddress: patientAddress
+    });
+
     return {
       resultPatient: resultPatient.data,
       resultDoctor: resultDoctor.data,
       hash_1_Patient,
       hash_1_Doctor,
+      keyLevel_2: getKey.data
     };
   };
 
@@ -61,9 +68,11 @@ const PasswordModal = ({ show, handleClosePasswordModal, dataRegister, waitingIt
       doctorName: currentUser.name,
     };
     const jsonData = JSON.stringify({ ...dataRegister, ...doctorInfo });
-    const { resultPatient, resultDoctor, hash_1_Patient, hash_1_Doctor } =
+    // const publicKey = await keyRSA.exportKey("pkcs8-public-pem");
+    const decrypPatientPassword = await keyRSA.decrypt(patientPassword)
+    const { resultPatient, resultDoctor, hash_1_Patient, hash_1_Doctor, keyLevel_2 } =
       await hasingPassword({
-        passwordPatient: patientPassword,
+        passwordPatient: decrypPatientPassword.toString(),
         passwordDoctor: data.passwordDoctor,
         patientAddress: dataRegister.generalInfo.publicAddress,
         doctorAddress: currentUser.publicAddress,
@@ -79,6 +88,7 @@ const PasswordModal = ({ show, handleClosePasswordModal, dataRegister, waitingIt
           patientAddress: dataRegister.generalInfo.publicAddress,
           hash_1_Patient,
           hash_1_Doctor,
+          keyLevel_2
         })
       );
       console.log("Authenticated successs");

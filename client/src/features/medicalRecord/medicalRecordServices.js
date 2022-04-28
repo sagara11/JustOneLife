@@ -1,5 +1,6 @@
+import {isEmpty} from "lodash";
 import MedicalRecord from "../../contracts/MedicalRecord.json";
-import { createMedicalTransactionAPI } from "./medicalRecordAPI";
+import {createMedicalTransactionAPI} from "./medicalRecordAPI";
 const {create} = require("ipfs-http-client");
 const {sha256} = require("js-sha256").sha256;
 const aes256 = require("aes256");
@@ -16,6 +17,7 @@ function medicalRecordServices(params) {
   this.passwordDoctor = params.passwordDoctor;
   this.hash_1_Patient = params.hash_1_Patient;
   this.hash_1_Doctor = params.hash_1_Doctor;
+  this.keyLevel_2 = params.keyLevel_2;
 
   this.getMedicalRecordList = async () => {
     const networkId = await this.web3.eth.net.getId();
@@ -32,9 +34,12 @@ function medicalRecordServices(params) {
     return medicalRecordList;
   };
 
-  this.processFile = async (hashValue, userAddress) => {
-    const encryptedPlainText = aes256.encrypt(hashValue, this.file);
-    const uploadFile = await client.add(encryptedPlainText);
+  this.processFile = async (hashValue, userAddress, patientKey) => {
+    const encryptedPlainText = await aes256.encrypt(hashValue, this.file);
+    const encryptedPlainText_final = isEmpty(patientKey)
+      ? encryptedPlainText
+      : await aes256.encrypt(patientKey, encryptedPlainText);
+    const uploadFile = await client.add(encryptedPlainText_final);
 
     // const decryptedPlainText = aes256.decrypt(this.hash_1, encryptedPlainText);
     // console.log(decryptedPlainText)
@@ -56,7 +61,7 @@ function medicalRecordServices(params) {
         const data = await createMedicalTransactionAPI({
           publicAddress: this.patientAddress,
           IpfsHash: uploadFile.path,
-          transactionHash: tx.transactionHash
+          transactionHash: tx.transactionHash,
         });
 
         console.log(data);
@@ -80,10 +85,24 @@ function medicalRecordServices(params) {
       return;
     }
 
-    await this.processFile(this.hash_1_Patient, this.patientAddress);
-    console.log(`Created successfully Patient file`)
-    await this.processFile(this.hash_1_Doctor, this.currentUser.publicAddress);
-    console.log(`Created successfully Doctor file`)
+    const {patientKey} = this.keyLevel_2
+    if(isEmpty(patientKey)) {
+      console.log("The Doctor are not authorized from patient")
+      return
+    }
+
+    await this.processFile(
+      this.hash_1_Patient,
+      this.patientAddress,
+      patientKey
+    );
+    console.log(`Created successfully Patient file`);
+    await this.processFile(
+      this.hash_1_Doctor,
+      this.currentUser.publicAddress,
+      null
+    );
+    console.log(`Created successfully Doctor file`);
 
     return Promise.reject("File save failed");
   };

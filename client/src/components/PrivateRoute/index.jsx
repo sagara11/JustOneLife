@@ -10,6 +10,8 @@ import { useEffect } from "react";
 import { isEmpty } from "lodash";
 import io from 'socket.io-client';
 let socket;
+const NodeRSA = require("node-rsa");
+const key = new NodeRSA();
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const dispatch = useDispatch();
@@ -29,11 +31,13 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       console.log("Connected to your room", response.data);
     })
 
-    socket.on('password-sent', (res) => {
-      const { doctor } = res;
+    socket.on('password-sent', async(res) => {
+      const { doctor, publicKey } = res;
+      const doctorKey = await key.importKey(publicKey, "pkcs8-public-pem")
       if (doctor) {
         let patientPassword = prompt(`Doctor ${doctor.name} wants to access your data, please type in your password?`);
-        socket.emit('respond-password', patientPassword, currentUser._id);
+        const encrypPatientPassword = await doctorKey.encrypt(patientPassword, "base64")
+        socket.emit('respond-password', encrypPatientPassword, currentUser._id);
       }
     })
   }, [currentUser]);

@@ -10,6 +10,8 @@ import {useSelector} from "react-redux";
 import axios from "axios";
 import medicalRecordServices from "../../features/medicalRecord/medicalRecordServices";
 import ConfirmModal from "../../features/medicalRecord/ConfirmModal";
+import {getKeyAPI} from "../../features/medicalRecord/medicalRecordAPI";
+import {authorizationState} from "../../features/authorization/authorizationSlice";
 
 const aes256 = require("aes256");
 
@@ -20,9 +22,16 @@ function MedicalRecordPage() {
   const [show, setShow] = useState(false);
   const handleCloseConfirmModal = () => setShow(false);
   const handleOpenConfirmModal = () => setShow(true);
+  const {userRole} = useSelector(authorizationState);
 
   useEffect(() => {
     const processMedicalRecord = async () => {
+      const getKey = await getKeyAPI({
+        publicAddress: currentUser.publicAddress,
+        doctorAddress: currentUser.publicAddress,
+      });
+
+      const {patientKey} = getKey.data;
       const medicalRecordService = new medicalRecordServices({
         web3,
         accounts,
@@ -31,12 +40,16 @@ function MedicalRecordPage() {
 
       const medicalRecordIPFSSTring =
         await medicalRecordService.getMedicalRecordList();
+      console.log(medicalRecordIPFSSTring);
 
       let medicalRecordList = [];
 
       for await (const element of medicalRecordIPFSSTring) {
         const file = await axios.get(`https://ipfs.infura.io/ipfs/${element}`);
-        const decryptedFile = await aes256.decrypt(hash_1, file.data);
+        const decryptedFile_final = userRole.includes("DOCTOR")
+          ? file.data
+          : await aes256.decrypt(patientKey, file.data);
+        const decryptedFile = await aes256.decrypt(hash_1, decryptedFile_final);
         const decryptedFileObjects = JSON.parse(decryptedFile);
         medicalRecordList.push({...decryptedFileObjects, ipfsHash: element});
       }
