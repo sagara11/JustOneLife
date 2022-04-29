@@ -6,49 +6,71 @@ import Treatment from "../../components/NewMedicalRecord/Treatment";
 import {useForm} from "react-hook-form";
 import MedicalMediaStorage from "../../components/NewMedicalRecord/MedicalMediaStorage";
 import PasswordModal from "./PasswordModal";
-import io from 'socket.io-client';
-import { useSelector } from 'react-redux';
-import { globalState } from '../global/globalSlice';
+import io from "socket.io-client";
+import {useSelector} from "react-redux";
+import {globalState} from "../global/globalSlice";
 let socket;
+const NodeRSA = require("node-rsa");
+const keyRSA = new NodeRSA({b: 512});
 
 const MedicalRecordForm = (props) => {
   const {register, handleSubmit, setValue} = useForm();
   const [show, setShow] = useState(false);
   const [dataRegister, setDataRegister] = useState("");
-  const { preloadData } = props;
-  const { currentUser } = useSelector(globalState);
+  const {preloadData} = props;
+  const {currentUser} = useSelector(globalState);
   const [patientPassword, setPatientPassword] = useState("");
 
   useEffect(() => {
     socket = io(process.env.REACT_APP_API_URL || "http://localhost:8080");
 
-    socket.emit('join-patient', preloadData.user[0]._id, (res) => {
+    socket.emit("join-patient", preloadData.user[0]._id, (res) => {
       console.log(`Connected to room ${res.data}`);
     });
 
-    socket.on('password-received', (res) => {
-      const { password } = res;
+    socket.on("password-received", (res) => {
+      const {password} = res;
       if (password) {
         console.log(`Patient password is ${password}`);
         setPatientPassword(password);
       }
-    })
-  }, [preloadData])
+    });
+  }, [preloadData]);
 
   const handleClosePasswordModal = () => setShow(false);
-  const handleOpenPasswordModal = () => {
+  const handleOpenPasswordModal = async () => {
     setShow(true);
-    socket.emit('request-password', { _id: currentUser._id, name: currentUser.name }, preloadData?.user[0]?._id);
-    console.log("Request password from patient....");
-  }
+    const publicKey = await keyRSA.exportKey("pkcs8-public-pem");
+    // const privateDer = await key.exportKey("pkcs1-private-pem");
+
+    socket.emit(
+      "request-password",
+      {_id: currentUser._id, name: currentUser.name},
+      preloadData?.user[0]?._id,
+      publicKey
+    );
+    console.log(`Request password from patient....with publicKey ${publicKey}`);
+  };
 
   const renderPage = () => {
     const pageNumber = props.page;
     switch (pageNumber) {
       case 0:
-        return <GeneralInfo register={register} setValue={setValue} preloadData={preloadData} />;
+        return (
+          <GeneralInfo
+            register={register}
+            setValue={setValue}
+            preloadData={preloadData}
+          />
+        );
       case 1:
-        return <PatientManagement register={register} setValue={setValue} preloadData={preloadData} />;
+        return (
+          <PatientManagement
+            register={register}
+            setValue={setValue}
+            preloadData={preloadData}
+          />
+        );
       case 2:
         return <Diagnose register={register} setValue={setValue} />;
       case 3:
@@ -56,12 +78,18 @@ const MedicalRecordForm = (props) => {
       case 4:
         return <MedicalMediaStorage />;
       default:
-        return <GeneralInfo register={register} setValue={setValue} preloadData={preloadData} />;
+        return (
+          <GeneralInfo
+            register={register}
+            setValue={setValue}
+            preloadData={preloadData}
+          />
+        );
     }
   };
 
   const onSubmit = (data) => {
-    setDataRegister(data)
+    setDataRegister(data);
     handleOpenPasswordModal();
   };
 
@@ -88,6 +116,7 @@ const MedicalRecordForm = (props) => {
         handleClosePasswordModal={handleClosePasswordModal}
         dataRegister={dataRegister}
         patientPassword={patientPassword}
+        keyRSA={keyRSA}
       />
     </>
   );
