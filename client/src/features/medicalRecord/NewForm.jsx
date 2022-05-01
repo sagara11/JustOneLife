@@ -45,7 +45,7 @@ const MedicalRecordForm = (props) => {
 
     socket.emit(
       "request-password",
-      {_id: currentUser._id, name: currentUser.name},
+      {_id: currentUser._id, name: currentUser.name, publicAddress: currentUser.publicAddress},
       preloadData?.user[0]?._id,
       publicKey
     );
