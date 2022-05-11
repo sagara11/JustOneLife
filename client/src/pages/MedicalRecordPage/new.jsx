@@ -15,10 +15,9 @@ const NewMedicalRecordPage = () => {
 
   const formTitle = [
     "Thông tin chung",
-    "Quản lý người bệnh",
+    "Chỉ số sinh tồn",
     "Chẩn đoán",
-    "Điều trị",
-    "Hình ảnh",
+    "Đơn thuốc",
   ];
 
   const handleChangePage = () => {
@@ -57,7 +56,7 @@ const NewMedicalRecordPage = () => {
             );
           })}
         </section>
-        <section className="new-medical-record__form">
+        <section className="new-medical-record__form medicine-form">
           <MedicalRecordForm preloadData={state.preloadData} page={page} handleChangePage={handleChangePage} />
         </section>
       </div>

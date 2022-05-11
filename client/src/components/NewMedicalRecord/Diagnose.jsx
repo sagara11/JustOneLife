@@ -7,51 +7,30 @@ function Diagnose(props) {
 
   return (
     <div className="row">
-      <div className="col-4">
+      <div className="col-6">
         <div className="field-input">
-          <label htmlFor="">Khoa khám bệnh</label>
-          <input
-            {...register("diagnose.medicalFalculty")}
-            className="form-control" />
-        </div>
-        <div className="field-input">
-          <label htmlFor="">Cấp cứu</label>
-          <input
-            {...register("diagnose.emergencyAid")}
-            className="form-control" />
+          <label htmlFor="">Triệu chứng</label>
+          <textarea
+            {...register("diagnose.medicalProcedure")}
+            className="form-control">
+          </textarea>
         </div>
       </div>
-      <div className="col-4">
+      <div className="col-6">
         <div className="field-input">
-          <label className="title" htmlFor="">Phương pháp</label>
+          <label className="title" htmlFor="">Bệnh chính</label>
           <div className="nested">
-            <span className="secondary-title">Thủ tục y tế</span>
+            <span className="secondary-title">Tên bệnh</span>
             <textarea
-              {...register("diagnose.method.medicalProcedure")}
+              {...register("diagnose.method.primaryCondition")}
               className="form-control">
             </textarea>
-            <span className="secondary-title">Phẫu thuật</span>
+            <span className="secondary-title">Mô tả bệnh</span>
             <textarea
-              {...register("diagnose.method.surgery")}
+              {...register("diagnose.method.descriptionCondition")}
               className="form-control">
             </textarea>
           </div>
-        </div>
-      </div>
-      <div className="col-4">
-        <div className="field-input">
-          <label htmlFor="">Bệnh chính</label>
-          <textarea
-            {...register("diagnose.primaryCondition")}
-            className="form-control">
-          </textarea>
-        </div>
-        <div className="field-input">
-          <label htmlFor="">Bệnh phụ</label>
-          <textarea
-            {...register("diagnose.cormobilities")}
-            className="form-control">
-          </textarea>
         </div>
       </div>
     </div>

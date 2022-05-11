@@ -1,47 +1,29 @@
 import React from "react";
 
 function Diagnose(props) {
-  const {
-    cormobilities,
-    emergencyAid,
-    medicalFalculty,
-    method,
-    primaryCondition
-  } = props.medicalData.diagnose;
+  const {method, medicalProcedure} = props.medicalData.diagnose;
 
   return (
     <div className="row">
-      <div className="col-4">
+      <div className="col-6">
         <div className="field-input">
-          <label htmlFor="">Khoa khám bệnh</label>
-          <div className="data">{medicalFalculty}</div>
-        </div>
-        <div className="field-input">
-          <label htmlFor="">Cấp cứu</label>
-          <div className="data">{emergencyAid}</div>
+          <label htmlFor="">Triệu chứng</label>
+          <div className="data">{medicalProcedure}</div>
         </div>
       </div>
-      <div className="col-4">
+      <div className="col-6">
         <div className="field-input group-field">
-          <label className="title" htmlFor="">Phương pháp</label>
+          <label className="title" htmlFor="">
+            Bệnh chính
+          </label>
           <div className="content">
-            <div className="sub-title">Thủ tục y tế</div>
-            <div className="data">{method.medicalProcedure}</div>
+            <div className="sub-title">Tên bệnh</div>
+            <div className="data">{method.primaryCondition}</div>
           </div>
           <div className="content">
-            <div className="sub-title">Phẫu thuật</div>
-            <div className="data">{method.surgery}</div>
+            <div className="sub-title">Mô tả bệnh</div>
+            <div className="data">{method.descriptionCondition}</div>
           </div>
-        </div>
-      </div>
-      <div className="col-4">
-        <div className="field-input">
-          <label htmlFor="">Bệnh chính</label>
-          <div className="data">{primaryCondition}</div>
-        </div>
-        <div className="field-input">
-          <label htmlFor="">Bệnh phụ</label>
-          <div className="data">{cormobilities}</div>
         </div>
       </div>
     </div>
