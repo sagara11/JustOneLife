@@ -13,16 +13,16 @@ export function createWaitingRoomAPI(params) {
   return axios.post(`${URL}/waiting-room`, params, config);
 }
 
-export function getWaitingRooomAPI(params) {
+export function getWaitingRoomAPI(params) {
   if (!params.manager) {
     return axios.get(`${URL}/waiting-room/?receptionist=${params.receptionist}`, config);
   }
 
   if (!params.receptionist) {
-    return axios.get(`${URL}/waiting-room/?manager=${params.manager}`, config);
+    return axios.get(`${URL}/waiting-room/?manager=${params.manager}&falculty=${params.falculty}`, config);
   }
 
-  return axios.get(`${URL}/waiting-room/?receeptionist=${params.receptionist}?manager=${params.manager}`, config);
+  return axios.get(`${URL}/waiting-room/?receptionist=${params.receptionist}&manager=${params.manager}`, config);
 }
 
 export function deleteWaitingRoomAPI(params) {

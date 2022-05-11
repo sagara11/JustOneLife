@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import { globalState } from '../../features/global/globalSlice';
-import { createWaitingRoomAPI, getWaitingRooomAPI } from '../../features/waitingRoom/waitingRoomAPI';
+import { createWaitingRoomAPI, getWaitingRoomAPI } from '../../features/waitingRoom/waitingRoomAPI';
 import AuthorizeContract from "../../contracts/Authorize.json";
 import { getUser } from '../../features/authorization/authorizationAPI';
 import "./styles.scss"
@@ -41,8 +41,9 @@ export default function WaitingListPage() {
     }
 
     const getList = async () => {
-      const {data} = await getWaitingRooomAPI({
+      const {data} = await getWaitingRoomAPI({
         manager: managerId,
+        falculty: currentUser.falculty
       });
 
       console.log(data);
@@ -77,7 +78,7 @@ export default function WaitingListPage() {
                   </div>
                   <div className="item medical-falculty">
                     <div className="title">Khoa khám bệnh</div>
-                    {waitingItem.medicalFalculty || "No falculty selected"}
+                    {waitingItem?.falculty[0].name || "No falculty selected"}
                   </div>
                   <div className="item admitted-date">
                     <div className="title">Ngày khám</div>
