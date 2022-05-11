@@ -53,6 +53,7 @@ function medicalRecordServices(params) {
         MedicalRecord.abi,
         deployedNetwork && deployedNetwork.address
       );
+
       const tx = await instance.methods
         .addMedicalRecord(userAddress, uploadFile.path)
         .send({from: this.currentUser.publicAddress});
@@ -85,10 +86,10 @@ function medicalRecordServices(params) {
       return;
     }
 
-    const {patientKey} = this.keyLevel_2
-    if(isEmpty(patientKey)) {
-      console.log("The Doctor are not authorized from patient")
-      return
+    const {patientKey} = this.keyLevel_2;
+    if (isEmpty(patientKey)) {
+      console.log("The Doctor are not authorized from patient");
+      return;
     }
 
     await this.processFile(

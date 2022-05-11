@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import GeneralInfo from "../../components/NewMedicalRecord/GeneralInfo";
 import Diagnose from "../../components/NewMedicalRecord/Diagnose";
+import Prescription from "../../components/NewMedicalRecord/Prescription";
 import PatientManagement from "../../components/NewMedicalRecord/PatientManagement";
 import Treatment from "../../components/NewMedicalRecord/Treatment";
 import {useForm} from "react-hook-form";
@@ -45,7 +46,11 @@ const MedicalRecordForm = (props) => {
 
     socket.emit(
       "request-password",
-      {_id: currentUser._id, name: currentUser.name, publicAddress: currentUser.publicAddress},
+      {
+        _id: currentUser._id,
+        name: currentUser.name,
+        publicAddress: currentUser.publicAddress,
+      },
       preloadData?.user[0]?._id,
       publicKey
     );
@@ -57,26 +62,28 @@ const MedicalRecordForm = (props) => {
     switch (pageNumber) {
       case 0:
         return (
-          <GeneralInfo
-            register={register}
-            setValue={setValue}
-            preloadData={preloadData}
-          />
+          <div>
+            <GeneralInfo
+              register={register}
+              setValue={setValue}
+              preloadData={preloadData}
+            />
+            <h5>Quản lý người bệnh</h5>
+            <PatientManagement
+              register={register}
+              setValue={setValue}
+              preloadData={preloadData}
+            />
+          </div>
         );
       case 1:
         return (
-          <PatientManagement
-            register={register}
-            setValue={setValue}
-            preloadData={preloadData}
-          />
+          <Treatment register={register} setValue={setValue} />
         );
       case 2:
         return <Diagnose register={register} setValue={setValue} />;
       case 3:
-        return <Treatment register={register} setValue={setValue} />;
-      case 4:
-        return <MedicalMediaStorage />;
+        return <Prescription register={register} setValue={setValue} />;
       default:
         return (
           <GeneralInfo
@@ -97,10 +104,10 @@ const MedicalRecordForm = (props) => {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         {renderPage()}
-        {props.page === 4 && (
+        {props.page === 3 && (
           <button className="btn btn-primary next-button">Lưu</button>
         )}
-        {props.page !== 4 && (
+        {props.page !== 3 && (
           <button
             type="button"
             onClick={props.handleChangePage}

@@ -1,10 +1,9 @@
-import { ErrorMessage } from '@hookform/error-message';
 import React, { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import { globalState } from '../../features/global/globalSlice';
-import { createWaitingRoomAPI, getWaitingRoomAPI } from '../../features/waitingRoom/waitingRoomAPI';
+import { getWaitingRoomAPI } from '../../features/waitingRoom/waitingRoomAPI';
 import AuthorizeContract from "../../contracts/Authorize.json";
 import { getUser } from '../../features/authorization/authorizationAPI';
 import "./styles.scss"
