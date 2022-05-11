@@ -20,17 +20,34 @@ function Sidebar() {
       <div className="sidebar__wrapper">
         <div className="sidebar__list-item">
           <div className="sidebar-top">
-            <NavLink
-              to={"/"}
-              exact
-              className={(isActive) =>
-                "sidebar__item" + (isActive ? " active-item" : "")
-              }
-            >
-              <ImHome className="sidebar__icon" />
-              <span className="sidebar-text">Trang chủ</span>
-            </NavLink>
-            {currentUser.receptionist.isReceptionist &&
+            {userRole.includes(process.env.REACT_APP_ROLE_MANAGER) && (
+              <>
+                <NavLink
+                  to={"/"}
+                  exact
+                  className={(isActive) =>
+                    "sidebar__item" + (isActive ? " active-item" : "")
+                  }
+                >
+                  <ImHome className="sidebar__icon" />
+                  <span className="sidebar-text">Trang chủ</span>
+                </NavLink>
+              </>
+            )}
+            {userRole.includes(process.env.REACT_APP_ROLE_DOCTOR) && (
+              <>
+                <NavLink
+                  to="/waiting-list"
+                  className={(isActive) =>
+                    "sidebar__item" + (isActive ? " active-item" : "")
+                  }
+                >
+                  <IoDocumentsSharp className="sidebar__icon" />
+                  <span className="sidebar-text">Hàng chờ</span>
+                </NavLink>
+              </>
+            )}
+            {currentUser.receptionist.isReceptionist && (
               <NavLink
                 to="/waiting-room"
                 className={(isActive) =>
@@ -40,7 +57,7 @@ function Sidebar() {
                 <IoDocumentsSharp className="sidebar__icon" />
                 <span className="sidebar-text">Phòng chờ</span>
               </NavLink>
-            }
+            )}
             {/* Patient icons */}
             <NavLink
               to={`/medical-record/${currentUser.publicAddress}`}
@@ -63,15 +80,6 @@ function Sidebar() {
             {/* Doctor icons */}
             {userRole.includes(process.env.REACT_APP_ROLE_DOCTOR) && (
               <>
-                <NavLink
-                  to="/waiting-list"
-                  className={(isActive) =>
-                    "sidebar__item" + (isActive ? " active-item" : "")
-                  }
-                >
-                  <IoDocumentsSharp className="sidebar__icon" />
-                  <span className="sidebar-text">Hàng chờ</span>
-                </NavLink>
                 <NavLink
                   to="/vaccination-certificates"
                   className={(isActive) =>

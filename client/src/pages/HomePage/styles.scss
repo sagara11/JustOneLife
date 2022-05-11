@@ -31,64 +31,7 @@
   }
 }
 
-.medical-record__section, .vaccine__section {
-  min-height: 50%;
+.chart__section {
+  min-height: 90%;
   position: relative;
-
-  .btn-primary {
-    font-size: 14px;
-    position: absolute;
-    bottom: 15px;
-    right: 15px;
-    padding: 3px 30px;
-  }
-}
-
-.medicine__section, .post__section {
-  min-height: 40%;
-  position: relative;
-
-  .btn-primary {
-    font-size: 14px;
-    position: absolute;
-    bottom: 15px;
-    right: 15px;
-    padding: 3px 30px;
-  }
-}
-
-.post__section {
-  position: relative;
-
-  .background-image, .background-cover {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-  }
-
-  .background-image {
-    img {
-      border-radius: 10px;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  }
-  .background-cover {
-    border-radius: 10px;
-    background-color: rgba($color: black, $alpha: 0.4);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    .post-header {
-      font-size: 18px;
-      color: white;
-    }
-
-    .post-description {
-      color: lightgray;
-    }
-  }
 }
