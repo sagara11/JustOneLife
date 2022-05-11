@@ -33,8 +33,10 @@
 .new-medical-record__form {
   position: relative;
   margin-top: 20px;
+  margin-bottom: 20px;
   background-color: white;
   padding: 20px;
+  padding-bottom: 40px;
   border-radius: 20px;
   width: 75%;
   min-height: 350px;
@@ -121,4 +123,49 @@
 
 .medical-record-list__filter {
   height: 800px;
+}
+
+.record-history__wrapper {
+  max-height: 500px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  .history-list {
+    padding: 20px 0;
+
+    .history-item {
+      padding: 30px 10px 30px 10px;
+      border-bottom: 2px solid gray;
+
+      .history-item-section {
+        padding: 10px;
+        background-color: rgb(240, 240, 240);
+        margin-bottom: 7px;
+        border-radius: 5px;
+      }
+
+      .title {
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 18px;
+      }
+
+      .item {
+        display: flex;
+        margin-bottom: 7px;
+
+        .item-label {
+          width: 40%;
+        }
+
+        .item-content {
+          width: 60%;
+        }
+      }
+
+      .medicine-item {
+        margin-bottom: 15px;
+      }
+    }
+  }
 }
