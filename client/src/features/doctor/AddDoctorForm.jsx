@@ -6,7 +6,11 @@ import {Modal} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
 import {globalState} from "../global/globalSlice";
 import {setRoleDoctor} from "../authorization/authorizationSlice";
-import {fetchUserInSystem} from "../doctor/doctorAPI";
+import {
+  fetchUserInSystem,
+  fetchFalcutiesData,
+  updateFalcuty,
+} from "../doctor/doctorAPI";
 import Select from "react-select";
 
 const AddDoctorForm = ({show, handleCloseAddDoctorModal}) => {
@@ -18,37 +22,73 @@ const AddDoctorForm = ({show, handleCloseAddDoctorModal}) => {
   const dispatch = useDispatch();
   const {web3, accounts, currentUser} = useSelector(globalState);
   const [userList, setUserList] = useState("");
-  const [selectedOption, setSelectedOption] = useState();
-  const options = [];
+  const [falcutiesList, setFalcutiesList] = useState("");
+  const [selectedDoctorInfo, setSelectedDoctorInfo] = useState();
+  const [selectedFalcuties, setSelectedFalcuties] = useState();
+  const optionsDoctors = [];
+  const optionsFalcuties = [];
 
-  if (userList) {
+  if (userList && falcutiesList) {
     userList.forEach((item) => {
-      options.push({
+      optionsDoctors.push({
         value: item.publicAddress,
         label: `${item.name} - ${item.email}`,
       });
     });
+
+    falcutiesList.forEach((item) => {
+      optionsFalcuties.push({
+        value: item._id,
+        label: `${item.name}`,
+      });
+    });
   }
 
-  const AnimatedMulti = () => {
+  const DoctorInfo = () => {
     return (
       <Select
         closeMenuOnSelect={false}
-        onChange={handleChange}
-        value={selectedOption}
-        options={options}
+        onChange={handleChangeDoctorInfo}
+        value={selectedDoctorInfo}
+        options={optionsDoctors}
       />
     );
   };
 
-  const handleChange = (selectedOption) => {
-    setSelectedOption(selectedOption);
+  const Falcuties = () => {
+    return (
+      <Select
+        closeMenuOnSelect={false}
+        onChange={handleChangeFalcuties}
+        value={selectedFalcuties}
+        options={optionsFalcuties}
+      />
+    );
+  };
+
+  const handleChangeDoctorInfo = (selectedOption) => {
+    setSelectedDoctorInfo(selectedOption);
+  };
+
+  const handleChangeFalcuties = (selectedOption) => {
+    setSelectedFalcuties(selectedOption);
   };
 
   const onSubmit = async () => {
-    const addressDoctor = selectedOption.value
-    dispatch(setRoleDoctor({web3, accounts, currentUser, address: addressDoctor}));
-    setSelectedOption("");
+    const addressDoctor = selectedDoctorInfo.value;
+    const falcuty = selectedFalcuties.value;
+    dispatch(
+      setRoleDoctor({
+        web3,
+        accounts,
+        currentUser,
+        address: addressDoctor,
+      })
+    );
+
+    await updateFalcuty({addressDoctor: addressDoctor, falculty: falcuty});
+    setSelectedDoctorInfo("");
+    setSelectedFalcuties("");
   };
 
   const onHideModal = () => {
@@ -62,7 +102,13 @@ const AddDoctorForm = ({show, handleCloseAddDoctorModal}) => {
       setUserList(userListData.data);
     };
 
+    const getAllFaculties = async () => {
+      const falcutiesDataList = await fetchFalcutiesData();
+      setFalcutiesList(falcutiesDataList.data);
+    };
+
     getAllUser();
+    getAllFaculties();
   }, []);
 
   return (
@@ -78,15 +124,30 @@ const AddDoctorForm = ({show, handleCloseAddDoctorModal}) => {
         onSubmit={handleSubmit(onSubmit)}
         id="add-doctor-form"
       >
-        <div className="new-doctor">
-          <label>Thêm bác sĩ mới</label>
+        <div className="row doctor-content">
+          <div className="col-5">
+            <div>
+              <label>Khoa</label>
+            </div>
+            <ErrorMessage
+              errors={errors}
+              name="address"
+              render={({message}) => <p>{message}</p>}
+            />
+            <Falcuties />
+          </div>
+          <div className="col-7">
+            <div>
+              <label>Thêm bác sĩ mới</label>
+            </div>
+            <ErrorMessage
+              errors={errors}
+              name="address"
+              render={({message}) => <p>{message}</p>}
+            />
+            <DoctorInfo />
+          </div>
         </div>
-        <ErrorMessage
-          errors={errors}
-          name="address"
-          render={({message}) => <p>{message}</p>}
-        />
-        <AnimatedMulti />
         <button className="btn btn-primary">THÊM</button>
       </form>
     </Modal>

@@ -20,3 +20,11 @@ export function fetchReceptionistListAPI(params) {
 export function fetchUserInSystem(params) {
   return axios.post(`${URL}/users/index`, params, config);
 }
+
+export function fetchFalcutiesData(params) {
+  return axios.post(`${URL}/falcuties/index`, params, config);
+}
+
+export function updateFalcuty(params) {
+  return axios.put(`${URL}/users/${params.addressDoctor}`, {falculty: params.falculty}, config);
+}

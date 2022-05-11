@@ -54,7 +54,7 @@ function DoctorPage() {
       <td>{key}</td>
       <td>{doctor.name}</td>
       <td>{doctor.publicAddress}</td>
-      <td>{doctor.specialites}</td>
+      <td>{doctor?.falculty?.name}</td>
     </tr>
   ));
 
