@@ -169,3 +169,21 @@
     }
   }
 }
+
+.history-modal-waiting {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.lock-icon {
+  height: 250px;
+  font-size: 70px;
+  color: gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

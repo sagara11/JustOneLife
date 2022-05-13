@@ -10,9 +10,7 @@ import PasswordModal from "./PasswordModal";
 import io from "socket.io-client";
 import {useSelector} from "react-redux";
 import {globalState} from "../global/globalSlice";
-let socket;
 const NodeRSA = require("node-rsa");
-const keyRSA = new NodeRSA({b: 512});
 
 const MedicalRecordForm = (props) => {
   const {register, handleSubmit, setValue} = useForm();
@@ -20,41 +18,26 @@ const MedicalRecordForm = (props) => {
   const [dataRegister, setDataRegister] = useState("");
   const {preloadData} = props;
   const {currentUser} = useSelector(globalState);
-  const [patientPassword, setPatientPassword] = useState("");
-
-  useEffect(() => {
-    socket = io(process.env.REACT_APP_API_URL || "http://localhost:8080");
-
-    socket.emit("join-patient", preloadData.user[0]._id, (res) => {
-      console.log(`Connected to room ${res.data}`);
-    });
-
-    socket.on("password-received", (res) => {
-      const {password} = res;
-      if (password) {
-        console.log(`Patient password is ${password}`);
-        setPatientPassword(password);
-      }
-    });
-  }, [preloadData]);
 
   const handleClosePasswordModal = () => setShow(false);
   const handleOpenPasswordModal = async () => {
     setShow(true);
-    const publicKey = await keyRSA.exportKey("pkcs8-public-pem");
+    const publicKey = await props.keyRSA.exportKey("pkcs8-public-pem");
     // const privateDer = await key.exportKey("pkcs1-private-pem");
 
-    socket.emit(
-      "request-password",
-      {
-        _id: currentUser._id,
-        name: currentUser.name,
-        publicAddress: currentUser.publicAddress,
-      },
-      preloadData?.user[0]?._id,
-      publicKey
-    );
-    console.log(`Request password from patient....with publicKey ${publicKey}`);
+    if (!props.patientPassword) {
+      props.socket.emit(
+        "request-password",
+        {
+          _id: currentUser._id,
+          name: currentUser.name,
+          publicAddress: currentUser.publicAddress,
+        },
+        preloadData?.user[0]?._id,
+        publicKey
+      );
+      console.log(`Request password from patient....with publicKey ${publicKey}`);
+    }
   };
 
   const renderPage = () => {
@@ -122,8 +105,8 @@ const MedicalRecordForm = (props) => {
         show={show}
         handleClosePasswordModal={handleClosePasswordModal}
         dataRegister={dataRegister}
-        patientPassword={patientPassword}
-        keyRSA={keyRSA}
+        patientPassword={props.patientPassword}
+        keyRSA={props.keyRSA}
       />
     </>
   );

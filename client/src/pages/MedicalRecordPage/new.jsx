@@ -9,6 +9,9 @@ import HistoryList from '../../features/medicalRecord/HistoryList';
 import { useSelector } from 'react-redux';
 import { globalState } from '../../features/global/globalSlice';
 import MedicalRecord from "../../contracts/MedicalRecord.json";
+import { Modal } from "react-bootstrap";
+import { isEmpty } from 'lodash';
+import { AiFillLock } from 'react-icons/ai';
 const NodeRSA = require("node-rsa");
 const keyRSA = new NodeRSA({b: 512});
 let socket;
@@ -17,6 +20,7 @@ const NewMedicalRecordPage = () => {
   const [page, setPage] = useState(0);
   const [historyList, setHistoryList] = useState([]);
   const [patientPassword, setPatientPassword] = useState("");
+  const [show, setShow] = useState(false);
   const { currentUser, web3 } = useSelector(globalState);
   const { state } = useLocation();
 
@@ -28,6 +32,7 @@ const NewMedicalRecordPage = () => {
     });
 
     socket.on("password-received", (res) => {
+      setShow(false);
       const {password} = res;
       const decryptedPassword = keyRSA.decrypt(password);
       if (decryptedPassword) {
@@ -87,8 +92,9 @@ const NewMedicalRecordPage = () => {
   };
 
   const requestHistoryList = async () => {
+    setShow(true);
     const publicKey = await keyRSA.exportKey("pkcs8-public-pem");
-    if (socket) {
+    if (socket && !patientPassword) {
       socket.emit(
         "request-password",
         {_id: currentUser._id, name: currentUser.name, publicAddress: currentUser.publicAddress},
@@ -96,6 +102,10 @@ const NewMedicalRecordPage = () => {
         publicKey
       )
     }
+  }
+
+  const hideModal = () => {
+    setShow(false);
   }
 
   return (
@@ -117,17 +127,40 @@ const NewMedicalRecordPage = () => {
           })}
         </section>
         <section className="new-medical-record__form medicine-form">
-          <MedicalRecordForm preloadData={state.preloadData} page={page} handleChangePage={handleChangePage} />
+          <MedicalRecordForm preloadData={state.preloadData} page={page} handleChangePage={handleChangePage} patientPassword={patientPassword} socket={socket} keyRSA={keyRSA} />
         </section>
         <section className="new-medical-record__form record-history__wrapper">
           <button disabled={patientPassword} className="btn btn-primary" onClick={requestHistoryList}>Xem bệnh sử </button>
-          {patientPassword &&
-            <HistoryList preloadData={state.preloadData} historyList={historyList} patientPassword={patientPassword} />
+          {isEmpty(patientPassword) ?
+            <div className='lock-icon'>
+              <AiFillLock/>
+            </div>
+            : <HistoryList preloadData={state.preloadData} historyList={historyList} patientPassword={patientPassword} />
           }
         </section>
+        <WaitingHistoryModal show={show} hideModal={hideModal} />
       </div>
     </>
   );
 };
+
+const WaitingHistoryModal = (props) => {
+  const { hideModal } = props;
+  return (
+    <>
+      <Modal
+        show={props.show}
+        onHide={hideModal}
+        centered
+        dialogClassName="add-doctor-form__dialog"
+        contentClassName="add-doctor-form__content row"
+      >
+        <div className="history-modal-waiting">
+          Waiting for patient approve...
+        </div>
+      </Modal>
+    </>
+  )
+}
 
 export default NewMedicalRecordPage;

@@ -37,3 +37,16 @@
     }
   }
 }
+
+.modal-header {
+  display: flex;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.modal-description {
+  color: gray;
+  margin: 10px 0;
+}

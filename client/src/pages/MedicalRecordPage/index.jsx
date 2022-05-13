@@ -51,7 +51,7 @@ function MedicalRecordPage() {
           : await aes256.decrypt(patientKey, file.data);
         const decryptedFile = await aes256.decrypt(hash_1, decryptedFile_final);
         const decryptedFileObjects = JSON.parse(decryptedFile);
-        medicalRecordList.push({...decryptedFileObjects, ipfsHash: element});
+        medicalRecordList.unshift({...decryptedFileObjects, ipfsHash: element});
       }
 
       setMedicalRecords(medicalRecordList);

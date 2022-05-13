@@ -28,8 +28,8 @@ function HistoryList({ historyList, patientPassword, preloadData }) {
         const decryptedObject = await aes256.decrypt(hash1, decryptedFile);
         setEncryptedHistoryList((prev) => {
           return [
+            JSON.parse(decryptedObject),
             ...prev,
-            JSON.parse(decryptedObject)
           ]
         })
       }
