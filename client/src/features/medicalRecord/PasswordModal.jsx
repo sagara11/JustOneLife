@@ -71,12 +71,12 @@ const PasswordModal = ({ show, handleClosePasswordModal, dataRegister, waitingIt
     // const publicKey = await keyRSA.exportKey("pkcs8-public-pem");
     const decrypPatientPassword = await keyRSA.decrypt(patientPassword)
     const { resultPatient, resultDoctor, hash_1_Patient, hash_1_Doctor, keyLevel_2 } =
-      await hasingPassword({
-        passwordPatient: decrypPatientPassword.toString(),
-        passwordDoctor: data.passwordDoctor,
-        patientAddress: dataRegister.generalInfo.publicAddress,
-        doctorAddress: currentUser.publicAddress,
-      });
+    await hasingPassword({
+      passwordPatient: decrypPatientPassword.toString(),
+      passwordDoctor: data.passwordDoctor,
+      patientAddress: dataRegister.generalInfo.publicAddress,
+      doctorAddress: currentUser.publicAddress,
+    });
 
     if (resultPatient && resultDoctor) {
       dispatch(
