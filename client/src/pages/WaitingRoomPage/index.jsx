@@ -135,7 +135,6 @@ function WaitingModal({show, handleCloseConfirmModal, handleOpenConfirmModal}) {
   const DoctorInfo = () => {
     return (
       <Select
-        className="form-control"
         closeMenuOnSelect={false}
         onChange={handleChangePatientInfo}
         value={selectedPatient}
@@ -202,14 +201,17 @@ function WaitingModal({show, handleCloseConfirmModal, handleOpenConfirmModal}) {
         dialogClassName="add-doctor-form__dialog"
         contentClassName="add-doctor-form__content"
       >
+        <div className="modal-header waiting-room-modal-header">
+          Thêm mới bệnh nhân
+        </div>
         <form
           className="add-doctor-form"
           onSubmit={handleSubmit(onSubmit)}
           id="add-doctor-form"
         >
-          <div className="row doctor-content">
+          <div className="row doctor-content receptionist-waitingroom__wrapper">
             <div className="col-5">
-              <div>
+              <div className="title">
                 <label>Khoa</label>
               </div>
               <ErrorMessage
@@ -220,8 +222,8 @@ function WaitingModal({show, handleCloseConfirmModal, handleOpenConfirmModal}) {
               <Falcuties />
             </div>
             <div className="col-7">
-              <div>
-                <label>Thêm bệnh nhân mới</label>
+              <div className="title">
+                <label>Bệnh nhân</label>
               </div>
               <ErrorMessage
                 errors={errors}

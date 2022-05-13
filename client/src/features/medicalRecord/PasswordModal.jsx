@@ -69,10 +69,9 @@ const PasswordModal = ({ show, handleClosePasswordModal, dataRegister, waitingIt
     };
     const jsonData = JSON.stringify({ ...dataRegister, ...doctorInfo });
     // const publicKey = await keyRSA.exportKey("pkcs8-public-pem");
-    const decrypPatientPassword = await keyRSA.decrypt(patientPassword)
     const { resultPatient, resultDoctor, hash_1_Patient, hash_1_Doctor, keyLevel_2 } =
     await hasingPassword({
-      passwordPatient: decrypPatientPassword.toString(),
+      passwordPatient: patientPassword.toString(),
       passwordDoctor: data.passwordDoctor,
       patientAddress: dataRegister.generalInfo.publicAddress,
       doctorAddress: currentUser.publicAddress,

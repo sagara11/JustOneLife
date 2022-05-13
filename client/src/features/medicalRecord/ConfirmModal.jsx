@@ -69,25 +69,24 @@ const ConfirmModal = ({
       dialogClassName="add-doctor-form__dialog"
       contentClassName="add-doctor-form__content"
     >
+      <div className="modal-header">Điền mật khẩu</div>
       <form
         className="add-doctor-form"
         onSubmit={handleSubmit(onSubmit)}
         id="add-doctor-form"
       >
-        <h5 className="modal-title signature-title" id="exampleModalLongTitle">
-          Điền mật khẩu
-        </h5>
+        <input
+          {...register("password", {required: "Please confirm you request"})}
+          className="form-control"
+          placeholder="Mật khẩu"
+          type="password"
+        />
         <ErrorMessage
           errors={errors}
           name="password"
           render={({message}) => <p>{message}</p>}
         />
-        <input
-          {...register("password", {required: "Please confirm you request"})}
-          className="form-control"
-          placeholder="Password"
-          type="password"
-        />
+        <span className='modal-description'>Mật khẩu này sẽ dùng để giải mã những hồ sơ bệnh án của bạn</span>
         <button className="btn btn-primary">Xác nhận</button>
       </form>
     </Modal>

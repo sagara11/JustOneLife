@@ -10,6 +10,8 @@ import { useEffect } from "react";
 import { isEmpty } from "lodash";
 import io from 'socket.io-client';
 import MedicalRecord from "../../contracts/MedicalRecord.json";
+import medicalRecordServices from '../../features/medicalRecord/medicalRecordServices';
+import { authenticateIPFSAPI } from '../../features/medicalRecord/medicalRecordAPI';
 let socket;
 const NodeRSA = require("node-rsa");
 const key = new NodeRSA();
@@ -40,6 +42,21 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       }
 
       let patientPassword = prompt(`Doctor ${doctor.name} wants to access your data, please type in your password and submit?`);
+      const medicalRecordService = new medicalRecordServices({key: 1});
+      const { hash_2 } = await medicalRecordService.processHashing(
+        patientPassword
+      );
+      const userAddress = currentUser.publicAddress;
+      const result = await authenticateIPFSAPI({
+        hash_2,
+        userAddress,
+      });
+
+      if (!result.data) {
+        alert("Wrong password, type again");
+        return;
+      }
+
       const encrypPatientPassword = await doctorKey.encrypt(patientPassword, "base64")
 
       const networkId = await web3.eth.net.getId();
