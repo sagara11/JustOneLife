@@ -43,9 +43,10 @@ function HomePage() {
       );
       return data;
     }
-
     if (userRole.includes(process.env.REACT_APP_ROLE_ADMIN)) {
-      getMedicalRecordList().then((res) => setDataChart(res.data.data));
+      getMedicalRecordList().then((res) => {
+        setDataChart(res.data.data);
+      });
       // }
       // if (
       //   userRole.includes(process.env.REACT_APP_ROLE_MANAGER) &&
@@ -64,7 +65,7 @@ function HomePage() {
   }
 
   if (userRole.length === 1 && userRole[0] === "PATIENT") {
-    return <Redirect to={`/medical-record/${currentUser.publicAddress}`} />;
+    return <Redirect to={`/doctor-room`} />;
   }
 
   return (

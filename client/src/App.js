@@ -28,9 +28,10 @@ import NewMedicalRecordPage from "./pages/MedicalRecordPage/new";
 import MedicalRecordPage from "./pages/MedicalRecordPage";
 import ShowMedicalRecord from "./pages/MedicalRecordPage/show";
 import VaccineCertificatePage from "./pages/VaccineCertificatePage";
-import ReceptionistPage from './pages/ReceptionistPage';
-import WaitingRoomPage from './pages/WaitingRoomPage';
-import WaitingListPage from './pages/doctorWaitingListPage';
+import ReceptionistPage from "./pages/ReceptionistPage";
+import WaitingRoomPage from "./pages/WaitingRoomPage";
+import WaitingListPage from "./pages/doctorWaitingListPage";
+import DoctorRoomPage from "./pages/WaitingRoomPage/doctorRoom";
 const jwt = require("jsonwebtoken");
 
 const App = () => {
@@ -85,6 +86,7 @@ const App = () => {
     <BrowserRouter>
       <Switch>
         <PrivateRoute path="/" exact component={HomePage} />
+        <PrivateRoute path="/doctor-room" component={DoctorRoomPage} />
         <PrivateRoute path="/user/:patientPublicAddress" component={UserPage} />
         <PrivateRoute path="/waiting-room" exact component={WaitingRoomPage} />
         <PrivateRoute
@@ -104,11 +106,7 @@ const App = () => {
           path="/vaccination-certificates"
           component={VaccineCertificatePage}
         />
-        <PrivateRoute
-          exact
-          path="/waiting-list"
-          component={WaitingListPage}
-        />
+        <PrivateRoute exact path="/waiting-list" component={WaitingListPage} />
         <PrivateRoute
           path="/medical-records"
           component={NewMedicalRecordPage}

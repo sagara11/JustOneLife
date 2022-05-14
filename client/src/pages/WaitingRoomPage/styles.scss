@@ -50,3 +50,86 @@
   color: gray;
   margin: 10px 0;
 }
+
+.doctor-room__item {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.25);
+  margin-bottom: 24px;
+
+  h1 {
+    padding: 15px;
+    font-size: 26px;
+  }
+
+  h3 {
+    font-size: 18;
+    font-weight: 100;
+    font-style: italic;
+    text-align: center;
+    padding: 0 0 20px 0;
+    color: rgba(142, 142, 142, 0.79);
+  }
+
+  cursor: pointer;
+
+  .item-header {
+    padding: 15px;
+    border-bottom: 1px solid rgba(142, 142, 142, 0.79);
+
+    p {
+      color: gray;
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0;
+    }
+  }
+
+  .item-body {
+    padding: 15px;
+  }
+}
+
+.faculties-item {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.25);
+  margin-bottom: 24px;
+  cursor: pointer;
+
+  .item-header {
+    padding: 15px;
+    border-bottom: 1px solid rgba(142, 142, 142, 0.79);
+
+    p {
+      color: gray;
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0;
+    }
+  }
+
+  .item-body {
+    padding: 15px;
+  }
+}
+
+.select-patient {
+  width: 95% !important;
+}
+
+.item-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  button {
+    display: block;
+  }
+
+  .button-view {
+    color: #29a9f5;
+    background-color: #fff;
+    border: 1px solid #29a9f5;
+  }
+}

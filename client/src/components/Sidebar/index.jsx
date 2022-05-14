@@ -1,10 +1,12 @@
 import React from "react";
 import "./styles.scss";
 import { ImHome } from "react-icons/im";
-import { AiFillSafetyCertificate } from "react-icons/ai";
 import { IoSettingsSharp, IoDocumentsSharp } from "react-icons/io5";
-import { BsPeopleFill, BsFillPersonPlusFill } from "react-icons/bs";
-import { BiSelectMultiple } from "react-icons/bi";
+import {
+  BsPeopleFill,
+  BsFillPersonPlusFill,
+  BsFillDoorOpenFill,
+} from "react-icons/bs";
 import { MdDocumentScanner } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import { globalState } from "../../features/global/globalSlice";
@@ -34,6 +36,15 @@ function Sidebar() {
                 </NavLink>
               </>
             )}
+            <NavLink
+              to={"/doctor-room"}
+              className={(isActive) =>
+                "sidebar__item" + (isActive ? " active-item" : "")
+              }
+            >
+              <BsFillDoorOpenFill className="sidebar__icon" />
+              <span className="sidebar-text">Phòng khám</span>
+            </NavLink>
             {userRole.includes(process.env.REACT_APP_ROLE_DOCTOR) && (
               <>
                 <NavLink
@@ -68,7 +79,7 @@ function Sidebar() {
               <MdDocumentScanner className="sidebar__icon" />
               <span className="sidebar-text">Bệnh án</span>
             </NavLink>
-            <NavLink
+            {/* <NavLink
               to={`/vaccination-certificate/${currentUser.publicAddress}`}
               className={(isActive) =>
                 "sidebar__item" + (isActive ? " active-item" : "")
@@ -76,9 +87,9 @@ function Sidebar() {
             >
               <AiFillSafetyCertificate className="sidebar__icon" />
               <span className="sidebar-text">Vaccine</span>
-            </NavLink>
+            </NavLink> */}
             {/* Doctor icons */}
-            {userRole.includes(process.env.REACT_APP_ROLE_DOCTOR) && (
+            {/* {userRole.includes(process.env.REACT_APP_ROLE_DOCTOR) && (
               <>
                 <NavLink
                   to="/vaccination-certificates"
@@ -90,7 +101,7 @@ function Sidebar() {
                   <span className="sidebar-text">Thêm vaccine</span>
                 </NavLink>
               </>
-            )}
+            )} */}
             {/* {userRole.includes(process.env.REACT_APP_ROLE_DOCTOR) && (
               <NavLink
                 to="/doctor-certificates"
