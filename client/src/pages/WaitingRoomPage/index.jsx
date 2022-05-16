@@ -1,8 +1,8 @@
-import {ErrorMessage} from "@hookform/error-message";
-import React, {useEffect, useState} from "react";
-import {Modal} from "react-bootstrap";
-import {useForm} from "react-hook-form";
-import {useSelector} from "react-redux";
+import { ErrorMessage } from "@hookform/error-message";
+import React, { useEffect, useState } from "react";
+import { Col, Modal, Row } from "react-bootstrap";
+import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 import Select from "react-select";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
@@ -11,7 +11,7 @@ import {
   fetchFalcutiesData,
   updateFalcuty,
 } from "../../features/doctor/doctorAPI";
-import {globalState} from "../../features/global/globalSlice";
+import { globalState } from "../../features/global/globalSlice";
 import {
   createWaitingRoomAPI,
   getWaitingRoomAPI,
@@ -20,14 +20,17 @@ import "./styles.scss";
 
 export default function WaitingRoomPage() {
   const [waitingList, setWaitingList] = useState([]);
-  const {currentUser} = useSelector(globalState);
+  const { currentUser } = useSelector(globalState);
   const [show, setShow] = useState(false);
   const handleCloseConfirmModal = () => setShow(false);
   const handleOpenConfirmModal = () => setShow(true);
+  const [falcultiesList, setFalcultiesList] = useState([]);
+  const [selectedFalculty, setSelectedFalculty] = useState(null);
+  const [showedFalculty, setShowedFalculty] = useState(null);
 
   useEffect(() => {
     const getList = async () => {
-      const {data} = await getWaitingRoomAPI({
+      const { data } = await getWaitingRoomAPI({
         receptionist: currentUser._id,
       });
 
@@ -39,6 +42,15 @@ export default function WaitingRoomPage() {
     getList();
   }, [currentUser, show]);
 
+  useEffect(() => {
+    const getAllFaculties = async () => {
+      const falcutiesDataList = await fetchFalcutiesData();
+      setFalcultiesList(falcutiesDataList.data);
+    };
+
+    getAllFaculties();
+  }, [show]);
+
   const formatAddress = (address) => {
     return (
       address.substring(0, 4) +
@@ -47,9 +59,90 @@ export default function WaitingRoomPage() {
     );
   };
 
-  const openWaitingModal = () => {
+  const openWaitingModal = (e, itemId) => {
+    e.preventDefault();
+    if (!itemId) return;
+    setSelectedFalculty(itemId);
     handleOpenConfirmModal();
   };
+
+  const openWaitingList = (e, itemId) => {
+    e.preventDefault();
+    if (!itemId) return;
+    setShowedFalculty(itemId);
+  };
+
+  const closeWaitingList = (e, itemId) => {
+    e.preventDefault();
+    if (!itemId) return;
+    setShowedFalculty(null);
+  };
+
+  const renderFalcultyList =
+    falcultiesList &&
+    falcultiesList.map((item, key) => (
+      <Col md={4} key={key}>
+        <div className="faculties-item">
+          <div className="item-header">
+            <b>Khoa: </b>
+            <span style={{ fontSize: "18px" }}>{item.name}</span>
+          </div>
+          <div className="item-body">
+            <p>
+              <b>Bệnh nhân đang chờ: </b>
+              <span style={{ fontSize: "18px" }}>{item.patientCount}</span>
+            </p>
+          </div>
+          <div className="item-body item-options">
+            {showedFalculty && showedFalculty === item._id ? (
+              <button
+                className="btn btn-primary button-view"
+                onClick={(e) => closeWaitingList(e, item._id)}
+              >
+                Hủy xem
+              </button>
+            ) : (
+              <button
+                className="btn btn-primary button-view"
+                onClick={(e) => openWaitingList(e, item._id)}
+              >
+                Xem danh sách
+              </button>
+            )}
+            <button
+              className="btn btn-primary"
+              onClick={(e) => openWaitingModal(e, item._id)}
+            >
+              Thêm bệnh nhân
+            </button>
+          </div>
+        </div>
+      </Col>
+    ));
+
+  const renderWaitingList = waitingList.map(
+    (waitingItem, index) =>
+      waitingItem?.falculty[0]?._id === showedFalculty && (
+        <div key={index} className="waiting-room__item">
+          <div className="item user-info">
+            <div className="title">Thông tin</div>
+            <span className="item-name">{waitingItem.user[0].name}</span>
+            <span className="item-public-address">
+              {formatAddress(waitingItem.user[0].publicAddress)}
+            </span>
+            <span className="item-phone">{waitingItem.user[0].phone}</span>
+          </div>
+          <div className="item medical-falculty">
+            <div className="title">Khoa khám bệnh</div>
+            {waitingItem?.falculty[0]?.name || "No falculty selected"}
+          </div>
+          <div className="item admitted-date">
+            <div className="title">Ngày nhập viện</div>
+            {waitingItem.admittedToHospital}
+          </div>
+        </div>
+      )
+  );
 
   return (
     <>
@@ -57,35 +150,18 @@ export default function WaitingRoomPage() {
       <Sidebar />
       <div className="medical-record__wrapper waiting-room__wrapper">
         <div className="waiting-room__container">
-          <div className="add-waiting-item">
-            <button onClick={openWaitingModal} className="btn btn-primary">
-              Bệnh nhân mới
-            </button>
-          </div>
-          {waitingList.map((waitingItem, index) => (
-            <div key={index} className="waiting-room__item">
-              <div className="item user-info">
-                <div className="title">Thông tin</div>
-                <span className="item-name">{waitingItem.user[0].name}</span>
-                <span className="item-public-address">
-                  {formatAddress(waitingItem.user[0].publicAddress)}
-                </span>
-                <span className="item-phone">{waitingItem.user[0].phone}</span>
-              </div>
-              <div className="item medical-falculty">
-                <div className="title">Khoa khám bệnh</div>
-                {waitingItem?.falculty[0]?.name || "No falculty selected"}
-              </div>
-              <div className="item admitted-date">
-                <div className="title">Ngày nhập viện</div>
-                {waitingItem.admittedToHospital}
-              </div>
-            </div>
-          ))}
+          <Row>{renderFalcultyList}</Row>
+          {showedFalculty && (
+            <>
+              <h3>Danh sách hàng chờ</h3>
+              {renderWaitingList}
+            </>
+          )}
           <WaitingModal
             show={show}
             handleCloseConfirmModal={handleCloseConfirmModal}
-            handleOpenConfirmModal={handleOpenConfirmModal}
+            selectedFalculty={selectedFalculty}
+            setShowedFalculty={setShowedFalculty}
           />
         </div>
       </div>
@@ -93,33 +169,27 @@ export default function WaitingRoomPage() {
   );
 }
 
-function WaitingModal({show, handleCloseConfirmModal, handleOpenConfirmModal}) {
+function WaitingModal({
+  show,
+  handleCloseConfirmModal,
+  selectedFalculty,
+  setShowedFalculty,
+}) {
   const {
-    register,
     handleSubmit,
     setValue,
-    formState: {errors},
+    formState: { errors },
   } = useForm();
   const [userList, setUserList] = useState([]);
-  const [falcutiesList, setFalcutiesList] = useState("");
   const [selectedPatient, setSelectedPatient] = useState();
-  const [selectedFalcuties, setSelectedFalcuties] = useState();
   const optionsPatient = [];
-  const optionsFalcuties = [];
-  const {currentUser} = useSelector(globalState);
+  const { currentUser } = useSelector(globalState);
 
-  if (userList && falcutiesList) {
+  if (userList) {
     userList.forEach((item) => {
       optionsPatient.push({
         value: item._id,
         label: `${item.name} - ${item.email}`,
-      });
-    });
-
-    falcutiesList.forEach((item) => {
-      optionsFalcuties.push({
-        value: item._id,
-        label: `${item.name}`,
       });
     });
   }
@@ -128,13 +198,10 @@ function WaitingModal({show, handleCloseConfirmModal, handleOpenConfirmModal}) {
     setSelectedPatient(selectedOption);
   };
 
-  const handleChangeFalcuties = (selectedOption) => {
-    setSelectedFalcuties(selectedOption);
-  };
-
   const DoctorInfo = () => {
     return (
       <Select
+        className="select-patient"
         closeMenuOnSelect={false}
         onChange={handleChangePatientInfo}
         value={selectedPatient}
@@ -144,19 +211,8 @@ function WaitingModal({show, handleCloseConfirmModal, handleOpenConfirmModal}) {
     );
   };
 
-  const Falcuties = () => {
-    return (
-      <Select
-        closeMenuOnSelect={false}
-        onChange={handleChangeFalcuties}
-        value={selectedFalcuties}
-        options={optionsFalcuties}
-      />
-    );
-  };
-
   const onSubmit = async (input) => {
-    const falculty = selectedFalcuties.value;
+    const falculty = selectedFalculty;
     await createWaitingRoomAPI({
       receptionist: currentUser._id,
       manager: currentUser.receptionist.addedBy,
@@ -170,6 +226,7 @@ function WaitingModal({show, handleCloseConfirmModal, handleOpenConfirmModal}) {
       falculty: falculty,
     });
     handleCloseConfirmModal();
+    setShowedFalculty(selectedFalculty);
   };
 
   const onHideModal = () => {
@@ -183,13 +240,7 @@ function WaitingModal({show, handleCloseConfirmModal, handleOpenConfirmModal}) {
       setUserList(userListData.data);
     };
 
-    const getAllFaculties = async () => {
-      const falcutiesDataList = await fetchFalcutiesData();
-      setFalcutiesList(falcutiesDataList.data);
-    };
-
     getAllUser();
-    getAllFaculties();
   }, []);
 
   return (
@@ -210,25 +261,14 @@ function WaitingModal({show, handleCloseConfirmModal, handleOpenConfirmModal}) {
           id="add-doctor-form"
         >
           <div className="row doctor-content receptionist-waitingroom__wrapper">
-            <div className="col-5">
-              <div className="title">
-                <label>Khoa</label>
-              </div>
-              <ErrorMessage
-                errors={errors}
-                name="address"
-                render={({message}) => <p>{message}</p>}
-              />
-              <Falcuties />
-            </div>
-            <div className="col-7">
+            <div className="col-12">
               <div className="title">
                 <label>Bệnh nhân</label>
               </div>
               <ErrorMessage
                 errors={errors}
                 name="address"
-                render={({message}) => <p>{message}</p>}
+                render={({ message }) => <p>{message}</p>}
               />
               <DoctorInfo />
             </div>
