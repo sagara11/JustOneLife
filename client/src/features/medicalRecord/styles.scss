@@ -69,6 +69,7 @@
 
   .medical-hash {
     span {
+      margin-right: 10px;
       cursor: pointer;
       display: inline-block;
       padding: 2px 7px;
@@ -76,6 +77,10 @@
       background-color: rgba($color: orange, $alpha: 0.6);
       color: white;
       font-size: 12px;
+    }
+
+    .ipfs-link {
+      background-color: #61affe;
     }
   }
 

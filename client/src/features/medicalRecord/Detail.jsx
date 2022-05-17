@@ -10,6 +10,7 @@ import {getTransactionByHashAPI} from "../medicalTransaction/medicalTranscationA
 const MedicalRecordDetail = (props) => {
   const {medicalData} = props;
   const [transactionHash, setTransactionHash] = useState("");
+  const [ipfsHash, setIPFSHash] = useState("");
 
   useEffect(() => {
     const getHash = async () => {
@@ -18,7 +19,8 @@ const MedicalRecordDetail = (props) => {
         ipfsHash: medicalData.medicalData.ipfsHash,
       });
       if (data && data.transaction) {
-        setTransactionHash(data.transaction.transactionHash);
+        setTransactionHash(data.transaction?.transactionHash);
+        setIPFSHash(data.transaction?.IpfsHash);
       }
     };
 
@@ -66,6 +68,9 @@ const MedicalRecordDetail = (props) => {
         <div className="medical-hash">
           <span>
             {`Xác thực bởi giao dịch: ${formatTransaction(transactionHash)}`}
+          </span>
+          <span className="ipfs-link">
+            <a target="_blank" href={`https://ipfs.infura.io/ipfs/${ipfsHash}`}>IPFS link</a>
           </span>
         </div>
       </div>
